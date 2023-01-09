@@ -317,8 +317,8 @@ public class HighAltitudeJoystick {
                 && (axis.equals(AxisType.LEFT_TRIGGER) || axis.equals(AxisType.RIGHT_TRIGGER))) {
             input = (input + 1) / 2;
         }
-        double clampedInput = Math.clampToDeadzone(input, axisDeadzoneConfiguration.get(axis));
-        double multipliedInput = clampedInput * axisMultiplierConfiguration.get(axis);
+        double deadzonedInput = Math.applyDeadzone(input, axisDeadzoneConfiguration.get(axis));
+        double multipliedInput = deadzonedInput * axisMultiplierConfiguration.get(axis);
         return multipliedInput;
     }
 
@@ -353,7 +353,7 @@ public class HighAltitudeJoystick {
         return availableJoystickButtons.get(port);
     }
 
-    public Trigger getPOVButtonObj(int angle) {
+    public POVButton getPOVButtonObj(int angle) {
         return availablePOVButtons.get(angle);
     }
 

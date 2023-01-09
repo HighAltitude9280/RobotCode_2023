@@ -133,7 +133,7 @@ public class HighAltitudeGuitarHeroJoystick {
 
     public double getAxis(AxisType axis) {
         double input = getRawAxis(axis);
-        double clampedInput = Math.clampToDeadzone(input, axisDeadzoneConfiguration.get(axis));
+        double clampedInput = Math.applyDeadzone(input, axisDeadzoneConfiguration.get(axis));
         double multipliedInput = clampedInput * axisMultiplierConfiguration.get(axis);
         return multipliedInput;
     }
@@ -162,7 +162,7 @@ public class HighAltitudeGuitarHeroJoystick {
         return availableJoystickButtons.get(port);
     }
 
-    public Trigger getPOVButtonObj(int angle) {
+    public POVButton getPOVButtonObj(int angle) {
         return availablePOVButtons.get(angle);
     }
 

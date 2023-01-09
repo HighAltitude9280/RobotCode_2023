@@ -96,7 +96,7 @@ public class Math {
         return hsv;
     }
 
-    public static double clampToDeadzone(double input, double deadzone) {
+    public static double applyDeadzone(double input, double deadzone) {
         return Math.abs(input) > deadzone ? input : 0;
     }
 
@@ -155,7 +155,8 @@ public class Math {
      * 
      * @param angle  The current angle (From -180 to 180).
      * @param target The desired angle (From -180 to 180).
-     * @return The smallest angle between the angle and the target, from -180 to 180.
+     * @return The smallest angle between the angle and the target, from -180 to
+     *         180.
      */
     public static double deltaAngle(double angle, double target) {
 
