@@ -5,9 +5,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
 
 public class Navx {
-    private double angle;
+    private double yaw;
     private double rate;
-    private double pitch;
     private double acceleration;
     private AHRS ahrs;
     private double last_world_linear_accel_x;
@@ -30,14 +29,25 @@ public class Navx {
     }
 
     public void run() {
-        angle = ahrs.getYaw();
+        yaw = ahrs.getYaw();
         rate = ahrs.getRawMagY();
-        pitch = ahrs.getPitch();
         acceleration = ahrs.getRawAccelY();
     }
 
+    public double getYaw() {
+        return ahrs.getYaw();
+    }
+
+    public double getPitch() {
+        return ahrs.getPitch();
+    }
+
+    public double getRoll() {
+        return ahrs.getRoll();
+    }
+
     public double getGyro() {
-        return angle + 180;
+        return yaw + 180;
     }
 
     public double getMagnitud() {
@@ -50,10 +60,6 @@ public class Navx {
 
     public void reset() {
         ahrs.reset();
-    }
-
-    public double getPitch() {
-        return pitch;
     }
 
     public float getWorldLinearAccelY() {
@@ -85,10 +91,6 @@ public class Navx {
         currentJerkY = curr_world_linear_accel_y - last_world_linear_accel_y;
         last_world_linear_accel_y = curr_world_linear_accel_y;
         return currentJerkY;
-    }
-
-    public double getYaw() {
-        return ahrs.getYaw();
     }
 
     public double getCollisionX() {
