@@ -8,26 +8,24 @@
 package frc.robot.commands.drivetrain.drivingParameters.dragonflySolenoid;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.DriveTrain.WheelState;
 import frc.robot.Robot;
+import frc.robot.subsystems.chassis.DriveTrain.WheelState;
 
-public class DrivetrainSetDragonflySolenoid extends InstantCommand 
-{
+public class DrivetrainSetDragonflySolenoid extends InstantCommand {
     WheelState state;
 
     /**
      * Raises or lowers the dragonfly wheel.
      * 
-     * @param state The desired state of the dragonfly module, either raised or lowered. 
+     * @param state The desired state of the dragonfly module, either raised or
+     *              lowered.
      */
-    public DrivetrainSetDragonflySolenoid(WheelState state) 
-    {
+    public DrivetrainSetDragonflySolenoid(WheelState state) {
         this.state = state;
     }
 
     @Override
-    public void initialize() 
-    {
+    public void initialize() {
         Robot.getRobotContainer().getDriveTrain().setDragonflySolenoid(state);
     }
 }

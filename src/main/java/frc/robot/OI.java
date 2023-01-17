@@ -10,7 +10,7 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
         copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
     }
 

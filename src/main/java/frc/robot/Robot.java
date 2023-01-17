@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     getRobotContainer().getDriveTrain().resetOdometry();
-    getRobotContainer().configureButtonBindings();
+    getRobotContainer().configureRobotContainer();
   }
 
   /**
@@ -115,6 +115,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+  }
+
+  public static void debug(String s) {
+    if (HighAltitudeConstants.DEBUG)
+      System.out.println(s);
   }
 
   public static RobotContainer getRobotContainer() {

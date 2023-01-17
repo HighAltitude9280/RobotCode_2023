@@ -114,8 +114,8 @@ public class OldHighAltitudePWMLEDStrip {
     /**
      * Starts a fire animation of a color given its hue and saturation.
      * 
-     * @param hue        hue of the color
-     * @param saturation saturation of the color
+     * @param hue        hue of the color 0-180
+     * @param saturation saturation of the color 0-255
      * @param cooling    How much the fire cools down. The lower the value, the more
      *                   intense the fire is. Recommended values: 10 for dim fire, 0
      *                   for intense fire.

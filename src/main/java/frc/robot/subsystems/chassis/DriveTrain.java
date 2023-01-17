@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.chassis;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -260,8 +260,8 @@ public class DriveTrain extends SubsystemBase {
      * @param turn  From -1 to 1, represents the angular velocity of the robot.
      */
     public void arcadeDrive(double speed, double turn) {
-        double leftPower = speed - turn;
-        double rightPower = speed + turn;
+        double leftPower = speed + turn;
+        double rightPower = speed - turn;
 
         tankDrive(leftPower, rightPower);
     }
@@ -501,6 +501,8 @@ public class DriveTrain extends SubsystemBase {
      */
     public void setTransmissionState(TransmissionMode state) {
         transmissionState = state;
+        if (!RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
+            return;
         if (state == TransmissionMode.torque)
             transmission.set(RobotMap.DRIVETRAIN_TRANSMISSION_TORQUE);
 
