@@ -9,8 +9,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.resources.components.Navx;
+<<<<<<< Updated upstream
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.subsystems.chassis.DriveTrain;
+=======
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Vision;
+>>>>>>> Stashed changes
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -28,7 +33,11 @@ public class RobotContainer {
 
   private Navx navx;
   private DriveTrain driveTrain;
+<<<<<<< Updated upstream
   private LEDs leds;
+=======
+  private Vision parkerVision;
+>>>>>>> Stashed changes
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -37,6 +46,8 @@ public class RobotContainer {
     navx = new Navx();
     leds = new LEDs();
     driveTrain = new DriveTrain();
+
+    parkerVision = new Vision();
   }
 
   /**
@@ -47,7 +58,11 @@ public class RobotContainer {
    * it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+<<<<<<< Updated upstream
   public void configureRobotContainer() {
+=======
+  public void configureButtonBindings() {
+>>>>>>> Stashed changes
     driveTrain.setDefaultCommand(new DefaultDrive());
 
     OI.getInstance().ConfigureButtonBindings();
@@ -70,5 +85,9 @@ public class RobotContainer {
 
   public DriveTrain getDriveTrain() {
     return driveTrain;
+  }
+
+  public Vision getVision() {
+    return parkerVision;
   }
 }

@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+<<<<<<< Updated upstream
 import java.util.ArrayList;
 
 import org.photonvision.PhotonCamera;
@@ -16,66 +17,142 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.util.Units;
+=======
+import java.util.HashSet;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 
 public class Vision extends SubsystemBase {
 
-  PhotonCamera photonCamera;
-  RobotPoseEstimator robotPoseEstimator;
-
-  double fieldLength = Units.feetToMeters(54);
-  double filedWidth = Units.feetToMeters(27);
-
-  boolean hasTargets = false;
-  private double previusPipelineTimestamp = 0;
+  private static RobotContainer robotContainer;
+  static AprilTagDetection[] resultsssss;
+  static double previousResult;
 
   /** Creates a new Vision. */
   public Vision() {
-    photonCamera = new PhotonCamera("Solis");
-    final AprilTag tag18 = new AprilTag(
-        18,
-        new Pose3d(
-            new Pose2d(
-                fieldLength,
-                filedWidth / 2.0,
-                Rotation2d.fromDegrees(180))));
-    final AprilTag tag01 = new AprilTag(
-        01,
-        new Pose3d(
-            new Pose2d(
-                0.0, filedWidth / 2.0,
-                Rotation2d.fromDegrees(0.0))));
-
-    ArrayList<AprilTag> atList = new ArrayList<AprilTag>();
-    atList.add(tag18);
-    atList.add(tag01);
-
-    // TODO - once 2023 happens, replace this with just loading the 2023 field
-    // arrangement
-    AprilTagFieldLayout atfl = new AprilTagFieldLayout(atList, fieldLength, filedWidth);
   }
 
   @Override
   public void periodic() {
-
-    var pipelineResult = photonCamera.getLatestResult();
-    double resultTimestamp = pipelineResult.getTimestampSeconds();
-
-    if (resultTimestamp != previusPipelineTimestamp && pipelineResult.hasTargets()) {
-      previusPipelineTimestamp = resultTimestamp;
-
-      var target = pipelineResult.getBestTarget();
-      var yaw = target.getYaw();
-      var pitch = target.getPitch();
-      int targetID = target.getFiducialId();
-      double poseAmbiguity = target.getPoseAmbiguity();
-
-      if (poseAmbiguity <= 0.2 && targetID >= 0) {
-        Transform3d bestCameraToTarget = target.getBestCameraToTarget();
-        Transform3d alternateCameraToTarget = target.getAlternateCameraToTarget();
-      }
-    }
-
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Use Field Relative", false);
+
+    // Only vision in robotInit below here
+    var camera = CameraServer.startAutomaticCapture();
+
+    var cameraWidth = 640;
+    var cameraHeight = 480;
+
+    camera.setResolution(cameraWidth, cameraHeight);
+
+    var cvSink = CameraServer.getVideo();
+    var outputStream = CameraServer.putVideo("RioApriltags", cameraWidth, cameraHeight);
+
+    var mat = new Mat();
+    var grayMat = new Mat();
+
+    var pt0 = new Point();
+    var pt1 = new Point();
+    var pt2 = new Point();
+    var pt3 = new Point();
+    var center = new Point();
+    var red = new Scalar(0, 0, 255);
+    var green = new Scalar(0, 255, 0);
+
+    var aprilTagDetector = new AprilTagDetector();
+
+    var config = aprilTagDetector.getConfig();
+    config.quadSigma = 0.8f;
+    aprilTagDetector.setConfig(config);
+
+    var quadThreshParams = aprilTagDetector.getQuadThresholdParameters();
+    quadThreshParams.minClusterPixels = 250;
+    quadThreshParams.criticalAngle *= 5; // default is 10
+    quadThreshParams.maxLineFitMSE *= 1.5;
+    aprilTagDetector.setQuadThresholdParameters(quadThreshParams);
+
+    aprilTagDetector.addFamily("tag16h5");
+
+    var timer = new Timer();
+    timer.start();
+    var count = 0;
+
+    while (!Thread.interrupted()) {
+      if (cvSink.grabFrame(mat) == 0) {
+        outputStream.notifyError(cvSink.getError());
+        continue;
+      }
+
+      Imgproc.cvtColor(mat, grayMat, Imgproc.COLOR_RGB2GRAY);
+
+      var results = aprilTagDetector.detect(grayMat);
+
+      var set = new HashSet<>();
+
+      for (var result : results) {
+        count += 1;
+        pt0.x = result.getCornerX(0);
+        pt1.x = result.getCornerX(1);
+        pt2.x = result.getCornerX(2);
+        pt3.x = result.getCornerX(3);
+
+        pt0.y = result.getCornerY(0);
+        pt1.y = result.getCornerY(1);
+        pt2.y = result.getCornerY(2);
+        pt3.y = result.getCornerY(3);
+
+        center.x = result.getCenterX();
+        center.y = result.getCenterY();
+
+        set.add(result.getId());
+
+        Imgproc.line(mat, pt0, pt1, red, 5);
+        Imgproc.line(mat, pt1, pt2, red, 5);
+        Imgproc.line(mat, pt2, pt3, red, 5);
+        Imgproc.line(mat, pt3, pt0, red, 5);
+
+        Imgproc.circle(mat, center, 4, green);
+        Imgproc.putText(mat, String.valueOf(result.getId()), pt2, Imgproc.FONT_HERSHEY_SIMPLEX, 2, green, 7);
+
+      }
+      ;
+
+      for (var id : set) {
+        System.out.println("Tag: " + String.valueOf(id));
+      }
+
+      if (timer.advanceIfElapsed(1.0)) {
+        System.out.println("detections per second: " + String.valueOf(count));
+        count = 0;
+      }
+
+      outputStream.putFrame(mat);
+    }
+    aprilTagDetector.close();
+  };
+
+  public static double getCenterX() {
+    if (resultsssss != null && resultsssss.length >= 1) {
+      previousResult = resultsssss[0].getCenterX();
+      return resultsssss[0].getCenterX();
+    } else
+      return previousResult;
+
+  }
+
+  public static RobotContainer getRobotContainer() {
+    return robotContainer;
   }
 }

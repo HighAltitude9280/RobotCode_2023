@@ -655,6 +655,14 @@ public class DriveTrain extends SubsystemBase {
         }
     }
 
+    // Vision
+    public void follow(double target) {
+        double turnPower = (target / 320) * 0.3;
+        System.out.println("Power = " + turnPower);
+        System.out.println("Target = " + target);
+        defaultDrive(0, 0, turnPower, 0);
+    }
+
     @Override
     public void periodic() {
         updateOdometry();
