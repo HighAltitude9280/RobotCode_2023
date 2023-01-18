@@ -121,14 +121,34 @@ public final class HighAltitudeConstants {
 
         public static final double WRIST_ARRIVE_OFFSET = 4;
 
-        ///////////////////// GRIPPER /////////////////////
+        //////////////////////// EXTENSOR ///////////////////////////////////
 
-        public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
+        // Default braking mode, true for brake, false for coast.
+        public static final boolean EXTENSOR_MOTORS_BRAKING_MODE = true;
 
-        public static final double GRIPPER_CUBE_IN_SPEED = -0.2;
-        public static final double GRIPPER_CUBE_OUT_SPEED = 1;
-        public static final double GRIPPER_CONE_IN_SPEED = 0.2;
-        public static final double GRIPPER_CONE_OUT_SPEED = -1;
+        // The reported encoder position after one revolution, check encoder
+        // specifications.
+        public static final double EXTENSOR_PULSES_PER_REVOLUTION = 1.0;
+
+        // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
+        // NUMBERS. MOTOR REVS / ARM REVS
+        public static final double EXTENSOR_RATIO = 1.0 / 1.0;
+
+        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.0;
+
+        public static final double EXTENSOR_METERS_PER_PULSE = (Math.PI * EXTENSOR_PITCH_DIAMETER_METERS)
+                        / (EXTENSOR_PULSES_PER_REVOLUTION * EXTENSOR_RATIO);
+
+        // When moving straight (straightMove()) in autonomous at power 1, if the
+        // difference between the target and the current position (in meters) is less
+        // than this constant, it will start braking. Note that this constant is
+        // proportional to the square of the speed (from -1 to 1).
+        public static final double EXTENSOR_BRAKING_METERS = 15;
+        // When moving straight (straightMove()) in autonomous, if the difference
+        // between the target and the current position (in meters) is less than this
+        // constant, it will be considered on target.
+
+        public static final double EXTENSOR_ARRIVE_OFFSET = 4;
 
         //////////////////////// ARM ///////////////////////////////////
 
@@ -155,6 +175,15 @@ public final class HighAltitudeConstants {
         // constant, it will be considered on target.
 
         public static final double ARM_ARRIVE_OFFSET = 4;
+
+        ///////////////////// GRIPPER /////////////////////
+
+        public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
+
+        public static final double GRIPPER_CUBE_IN_SPEED = -0.2;
+        public static final double GRIPPER_CUBE_OUT_SPEED = 1;
+        public static final double GRIPPER_CONE_IN_SPEED = 0.2;
+        public static final double GRIPPER_CONE_OUT_SPEED = -1;
 
         ///////////////////// LEDS ////////////////////////
 

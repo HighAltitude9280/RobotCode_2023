@@ -28,7 +28,7 @@ public class DriveWrist extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wrist.driveWrist(OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y));
+    wrist.driveWrist(-OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y) * 0.5);
   }
 
   // Called once the command ends or is interrupted.

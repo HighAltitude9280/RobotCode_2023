@@ -1,22 +1,21 @@
-// Copyright (c) FIRST and other WPILib contributors.
+// Copyright (c) FIRST and other WPILib contributors.DriveExtensor
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.transport.arm;
+package frc.robot.commands.transport.extensor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
-import frc.robot.subsystems.transport.Arm;
+import frc.robot.subsystems.transport.Extensor;
 
-public class DriveArm extends CommandBase {
-  Arm arm;
+public class DriveExtensor extends CommandBase {
+  Extensor extensor;
 
   /** Creates a new DriveWrist. */
-  public DriveArm() {
-    arm = Robot.getRobotContainer().getArm();
-    addRequirements(arm);
+  public DriveExtensor() {
+    extensor = Robot.getRobotContainer().getExtensor();
+    addRequirements(extensor);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,7 +27,7 @@ public class DriveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.driveArm(-OI.getInstance().getPilot().getAxis(AxisType.LEFT_Y) * 0.5);
+    extensor.driveExtensor(-OI.getInstance().getPilot().getTriggers() * 0.5);
   }
 
   // Called once the command ends or is interrupted.
