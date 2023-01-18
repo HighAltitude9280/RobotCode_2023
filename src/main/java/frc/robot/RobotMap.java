@@ -6,49 +6,56 @@ import frc.robot.resources.components.speedController.HighAltitudeMotorControlle
 
 public class RobotMap {
 
-    //////////////////////// DRIVE TRAIN ////////////////////////
+        //////////////////////// DRIVE TRAIN ////////////////////////
 
-    // Transmission
-    public static final boolean DRIVETRAIN_TRANSMISSION_IS_AVAILABLE = false;
-    public static final int[] DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS = { 0, 1 };
-    public static final PneumaticsModuleType DRIVETRAIN_TRANSMISSION_MODULE_TYPE = PneumaticsModuleType.REVPH;
+        // Transmission
+        public static final boolean DRIVETRAIN_TRANSMISSION_IS_AVAILABLE = false;
+        public static final int[] DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS = { 0, 1 };
+        public static final PneumaticsModuleType DRIVETRAIN_TRANSMISSION_MODULE_TYPE = PneumaticsModuleType.REVPH;
 
-    public static final Value DRIVETRAIN_TRANSMISSION_SPEED = Value.kReverse;
-    public static final Value DRIVETRAIN_TRANSMISSION_TORQUE = Value.kForward;
+        public static final Value DRIVETRAIN_TRANSMISSION_SPEED = Value.kReverse;
+        public static final Value DRIVETRAIN_TRANSMISSION_TORQUE = Value.kForward;
 
-    // Left side
-    public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 12, 14 };
-    public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = {};
-    public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = true;
-    public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-            TypeOfMotor.TALON_SRX };
+        // Left side
+        public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 12, 14 };
+        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = {};
+        public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = true;
+        public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
+                        TypeOfMotor.TALON_SRX };
 
-    // Right side
-    public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 13, 4 };
-    public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = { 13, 4 };
-    public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
-    public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-            TypeOfMotor.TALON_SRX };
+        // Right side
+        public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 13, 4 };
+        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = { 13, 4 };
+        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
+                        TypeOfMotor.TALON_SRX };
 
-    // Dragonfly
-    public static final boolean DRIVETRAIN_DRAGONFLY_IS_AVAILABLE = false;
-    public static final int[] DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS = { 2, 3 };
-    public static final PneumaticsModuleType DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE = PneumaticsModuleType.REVPH;
+        // Dragonfly
+        public static final boolean DRIVETRAIN_DRAGONFLY_IS_AVAILABLE = false;
+        public static final int[] DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS = { 2, 3 };
+        public static final PneumaticsModuleType DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE = PneumaticsModuleType.REVPH;
 
-    public static final Value DRIVETRAIN_DRAGONFLY_LOWERED = Value.kForward;
-    public static final Value DRIVETRAIN_DRAGONFLY_RAISED = Value.kReverse;
+        public static final Value DRIVETRAIN_DRAGONFLY_LOWERED = Value.kForward;
+        public static final Value DRIVETRAIN_DRAGONFLY_RAISED = Value.kReverse;
 
-    public static final int[] DRIVETRAIN_DRAGONFLY_MOTOR_PORTS = { 4 };
-    public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = {};
-    public static final boolean DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED = false;
-    public static final TypeOfMotor[] DRIVETRAIN_DRAGONFLY_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
+        public static final int[] DRIVETRAIN_DRAGONFLY_MOTOR_PORTS = { 4 };
+        public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = {};
+        public static final boolean DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] DRIVETRAIN_DRAGONFLY_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
-    //////////////////////// WRIST ////////////////////////
+        //////////////////////// WRIST ////////////////////////
 
-    public static final int[] WRIST_MOTOR_PORTS = { -1, -1 };
-    public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
-    public static final boolean WRIST_ENCODER_IS_INVERTED = false;
-    public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-            TypeOfMotor.TALON_SRX };
+        public static final int[] WRIST_MOTOR_PORTS = { -1, -1 };
+        public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
+        public static final boolean WRIST_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
+                        TypeOfMotor.TALON_SRX };
+
+        //////////////////////// GRIPPER ////////////////////////
+
+        public static final int[] GRIPPER_MOTOR_PORTS = { 22 };
+        public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = {};
+        public static final boolean GRIPPER_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
 }

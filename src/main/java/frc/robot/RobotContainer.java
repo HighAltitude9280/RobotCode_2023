@@ -8,9 +8,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.gripper.DriveGripper;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.subsystems.chassis.DriveTrain;
+import frc.robot.subsystems.transport.Wrist;
+import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Vision;
 
 /**
@@ -31,6 +34,8 @@ public class RobotContainer {
   private DriveTrain driveTrain;
   private LEDs leds;
   private Vision parkerVision;
+  private Wrist wrist;
+  private Gripper gripper;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -39,6 +44,8 @@ public class RobotContainer {
     navx = new Navx();
     leds = new LEDs();
     driveTrain = new DriveTrain();
+    wrist = new Wrist();
+    gripper = new Gripper();
 
     parkerVision = new Vision();
   }
@@ -53,6 +60,9 @@ public class RobotContainer {
    */
   public void configureRobotContainer() {
     driveTrain.setDefaultCommand(new DefaultDrive());
+    gripper.setDefaultCommand(new DriveGripper());
+    Robot.debug(driveTrain.getDefaultCommand().getName());
+    Robot.debug("Ps se setteo el default command no sé qué pedo");
 
     OI.getInstance().ConfigureButtonBindings();
     leds.allLedsOff();
@@ -76,7 +86,16 @@ public class RobotContainer {
     return driveTrain;
   }
 
+  public Wrist getWrist() {
+    return wrist;
+  }
+
+  public Gripper getGripper() {
+    return gripper;
+  }
+
   public Vision getVision() {
     return parkerVision;
   }
+
 }

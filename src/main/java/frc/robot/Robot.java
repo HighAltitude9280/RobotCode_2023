@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    getRobotContainer().getDriveTrain().resetOdometry();
-    getRobotContainer().configureRobotContainer();
+    m_robotContainer.getDriveTrain().resetOdometry();
+    m_robotContainer.configureRobotContainer();
   }
 
   /**
@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods. This must be called from the
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
-    // CommandScheduler.getInstance().run();
+    CommandScheduler.getInstance().run();
     // getRobotContainer().getNavx().run();
     // getRobotContainer().getVision();
 

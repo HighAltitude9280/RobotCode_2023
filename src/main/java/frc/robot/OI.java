@@ -1,6 +1,8 @@
 package frc.robot;
 
+import frc.robot.commands.FollowAprilTag;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
+import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.JoystickType;
 
 public class OI {
@@ -10,8 +12,10 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
+        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
         copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
+
+        // pilot.toggleOnTrue(ButtonType.A, new FollowAprilTag());
     }
 
     public static OI getInstance() {

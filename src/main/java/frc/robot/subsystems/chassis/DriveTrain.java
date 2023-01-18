@@ -656,11 +656,11 @@ public class DriveTrain extends SubsystemBase {
     }
 
     // Vision
-    public void follow(double target) {
-        double turnPower = (target / 320) * 0.3;
-        System.out.println("Power = " + turnPower);
-        System.out.println("Target = " + target);
-        defaultDrive(0, 0, turnPower, 0);
+    public void follow(double target, double dist) {
+        double turnPower = (target / 320) * 0.125;
+        double speedPower = (Math.abs(100 - dist) / 50) * 0.225;
+        Robot.debug("Power = " + turnPower + " Target = " + target);
+        defaultDrive(turnPower, speedPower, 0, 0);
     }
 
     @Override

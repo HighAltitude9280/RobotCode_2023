@@ -21,7 +21,7 @@ public class Wrist extends SubsystemBase {
     wristMotors = new HighAltitudeMotorGroup(RobotMap.WRIST_MOTOR_PORTS, RobotMap.WRIST_INVERTED_MOTORS_PORTS,
         RobotMap.WRIST_MOTOR_TYPES);
     wristMotors.setEncoderInverted(RobotMap.WRIST_ENCODER_IS_INVERTED);
-    wristMotors.setBrakeMode(HighAltitudeConstants.WRIST_MOTOR_BRAKING_MODE);
+    wristMotors.setBrakeMode(HighAltitudeConstants.WRIST_MOTORS_BRAKING_MODE);
   }
 
   public void driveWrist(double speed) {
@@ -47,7 +47,7 @@ public class Wrist extends SubsystemBase {
   public void periodic() {
     wristEncoderPosition = wristMotors.getEncoderPosition();
     wristPositionDegrees = wristEncoderPosition * HighAltitudeConstants.WRIST_DEGREES_PER_PULSE;
-    Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " + wristPositionDegrees);
-    // This method will be called once per scheduler run
+    // Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " +
+    // wristPositionDegrees);
   }
 }

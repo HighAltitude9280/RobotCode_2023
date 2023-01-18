@@ -98,7 +98,7 @@ public final class HighAltitudeConstants {
         //////////////////////// WRIST ///////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
-        public static final boolean WRIST_MOTOR_BRAKING_MODE = true;
+        public static final boolean WRIST_MOTORS_BRAKING_MODE = true;
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
@@ -118,6 +118,11 @@ public final class HighAltitudeConstants {
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
+
         public static double WRIST_ARRIVE_OFFSET = 4;
+
+        ///////////////////// GRIPPER /////////////////////
+
+        public static boolean GRIPPER_MOTORS_BRAKING_MODE = true;
 
 }
