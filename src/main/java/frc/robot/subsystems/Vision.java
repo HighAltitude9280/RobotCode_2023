@@ -4,20 +4,6 @@
 
 package frc.robot.subsystems;
 
-<<<<<<< Updated upstream
-import java.util.ArrayList;
-
-import org.photonvision.PhotonCamera;
-import org.photonvision.RobotPoseEstimator;
-
-import edu.wpi.first.apriltag.AprilTag;
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.util.Units;
-=======
 import java.util.HashSet;
 
 import org.opencv.core.Mat;
@@ -30,7 +16,6 @@ import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
->>>>>>> Stashed changes
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
