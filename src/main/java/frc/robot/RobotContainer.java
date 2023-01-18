@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
-import frc.robot.commands.gripper.DriveGripper;
+import frc.robot.commands.transport.arm.DriveArm;
+import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
+import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
 import frc.robot.subsystems.chassis.DriveTrain;
+import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Wrist;
 import frc.robot.subsystems.Gripper;
 import frc.robot.subsystems.Vision;
@@ -28,6 +31,10 @@ import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
 
+  public enum GamePieceMode {
+    CUBE, CONE, OTHER
+  }
+
   private Command m_autoCommand;
 
   private Navx navx;
@@ -36,6 +43,9 @@ public class RobotContainer {
   private Vision parkerVision;
   private Wrist wrist;
   private Gripper gripper;
+  private Arm arm;
+
+  private GamePieceMode currentGamePieceMode;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -46,8 +56,10 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     wrist = new Wrist();
     gripper = new Gripper();
-
     parkerVision = new Vision();
+    arm = new Arm();
+
+    currentGamePieceMode = GamePieceMode.OTHER;
   }
 
   /**
@@ -60,12 +72,12 @@ public class RobotContainer {
    */
   public void configureRobotContainer() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-    gripper.setDefaultCommand(new DriveGripper());
-    Robot.debug(driveTrain.getDefaultCommand().getName());
-    Robot.debug("Ps se setteo el default command no sé qué pedo");
+    wrist.setDefaultCommand(new DriveWrist()); // Right y
+    arm.setDefaultCommand(new DriveArm()); // Triggers
+
+    leds.setDefaultCommand(new DisplayGamePieceMode());
 
     OI.getInstance().ConfigureButtonBindings();
-    leds.allLedsOff();
   }
 
   /**
@@ -94,8 +106,24 @@ public class RobotContainer {
     return gripper;
   }
 
+  public LEDs getLeds() {
+    return leds;
+  }
+
   public Vision getVision() {
     return parkerVision;
+  }
+
+  public Arm getArm() {
+    return arm;
+  }
+
+  public void setCurrentGamePieceMode(GamePieceMode mode) {
+    currentGamePieceMode = mode;
+  }
+
+  public GamePieceMode getCurrentGamePieceMode() {
+    return currentGamePieceMode;
   }
 
 }

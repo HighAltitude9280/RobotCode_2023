@@ -114,15 +114,52 @@ public final class HighAltitudeConstants {
         // difference between the target and the current position (in meters) is less
         // than this constant, it will start braking. Note that this constant is
         // proportional to the square of the speed (from -1 to 1).
-        public static double WRIST_BRAKING_DEGREES = 15;
+        public static final double WRIST_BRAKING_DEGREES = 15;
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
 
-        public static double WRIST_ARRIVE_OFFSET = 4;
+        public static final double WRIST_ARRIVE_OFFSET = 4;
 
         ///////////////////// GRIPPER /////////////////////
 
-        public static boolean GRIPPER_MOTORS_BRAKING_MODE = true;
+        public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
+
+        public static final double GRIPPER_CUBE_IN_SPEED = -0.2;
+        public static final double GRIPPER_CUBE_OUT_SPEED = 1;
+        public static final double GRIPPER_CONE_IN_SPEED = 0.2;
+        public static final double GRIPPER_CONE_OUT_SPEED = -1;
+
+        //////////////////////// ARM ///////////////////////////////////
+
+        // Default braking mode, true for brake, false for coast.
+        public static final boolean ARM_MOTORS_BRAKING_MODE = true;
+
+        // The reported encoder position after one revolution, check encoder
+        // specifications.
+        public static final double ARM_PULSES_PER_REVOLUTION = 2048;
+
+        // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
+        // NUMBERS. MOTOR REVS / ARM REVS
+        public static final double ARM_RATIO = 94221.0 / 343.0;
+
+        public static final double ARM_DEGREES_PER_PULSE = 360 / (ARM_PULSES_PER_REVOLUTION * ARM_RATIO);
+
+        // When moving straight (straightMove()) in autonomous at power 1, if the
+        // difference between the target and the current position (in meters) is less
+        // than this constant, it will start braking. Note that this constant is
+        // proportional to the square of the speed (from -1 to 1).
+        public static final double ARM_BRAKING_DEGREES = 15;
+        // When moving straight (straightMove()) in autonomous, if the difference
+        // between the target and the current position (in meters) is less than this
+        // constant, it will be considered on target.
+
+        public static final double ARM_ARRIVE_OFFSET = 4;
+
+        ///////////////////// LEDS ////////////////////////
+
+        public static final int LEDS_9280_HUE = 64;
+        public static final int LEDS_CUBE_HUE = 138;
+        public static final int LEDS_CONE_HUE = 30;
 
 }

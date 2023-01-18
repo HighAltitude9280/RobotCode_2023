@@ -26,17 +26,18 @@ public class Wrist extends SubsystemBase {
 
   public void driveWrist(double speed) {
     wristMotors.setAll(speed);
+    Robot.debug("WristPower: " + speed);
   }
 
   public boolean moveTo(double targetDegrees, double maxPower) {
     double delta = targetDegrees - wristPositionDegrees;
 
-    if (Math.abs(delta) < HighAltitudeConstants.DRIVETRAIN_AUTO_STRAIGHT_ARRIVE_OFFSET) {
+    if (Math.abs(delta) < HighAltitudeConstants.WRIST_ARRIVE_OFFSET) {
       wristMotors.setAll(0);
       return true;
     }
 
-    double power = delta / (HighAltitudeConstants.DRIVETRAIN_AUTO_STRAIGHT_BRAKING_DISTANCE * maxPower * maxPower);
+    double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES * maxPower * maxPower);
     power = Math.clamp(power, -1, 1) * maxPower;
 
     wristMotors.setAll(power);

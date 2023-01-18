@@ -45,11 +45,17 @@ public class RobotMap {
 
         //////////////////////// WRIST ////////////////////////
 
-        public static final int[] WRIST_MOTOR_PORTS = { -1, -1 };
+        public static final int[] WRIST_MOTOR_PORTS = { 24 };
         public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
         public static final boolean WRIST_ENCODER_IS_INVERTED = false;
-        public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-                        TypeOfMotor.TALON_SRX };
+        public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
+
+        //////////////////////// ARM ////////////////////////
+
+        public static final int[] ARM_MOTOR_PORTS = { 23 };
+        public static final int[] ARM_INVERTED_MOTORS_PORTS = {};
+        public static final boolean ARM_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] ARM_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
         //////////////////////// GRIPPER ////////////////////////
 
