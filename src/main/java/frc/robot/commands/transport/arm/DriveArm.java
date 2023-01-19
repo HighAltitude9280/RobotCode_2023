@@ -7,13 +7,12 @@ package frc.robot.commands.transport.arm;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.subsystems.transport.Arm;
 
 public class DriveArm extends CommandBase {
   Arm arm;
 
-  /** Creates a new DriveWrist. */
+  /** Creates a new DriveArm. */
   public DriveArm() {
     arm = Robot.getRobotContainer().getArm();
     addRequirements(arm);
@@ -28,7 +27,7 @@ public class DriveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.driveArm(-OI.getInstance().getPilot().getAxis(AxisType.LEFT_Y) * 0.5);
+    arm.driveArm(-OI.getInstance().getPilot().getTriggers() * 0.5);
   }
 
   // Called once the command ends or is interrupted.

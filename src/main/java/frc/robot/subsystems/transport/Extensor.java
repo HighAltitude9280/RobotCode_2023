@@ -27,7 +27,7 @@ public class Extensor extends SubsystemBase {
 
   public void driveExtensor(double speed) {
     extensorMotors.setAll(speed);
-    Robot.debug("ExtensorPower: " + speed);
+    Robot.debugPrint("ExtensorPower: " + speed);
   }
 
   public boolean moveTo(double targetMeters, double maxPower) {

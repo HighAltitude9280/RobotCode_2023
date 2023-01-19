@@ -64,7 +64,9 @@ public class HighAltitudeJoystick {
         RIGHT_X,
         RIGHT_Y,
         LEFT_TRIGGER,
-        RIGHT_TRIGGER
+        RIGHT_TRIGGER,
+        POV_X,
+        POV_Y
     }
 
     private HashMap<Integer, JoystickButton> availableJoystickButtons;
@@ -157,9 +159,11 @@ public class HighAltitudeJoystick {
         // MAPPING ENDS HERE
 
         for (AxisType axisType : AxisType.values()) {
-            int port = axisConfiguration.get(axisType);
-            BooleanSupplier booleanSupplier = () -> isAxisPressed(axisType);
-            availableAxisButtons.put(port, new Trigger(booleanSupplier));
+            if (axisConfiguration.get(axisType) != null) {
+                int port = axisConfiguration.get(axisType);
+                BooleanSupplier booleanSupplier = () -> isAxisPressed(axisType);
+                availableAxisButtons.put(port, new Trigger(booleanSupplier));
+            }
         }
 
         joystickButtonConfiguration.put(ButtonType.LT,
@@ -226,9 +230,11 @@ public class HighAltitudeJoystick {
         // MAPPING ENDS HERE
 
         for (AxisType axisType : AxisType.values()) {
-            int port = axisConfiguration.get(axisType);
-            BooleanSupplier booleanSupplier = () -> isAxisPressed(axisType);
-            availableAxisButtons.put(port, new Trigger(booleanSupplier));
+            if (axisConfiguration.get(axisType) != null) {
+                int port = axisConfiguration.get(axisType);
+                BooleanSupplier booleanSupplier = () -> isAxisPressed(axisType);
+                availableAxisButtons.put(port, new Trigger(booleanSupplier));
+            }
         }
 
         joystickButtonConfiguration.put(ButtonType.LT,
@@ -284,9 +290,12 @@ public class HighAltitudeJoystick {
      * @return Raw axis value
      */
     public double getRawAxis(AxisType axisType) {
-        Integer port = axisConfiguration.get(axisType);
-        if (port != null)
+        if (axisConfiguration.get(axisType) != null)
             return joystick.getRawAxis(axisConfiguration.get(axisType));
+        if (axisType.equals(AxisType.POV_X))
+            return getPovXAxis();
+        if (axisType.equals(AxisType.POV_Y))
+            return getPovYAxis();
         DriverStation.reportError("Axis " + axisType + " not found. Returning 0.", true);
         return 0;
     }
@@ -322,11 +331,44 @@ public class HighAltitudeJoystick {
         return multipliedInput;
     }
 
+    /**
+     * Will return the value of the joystick's Left and Right Triggers combined. For
+     * instance, if the left one is pressed all the way in, -1 will be returned. If
+     * the
+     * right trigger is pressed all the way in, +1 will returned. If both
+     * are pressed, 0 will be returned.
+     * 
+     * @return Processed axis value
+     */
     public double getTriggers() {
         double left = getAxis(AxisType.LEFT_TRIGGER);
         double right = getAxis(AxisType.RIGHT_TRIGGER);
 
         return right - left;
+    }
+
+    /**
+     * Treats the POV axis as if it were another axis.
+     * 
+     * @return the 'raw' x-value of the POV. Use {@link #getAxis()} to obtain a
+     *         value with deadzone/multiplier applied.
+     */
+
+    public double getPovXAxis() {
+        double x = Math.sin(Math.toRadians(joystick.getPOV()));
+        return joystick.getPOV() == -1 || Math.abs(x) < 0.1 ? 0 : x;
+    }
+
+    /**
+     * Treats the POV axis as if it were another axis.
+     * 
+     * @return the 'raw' y-value of the POV. Use {@link #getAxis()} to obtain a
+     *         value with deadzone/multiplier applied.
+     */
+
+    public double getPovYAxis() {
+        double y = Math.cos(Math.toRadians(joystick.getPOV()));
+        return joystick.getPOV() == -1 || Math.abs(y) < 0.1 ? 0 : y;
     }
 
     public boolean isAxisPressed(AxisType axisType) {

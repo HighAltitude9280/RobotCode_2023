@@ -29,11 +29,20 @@ public class GripperOut extends CommandBase {
   public void execute() {
     GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
-    if (currentMode.equals(GamePieceMode.CONE)) {
-      gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED);
-    } else if (currentMode.equals(GamePieceMode.CUBE)) {
-      gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED);
-    }
+    if (currentMode != null) {
+      switch (currentMode) {
+        case CONE:
+          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED);
+          break;
+        case CUBE:
+          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED);
+          break;
+        case OTHER:
+          gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
+          break;
+      }
+    } else
+      gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
   }
 
   // Called once the command ends or is interrupted.

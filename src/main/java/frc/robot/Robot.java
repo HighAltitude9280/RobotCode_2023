@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -60,6 +61,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     // getRobotContainer().getNavx().run();
     // getRobotContainer().getVision();
+    // System.out.println("POVx: " +
+    // OI.getInstance().getPilot().getAxis(AxisType.POV_X) + "POVy: "
+    // + OI.getInstance().getPilot().getAxis(AxisType.POV_Y));
 
   }
 
@@ -105,6 +109,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    if (goingToLose()) {
+      dont();
+    }
   }
 
   @Override
@@ -118,12 +125,30 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
   }
 
-  public static void debug(String s) {
+  public static void debugPrint(String s) {
     if (HighAltitudeConstants.DEBUG)
       System.out.println(s);
   }
 
+  public static void debugNumberSmartDashboard(String key, double value) {
+    if (HighAltitudeConstants.DEBUG)
+      SmartDashboard.putNumber(key, value);
+  }
+
+  public static void debugStringSmartDashboard(String key, String value) {
+    if (HighAltitudeConstants.DEBUG)
+      SmartDashboard.putString(key, value);
+  }
+
   public static RobotContainer getRobotContainer() {
     return robotContainer;
+  }
+
+  boolean goingToLose() {
+    return false;
+  }
+
+  void dont() {
+
   }
 }

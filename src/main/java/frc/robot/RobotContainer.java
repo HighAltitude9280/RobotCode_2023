@@ -74,7 +74,7 @@ public class RobotContainer {
    */
   public void configureRobotContainer() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new DriveWrist()); // Right y
+    wrist.setDefaultCommand(new DriveWrist()); // POV-Y
     arm.setDefaultCommand(new DriveArm()); // Triggers
 
     leds.setDefaultCommand(new DisplayGamePieceMode());

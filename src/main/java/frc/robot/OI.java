@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
+import frc.robot.commands.drivetrain.drivingParameters.dragonflySolenoid.DrivetrainToggleDragonflySolenoid;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
@@ -23,6 +24,8 @@ public class OI {
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
+
+        pilot.onTrue(ButtonType.Y, new DrivetrainToggleDragonflySolenoid());
 
         pilot.whileTrue(ButtonType.LB, new GripperIn());
         pilot.whileTrue(ButtonType.RB, new GripperOut());

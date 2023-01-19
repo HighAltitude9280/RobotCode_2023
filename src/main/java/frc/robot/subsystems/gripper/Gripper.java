@@ -23,7 +23,7 @@ public class Gripper extends SubsystemBase {
 
   public void driveGripper(double speed) {
     gripperMotors.setAll(speed);
-    Robot.debug("GripperSpeed: " + speed);
+    Robot.debugPrint("GripperSpeed: " + speed);
   }
 
   public void stopGripper() {

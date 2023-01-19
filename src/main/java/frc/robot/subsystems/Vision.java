@@ -15,7 +15,6 @@ import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.resources.math.Math;
@@ -28,6 +27,7 @@ public class Vision extends SubsystemBase {
 
   /** Creates a new Vision. */
   public Vision() {
+    boolean print = false;
     m_visionThread = new Thread(
         () -> {
           var camera = CameraServer.startAutomaticCapture();
@@ -112,11 +112,13 @@ public class Vision extends SubsystemBase {
             ;
 
             for (var id : set) {
-              // System.out.println("Tag: " + String.valueOf(id));
+              if (print)
+                System.out.println("Tag: " + String.valueOf(id));
             }
 
             if (timer.advanceIfElapsed(1.0)) {
-              // System.out.println("detections per second: " + String.valueOf(count));
+              if (print)
+                System.out.println("detections per second: " + String.valueOf(count));
               count = 0;
             }
 

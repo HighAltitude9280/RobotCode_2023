@@ -30,7 +30,7 @@ public class FollowAprilTag extends CommandBase {
     double position = Robot.getRobotContainer().getVision().getCenterX();
     double dist = Robot.getRobotContainer().getVision().getDist();
 
-    Robot.debug("dist: " + dist);
+    Robot.debugPrint("dist: " + dist);
 
     double centeredPos = position - 320;
 

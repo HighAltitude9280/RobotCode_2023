@@ -39,7 +39,7 @@ public final class HighAltitudeConstants {
         //// DEFAULT INITIAL PARAMETERS
 
         public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.speed;
-        public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Raised;
+        public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Lowered;
 
         // Default braking mode, true for brake, false for coast.
         public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = true;
@@ -205,6 +205,9 @@ public final class HighAltitudeConstants {
         public static final double GRIPPER_CUBE_OUT_SPEED = 1;
         public static final double GRIPPER_CONE_IN_SPEED = 0.2;
         public static final double GRIPPER_CONE_OUT_SPEED = -1;
+
+        public static final double GRIPPER_DEFAULT_IN_SPEED = GRIPPER_CONE_IN_SPEED;
+        public static final double GRIPPER_DEFAULT_OUT_SPEED = GRIPPER_CONE_OUT_SPEED;
 
         ///////////////////// LEDS ////////////////////////
 

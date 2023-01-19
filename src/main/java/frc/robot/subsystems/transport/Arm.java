@@ -27,7 +27,7 @@ public class Arm extends SubsystemBase {
 
   public void driveArm(double speed) {
     armMotors.setAll(speed);
-    Robot.debug("Armpower: " + speed);
+    Robot.debugPrint("Armpower: " + speed);
   }
 
   public boolean moveTo(double targetDegrees, double maxPower) {
