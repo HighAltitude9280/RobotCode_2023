@@ -45,14 +45,14 @@ public class RobotMap {
 
         //////////////////////// WRIST ////////////////////////
 
-        public static final int[] WRIST_MOTOR_PORTS = { 24 };
+        public static final int[] WRIST_MOTOR_PORTS = { 32 };
         public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
         public static final boolean WRIST_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
         //////////////////////// EXTENSOR ////////////////////////
 
-        public static final int[] EXTENSOR_MOTOR_PORTS = { -1 };
+        public static final int[] EXTENSOR_MOTOR_PORTS = { 2 };
         public static final int[] EXTENSOR_INVERTED_MOTORS_PORTS = {};
         public static final boolean EXTENSOR_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] EXTENSOR_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
@@ -66,7 +66,7 @@ public class RobotMap {
 
         //////////////////////// GRIPPER ////////////////////////
 
-        public static final int[] GRIPPER_MOTOR_PORTS = { 22 };
+        public static final int[] GRIPPER_MOTOR_PORTS = { 23 };
         public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = {};
         public static final boolean GRIPPER_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };

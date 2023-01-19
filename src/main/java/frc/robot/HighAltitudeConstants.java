@@ -24,7 +24,7 @@ public final class HighAltitudeConstants {
 
         public static final boolean DEBUG = true;
 
-        //////////////////////// DRIVE TRAIN ///////////////////////////////////
+        /////////////////////////// DRIVE TRAIN ///////////////////////////////////////
 
         // The constant that helps the robot stay in the same angle while driving on an
         // assisted mode with the dragonfly. The higher the constant, the sharper the
@@ -95,7 +95,7 @@ public final class HighAltitudeConstants {
         public static final double DRIVETRAIN_METERS_PER_PULSE_SPEED = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
                         / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_SPEED);
 
-        //////////////////////// WRIST ///////////////////////////////////
+        ///////////////////////////// WRIST ////////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
         public static final boolean WRIST_MOTORS_BRAKING_MODE = true;
@@ -110,18 +110,18 @@ public final class HighAltitudeConstants {
 
         public static final double WRIST_DEGREES_PER_PULSE = 360 / (WRIST_PULSES_PER_REVOLUTION * WRIST_RATIO);
 
-        // When moving straight (straightMove()) in autonomous at power 1, if the
-        // difference between the target and the current position (in meters) is less
-        // than this constant, it will start braking. Note that this constant is
-        // proportional to the square of the speed (from -1 to 1).
+        // When moving to a position at power 1, if the difference between the target
+        // and the current position (in degrees) is less than this constant, it will
+        // start braking. Note that this constant is proportional to the square of the
+        // speed (from -1 to 1).
         public static final double WRIST_BRAKING_DEGREES = 15;
+
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-
         public static final double WRIST_ARRIVE_OFFSET = 4;
 
-        //////////////////////// EXTENSOR ///////////////////////////////////
+        ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
         public static final boolean EXTENSOR_MOTORS_BRAKING_MODE = true;
@@ -139,10 +139,10 @@ public final class HighAltitudeConstants {
         public static final double EXTENSOR_METERS_PER_PULSE = (Math.PI * EXTENSOR_PITCH_DIAMETER_METERS)
                         / (EXTENSOR_PULSES_PER_REVOLUTION * EXTENSOR_RATIO);
 
-        // When moving straight (straightMove()) in autonomous at power 1, if the
-        // difference between the target and the current position (in meters) is less
-        // than this constant, it will start braking. Note that this constant is
-        // proportional to the square of the speed (from -1 to 1).
+        // When moving to a position at power 1, if the difference between the target
+        // and the current position (in meters) is less than this constant, it will
+        // start braking. Note that this constant is proportional to the square of the
+        // speed (from -1 to 1).
         public static final double EXTENSOR_BRAKING_METERS = 15;
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
@@ -150,7 +150,7 @@ public final class HighAltitudeConstants {
 
         public static final double EXTENSOR_ARRIVE_OFFSET = 4;
 
-        //////////////////////// ARM ///////////////////////////////////
+        //////////////////////////////// ARM ///////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
         public static final boolean ARM_MOTORS_BRAKING_MODE = true;
@@ -165,10 +165,10 @@ public final class HighAltitudeConstants {
 
         public static final double ARM_DEGREES_PER_PULSE = 360 / (ARM_PULSES_PER_REVOLUTION * ARM_RATIO);
 
-        // When moving straight (straightMove()) in autonomous at power 1, if the
-        // difference between the target and the current position (in meters) is less
-        // than this constant, it will start braking. Note that this constant is
-        // proportional to the square of the speed (from -1 to 1).
+        // When moving to a position at power 1, if the difference between the target
+        // and the current position (in degrees) is less than this constant, it will
+        // start braking. Note that this constant is proportional to the square of the
+        // speed (from -1 to 1).
         public static final double ARM_BRAKING_DEGREES = 15;
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
@@ -176,8 +176,29 @@ public final class HighAltitudeConstants {
 
         public static final double ARM_ARRIVE_OFFSET = 4;
 
-        ///////////////////// GRIPPER /////////////////////
+        //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
+        ////////// TOP ROW
+
+        public static final double WRIST_TOP_ROW_DEGREES = -1.0;
+        public static final double EXTENSOR_TOP_ROW_METERS = -1.0;
+        public static final double ARM_TOP_ROW_DEGREES = -1.0;
+
+        ////////// MIDDLE ROW
+
+        public static final double WRIST_MIDDLE_ROW_DEGREES = -1.0;
+        public static final double EXTENSOR_MIDDLE_ROW_METERS = -1.0;
+        public static final double ARM_MIDDLE_ROW_DEGREES = -1.0;
+
+        ////////// BOTTOM ROW
+
+        public static final double WRIST_BOTTOM_ROW_DEGREES = -1.0;
+        public static final double EXTENSOR_BOTTOM_ROW_METERS = -1.0;
+        public static final double ARM_BOTTOM_ROW_DEGREES = -1.0;
+
+        ///////////////////////////// GRIPPER //////////////////////////////////////////
+
+        // Default braking mode, true for brake, false for coast.
         public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
 
         public static final double GRIPPER_CUBE_IN_SPEED = -0.2;

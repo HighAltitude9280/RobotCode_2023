@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.gripper.Gripper;
 
 public class GripperOut extends CommandBase {
   Gripper gripper;

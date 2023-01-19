@@ -7,7 +7,7 @@ package frc.robot.commands.gripper;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.gripper.Gripper;
 
 public class DriveGripper extends CommandBase {
   Gripper gripper;
