@@ -419,11 +419,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void onTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.onTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -436,11 +437,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void whileTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.whileTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -452,11 +454,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void toggleOnTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.toggleOnTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -468,11 +471,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void onFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.onFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -485,11 +489,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void whileFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.whileFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -501,11 +506,12 @@ public class HighAltitudeJoystick {
      * @param command    command to be assigned to button
      */
     public void toggleOnFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.toggleOnFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**

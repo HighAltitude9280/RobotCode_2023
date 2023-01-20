@@ -263,6 +263,9 @@ public class DriveTrain extends SubsystemBase {
         double leftPower = speed + turn;
         double rightPower = speed - turn;
 
+        Robot.debugNumberSmartDashboard("leftPower", leftPower);
+        Robot.debugNumberSmartDashboard("rightPower", rightPower);
+
         tankDrive(leftPower, rightPower);
     }
 
