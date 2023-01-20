@@ -5,6 +5,7 @@ import frc.robot.commands.drivetrain.drivingParameters.dragonflySolenoid.Drivetr
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.robotParameters.ToggleGamePieceMode;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
@@ -25,7 +26,9 @@ public class OI {
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
 
-        pilot.onTrue(ButtonType.Y, new DrivetrainToggleDragonflySolenoid());
+        // pilot.onTrue(ButtonType.Y, new ToggleGamePieceMode());
+
+        pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
 
         pilot.whileTrue(ButtonType.LB, new GripperIn());
         pilot.whileTrue(ButtonType.RB, new GripperOut());

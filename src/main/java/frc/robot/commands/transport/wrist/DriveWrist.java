@@ -7,6 +7,7 @@ package frc.robot.commands.transport.wrist;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.subsystems.transport.Wrist;
 
 public class DriveWrist extends CommandBase {
@@ -27,7 +28,7 @@ public class DriveWrist extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    wrist.driveWrist(OI.getInstance().getPilot().getPovYAxis() * 0.125);
+    wrist.driveWrist(OI.getInstance().getPilot().getAxis(AxisType.POV_Y) * 0.125);
   }
 
   // Called once the command ends or is interrupted.
