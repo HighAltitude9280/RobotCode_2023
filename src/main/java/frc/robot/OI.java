@@ -17,7 +17,7 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
         copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
 
         pilot.setAxisDeadzone(AxisType.LEFT_X, 0.09);
@@ -25,6 +25,8 @@ public class OI {
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
+
+        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.OTHER), ButtonType.START, ButtonType.BACK);
 
         // pilot.onTrue(ButtonType.Y, new ToggleGamePieceMode());
 

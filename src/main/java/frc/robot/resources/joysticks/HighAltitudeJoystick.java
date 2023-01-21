@@ -96,6 +96,11 @@ public class HighAltitudeJoystick {
     public HighAltitudeJoystick(int port, JoystickType type) {
         this.joystick = new Joystick(port);
         this.joystickType = type;
+        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
+        availablePOVButtons = new HashMap<Integer, POVButton>();
+        availableAxisButtons = new HashMap<Integer, Trigger>();
+        axisConfiguration = new HashMap<AxisType, Integer>();
+        joystickButtonConfiguration = new HashMap<ButtonType, Trigger>();
 
         switch (type) {
             case XBOX:
@@ -113,21 +118,18 @@ public class HighAltitudeJoystick {
     }
 
     private void configureXboxJoystick() {
-        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
+
         for (int i = 1; i <= 10; i++) {
             availableJoystickButtons.put(i, new JoystickButton(joystick, i));
         }
 
-        availablePOVButtons = new HashMap<Integer, POVButton>();
         availablePOVButtons.put(-1, new POVButton(joystick, -1));
         for (int i = 0; i <= 360; i += 45) {
             availablePOVButtons.put(i, new POVButton(joystick, i));
         }
 
-        availableAxisButtons = new HashMap<Integer, Trigger>();
-
         // MAPPING STARTS HERE
-        axisConfiguration = new HashMap<AxisType, Integer>();
+
         axisConfiguration.put(AxisType.LEFT_X, 0);
         axisConfiguration.put(AxisType.LEFT_Y, 1);
         axisConfiguration.put(AxisType.LEFT_TRIGGER, 2);
@@ -135,7 +137,6 @@ public class HighAltitudeJoystick {
         axisConfiguration.put(AxisType.RIGHT_X, 4);
         axisConfiguration.put(AxisType.RIGHT_Y, 5);
 
-        joystickButtonConfiguration = new HashMap<ButtonType, Trigger>();
         joystickButtonConfiguration.put(ButtonType.A, availableJoystickButtons.get(1));
         joystickButtonConfiguration.put(ButtonType.B, availableJoystickButtons.get(2));
         joystickButtonConfiguration.put(ButtonType.X, availableJoystickButtons.get(3));
@@ -182,21 +183,16 @@ public class HighAltitudeJoystick {
     }
 
     private void configurePs4Joystick() {
-        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
         for (int i = 1; i <= 14; i++) {
             availableJoystickButtons.put(i, new JoystickButton(joystick, i));
         }
 
-        availablePOVButtons = new HashMap<Integer, POVButton>();
         availablePOVButtons.put(-1, new POVButton(joystick, -1));
         for (int i = 0; i <= 360; i += 45) {
             availablePOVButtons.put(i, new POVButton(joystick, i));
         }
 
-        availableAxisButtons = new HashMap<Integer, Trigger>();
-
         // MAPPING STARTS HERE
-        axisConfiguration = new HashMap<AxisType, Integer>();
         axisConfiguration.put(AxisType.LEFT_X, 0);
         axisConfiguration.put(AxisType.LEFT_Y, 1);
         axisConfiguration.put(AxisType.LEFT_TRIGGER, 3);
@@ -204,7 +200,6 @@ public class HighAltitudeJoystick {
         axisConfiguration.put(AxisType.RIGHT_X, 2);
         axisConfiguration.put(AxisType.RIGHT_Y, 5);
 
-        joystickButtonConfiguration = new HashMap<ButtonType, Trigger>();
         joystickButtonConfiguration.put(ButtonType.A, availableJoystickButtons.get(2));
         joystickButtonConfiguration.put(ButtonType.B, availableJoystickButtons.get(3));
         joystickButtonConfiguration.put(ButtonType.X, availableJoystickButtons.get(1));
@@ -252,17 +247,14 @@ public class HighAltitudeJoystick {
     }
 
     private void configureUnknownJoystick() {
-        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
         for (int i = 1; i <= joystick.getButtonCount(); i++) {
             availableJoystickButtons.put(i, new JoystickButton(joystick, i));
         }
 
-        availablePOVButtons = new HashMap<Integer, POVButton>();
         for (int i = 0; i <= 360; i += 45) {
             availablePOVButtons.put(i, new POVButton(joystick, i));
         }
 
-        availableAxisButtons = new HashMap<Integer, Trigger>();
         for (int i = 0; i < joystick.getAxisCount(); i++) {
             int currentPort = i;
             BooleanSupplier booleanSupplier = () -> isAxisPressed(currentPort);
@@ -290,13 +282,15 @@ public class HighAltitudeJoystick {
      * @return Raw axis value
      */
     public double getRawAxis(AxisType axisType) {
-        if (axisConfiguration.get(axisType) != null)
-            return joystick.getRawAxis(axisConfiguration.get(axisType));
         if (axisType.equals(AxisType.POV_X))
             return getPovXAxis();
         if (axisType.equals(AxisType.POV_Y))
             return getPovYAxis();
-        DriverStation.reportError("Axis " + axisType + " not found. Returning 0.", true);
+        try {
+            return joystick.getRawAxis(axisConfiguration.get(axisType));
+        } catch (NullPointerException e) {
+            DriverStation.reportError("Axis " + axisType + " not found. Returning 0.", true);
+        }
         return 0;
     }
 
@@ -522,17 +516,36 @@ public class HighAltitudeJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void onTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.onTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.onTrue(command);
+
     }
 
     /**
@@ -544,17 +557,35 @@ public class HighAltitudeJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void whileTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.whileTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.whileTrue(command);
     }
 
     /**
@@ -565,17 +596,35 @@ public class HighAltitudeJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void toggleOnTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.toggleOnTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.toggleOnTrue(command);
     }
 
     private void reportButtonError(ButtonType b, CommandBase c) {
