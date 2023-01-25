@@ -27,7 +27,7 @@ public class DriveExtensor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    extensor.driveExtensor(-OI.getInstance().getPilot().getPovXAxis() * 0.5);
+    extensor.driveExtensor(OI.getInstance().getPilot().getPovXAxis() * 0.1);
   }
 
   // Called once the command ends or is interrupted.

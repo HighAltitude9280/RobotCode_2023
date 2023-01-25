@@ -29,11 +29,13 @@ public final class HighAltitudeConstants {
         // The constant that helps the robot stay in the same angle while driving on an
         // assisted mode with the dragonfly. The higher the constant, the sharper the
         // correction.
+        // 0.01 -> 0.05 -> 0.025
         public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.01;
 
         // The sides of the robot normally move faster than the dragonfly module, this
         // constant indicates their rate. A constant of 0.60 means that the dragonfly
         // module has 60% of the speed of the sides.
+        // 0.6 -> 0.7 -> 0.65
         public static double DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION = 0.6;
 
         //// DEFAULT INITIAL PARAMETERS
@@ -171,7 +173,7 @@ public final class HighAltitudeConstants {
         // speed (from -1 to 1).
         public static final double ARM_BRAKING_DEGREES = 15;
         // When moving straight (straightMove()) in autonomous, if the difference
-        // between the target and the current position (in meters) is less than this
+        // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.
 
         public static final double ARM_ARRIVE_OFFSET = 4;

@@ -263,9 +263,6 @@ public class DriveTrain extends SubsystemBase {
         double leftPower = speed + turn;
         double rightPower = speed - turn;
 
-        Robot.debugNumberSmartDashboard("leftPower", leftPower);
-        Robot.debugNumberSmartDashboard("rightPower", rightPower);
-
         tankDrive(leftPower, rightPower);
     }
 
@@ -669,5 +666,6 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
+        Robot.debugStringSmartDashboard("Driving mode", getCurrentDrivingMode().toString());
     }
 }

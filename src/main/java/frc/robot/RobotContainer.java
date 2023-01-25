@@ -8,18 +8,16 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
-import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
-import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Extensor;
 import frc.robot.subsystems.transport.Wrist;
-import frc.robot.subsystems.Vision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -59,7 +57,7 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     wrist = new Wrist();
     gripper = new Gripper();
-    parkerVision = new Vision();
+    // parkerVision = new Vision();
     arm = new Arm();
     extensor = new Extensor();
 
@@ -76,9 +74,9 @@ public class RobotContainer {
    */
   public void configureRobotContainer() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new DriveWrist()); // POV-Y
-    arm.setDefaultCommand(new DriveArm()); // Triggers
-    extensor.setDefaultCommand(new DriveExtensor()); // POV-X
+    // wrist.setDefaultCommand(new DriveWrist()); // POV-Y
+    // arm.setDefaultCommand(new DriveArm()); // Triggers
+    // extensor.setDefaultCommand(new DriveExtensor()); // POV-X
 
     leds.setDefaultCommand(new DisplayGamePieceMode());
 

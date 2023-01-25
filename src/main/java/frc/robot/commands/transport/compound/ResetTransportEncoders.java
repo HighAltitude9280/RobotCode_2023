@@ -2,42 +2,37 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.transport.arm;
+package frc.robot.commands.transport.compound;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.transport.Arm;
+import frc.robot.subsystems.transport.Wrist;
+import frc.robot.subsystems.transport.Extensor;
 
-public class DriveArm extends CommandBase {
+public class ResetTransportEncoders extends CommandBase {
+  Wrist wrist;
   Arm arm;
+  Extensor extensor;
 
-  /** Creates a new DriveArm. */
-  public DriveArm() {
+  /** Creates a new ResetTransportEncoders. */
+  public ResetTransportEncoders() {
+    wrist = Robot.getRobotContainer().getWrist();
     arm = Robot.getRobotContainer().getArm();
-    addRequirements(arm);
-    // Use addRequirements() here to declare subsystem dependencies.
+    extensor = Robot.getRobotContainer().getExtensor();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    arm.driveArm(OI.getInstance().getPilot().getTriggers() * 0.75);
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
+    wrist.resetEncoders();
+    arm.resetEncoders();
+    extensor.resetEncoders();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

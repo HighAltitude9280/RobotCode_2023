@@ -135,7 +135,7 @@ public class Math {
 
         double result = angle;
 
-        if (Math.abs(result) < 180) {
+        if (Math.abs(result) <= 180) {
             return result;
         }
 

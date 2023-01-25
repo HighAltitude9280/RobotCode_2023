@@ -4,30 +4,38 @@
 
 package frc.robot.subsystems.transport;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.resources.components.speedController.HighAltitudeMotorController;
 import frc.robot.resources.components.speedController.HighAltitudeMotorGroup;
 import frc.robot.resources.math.Math;
 
 public class Extensor extends SubsystemBase {
 
   HighAltitudeMotorGroup extensorMotors;
+  HighAltitudeMotorController xd;
   double extensorEncoderPosition, extensorPositionMeters;
 
   /** Creates a new Extensor. */
   public Extensor() {
-    extensorMotors = new HighAltitudeMotorGroup(RobotMap.EXTENSOR_MOTOR_PORTS, RobotMap.EXTENSOR_INVERTED_MOTORS_PORTS,
+
+    // xd = new HighAltitudeMotorController(RobotMap.EXTENSOR_MOTOR_PORTS[0],
+    // RobotMap.EXTENSOR_MOTOR_TYPES[0]);
+
+    // extensorMotors = new HighAltitudeMotorGroup(xd);
+    extensorMotors = new HighAltitudeMotorGroup(RobotMap.EXTENSOR_MOTOR_PORTS,
+        RobotMap.EXTENSOR_INVERTED_MOTORS_PORTS,
         RobotMap.EXTENSOR_MOTOR_TYPES);
     extensorMotors.setEncoderInverted(RobotMap.EXTENSOR_ENCODER_IS_INVERTED);
     extensorMotors.setBrakeMode(HighAltitudeConstants.EXTENSOR_MOTORS_BRAKING_MODE);
+    // resetEncoders();
   }
 
   public void driveExtensor(double speed) {
-    extensorMotors.setAll(speed);
     Robot.debugPrint("ExtensorPower: " + speed);
+    extensorMotors.setAll(speed);
   }
 
   public boolean moveTo(double targetMeters, double maxPower) {
@@ -45,13 +53,18 @@ public class Extensor extends SubsystemBase {
     return false;
   }
 
+  public void resetEncoders() {
+    extensorMotors.resetEncoder();
+  }
+
   @Override
   public void periodic() {
-    extensorEncoderPosition = extensorMotors.getEncoderPosition();
-    extensorPositionMeters = extensorEncoderPosition * HighAltitudeConstants.EXTENSOR_METERS_PER_PULSE;
+    // extensorEncoderPosition = extensorMotors.getEncoderPosition();
+    // extensorPositionMeters = extensorEncoderPosition *
+    // HighAltitudeConstants.EXTENSOR_METERS_PER_PULSE;
 
-    SmartDashboard.putNumber("Extensor Encoder", extensorEncoderPosition);
-    SmartDashboard.putNumber("Extensor Meters", extensorPositionMeters);
+    // SmartDashboard.putNumber("Extensor Encoder", extensorEncoderPosition);
+    // SmartDashboard.putNumber("Extensor Meters", extensorPositionMeters);
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
   }

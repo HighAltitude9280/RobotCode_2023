@@ -2,13 +2,16 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.dragonflySolenoid.DrivetrainToggleDragonflySolenoid;
+import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.JoystickType;
+import frc.robot.subsystems.chassis.DriveTrain.DrivingMode;
 
 public class OI {
 
@@ -18,19 +21,24 @@ public class OI {
 
     public void ConfigureButtonBindings() {
         pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
-        copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
+        copilot = new HighAltitudeJoystick(1, JoystickType.UNKNOWN);
 
         pilot.setAxisDeadzone(AxisType.LEFT_X, 0.09);
         pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.09);
+        pilot.setAxisDeadzone(AxisType.LEFT_TRIGGER, 0.2);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
 
         pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.OTHER), ButtonType.START, ButtonType.BACK);
 
+        pilot.onTrue(ButtonType.B, new ResetTransportEncoders());
+
         // pilot.onTrue(ButtonType.Y, new ToggleGamePieceMode());
 
-        // pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
+        pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
+
+        pilot.onTrue(ButtonType.Y, new DrivetrainToggleDrivingMode(DrivingMode.Mecanum));
 
         pilot.whileTrue(ButtonType.LB, new GripperIn());
         pilot.whileTrue(ButtonType.RB, new GripperOut());

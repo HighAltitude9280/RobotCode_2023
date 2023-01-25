@@ -12,6 +12,7 @@
 
 package frc.robot.resources.components.speedController;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -24,6 +25,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.motorcontrol.*;
+import frc.robot.Robot;
 
 /**
  * Creates new HighAltitudeMotorController and allows a generalized
@@ -191,7 +193,11 @@ public class HighAltitudeMotorController {
     public void setEncoderPosition(int value) {
 
         if (motorToUse == TypeOfMotor.TALON_SRX || motorToUse == TypeOfMotor.TALON_FX) {
-            phoenixMotor.setSelectedSensorPosition(value);
+            ErrorCode a = phoenixMotor.setSelectedSensorPosition(value);
+            ErrorCode b = phoenixMotor.setSelectedSensorPosition(value, 0, 0);
+
+            Robot.debugPrint(a.toString());
+            Robot.debugPrint(b.toString());
             return;
         }
         if (motorToUse == TypeOfMotor.CAN_SPARK_BRUSHLESS) {

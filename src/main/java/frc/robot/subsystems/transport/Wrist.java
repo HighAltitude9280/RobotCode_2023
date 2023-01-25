@@ -23,6 +23,8 @@ public class Wrist extends SubsystemBase {
         RobotMap.WRIST_MOTOR_TYPES);
     wristMotors.setEncoderInverted(RobotMap.WRIST_ENCODER_IS_INVERTED);
     wristMotors.setBrakeMode(HighAltitudeConstants.WRIST_MOTORS_BRAKING_MODE);
+
+    resetEncoders();
   }
 
   public void driveWrist(double speed) {
@@ -43,6 +45,10 @@ public class Wrist extends SubsystemBase {
 
     wristMotors.setAll(power);
     return false;
+  }
+
+  public void resetEncoders() {
+    wristMotors.resetEncoder();
   }
 
   @Override

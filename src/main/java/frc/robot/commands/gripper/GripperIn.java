@@ -29,21 +29,17 @@ public class GripperIn extends CommandBase {
   public void execute() {
 
     GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
-
-    if (currentMode != null) {
-      switch (currentMode) {
-        case CONE:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_IN_SPEED);
-          break;
-        case CUBE:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_IN_SPEED);
-          break;
-        case OTHER:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
-          break;
-      }
-    } else
-      gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
+    switch (currentMode) {
+      case CONE:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_IN_SPEED);
+        break;
+      case CUBE:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_IN_SPEED);
+        break;
+      case OTHER:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
+        break;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +51,8 @@ public class GripperIn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.CUBE)
+      return gripper.getCubeLimitSwitch();
     return false;
   }
 }

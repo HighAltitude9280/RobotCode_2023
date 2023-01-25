@@ -23,6 +23,8 @@ public class Arm extends SubsystemBase {
         RobotMap.ARM_MOTOR_TYPES);
     armMotors.setEncoderInverted(RobotMap.ARM_ENCODER_IS_INVERTED);
     armMotors.setBrakeMode(HighAltitudeConstants.ARM_MOTORS_BRAKING_MODE);
+
+    resetEncoders();
   }
 
   public void driveArm(double speed) {
@@ -43,6 +45,10 @@ public class Arm extends SubsystemBase {
 
     armMotors.setAll(power);
     return false;
+  }
+
+  public void resetEncoders() {
+    armMotors.resetEncoder();
   }
 
   @Override

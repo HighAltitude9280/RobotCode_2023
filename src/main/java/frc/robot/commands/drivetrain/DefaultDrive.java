@@ -31,6 +31,14 @@ public class DefaultDrive extends CommandBase {
         double turn = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
         double dragonfly = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
 
+        /*
+         * // Logitech joystick on copilot
+         * double x = OI.getInstance().getCopilot().getRawAxis(0);
+         * double y = -OI.getInstance().getCopilot().getRawAxis(1);
+         * double turn = OI.getInstance().getCopilot().getPovXAxis() * 0.5;
+         * double dragonfly = OI.getInstance().getCopilot().getPovXAxis() * 0.5;
+         */
+
         Robot.getRobotContainer().getDriveTrain().defaultDrive(x, y, turn, dragonfly);
     }
 

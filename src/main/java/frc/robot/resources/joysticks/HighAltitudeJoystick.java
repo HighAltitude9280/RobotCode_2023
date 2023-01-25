@@ -401,6 +401,10 @@ public class HighAltitudeJoystick {
         return haptics;
     }
 
+    public Joystick getJoystick() {
+        return joystick;
+    }
+
     // METHODS FOR ASSOCIATING COMMANDS YES THEY'RE A LOT BUT WE'D RATHER HAVE IT
     // THIS WAY
 

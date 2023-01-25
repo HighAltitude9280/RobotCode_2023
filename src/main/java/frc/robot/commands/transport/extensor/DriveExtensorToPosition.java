@@ -2,20 +2,22 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.transport.arm;
+package frc.robot.commands.transport.extensor;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.transport.Arm;
+import frc.robot.subsystems.transport.Extensor;
 
-public class DriveArm extends CommandBase {
-  Arm arm;
+public class DriveExtensorToPosition extends CommandBase {
+  Extensor extensor;
+  double targetDegrees, maxPower;
 
-  /** Creates a new DriveArm. */
-  public DriveArm() {
-    arm = Robot.getRobotContainer().getArm();
-    addRequirements(arm);
+  /** Creates a new DriveExtensorToPosition. */
+  public DriveExtensorToPosition(double targetDegrees, double maxPower) {
+    extensor = Robot.getRobotContainer().getExtensor();
+    addRequirements(extensor);
+    this.targetDegrees = targetDegrees;
+    this.maxPower = maxPower;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,12 +29,12 @@ public class DriveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    arm.driveArm(OI.getInstance().getPilot().getTriggers() * 0.75);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    extensor.moveTo(targetDegrees, maxPower);
   }
 
   // Returns true when the command should end.

@@ -39,7 +39,7 @@ public class RobotMap {
         public static final Value DRIVETRAIN_DRAGONFLY_RAISED = Value.kReverse;
 
         public static final int[] DRIVETRAIN_DRAGONFLY_MOTOR_PORTS = { 5 };
-        public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = {};
+        public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = { 5 };
         public static final boolean DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] DRIVETRAIN_DRAGONFLY_MOTOR_TYPES = { TypeOfMotor.TALON_SRX };
 
@@ -47,15 +47,15 @@ public class RobotMap {
 
         public static final int[] WRIST_MOTOR_PORTS = { 12 };
         public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
-        public static final boolean WRIST_ENCODER_IS_INVERTED = false;
+        public static final boolean WRIST_ENCODER_IS_INVERTED = true;
         public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
         //////////////////////// EXTENSOR ////////////////////////
 
-        public static final int[] EXTENSOR_MOTOR_PORTS = { 10 };
-        public static final int[] EXTENSOR_INVERTED_MOTORS_PORTS = {};
+        public static final int[] EXTENSOR_MOTOR_PORTS = { 15 };
+        public static final int[] EXTENSOR_INVERTED_MOTORS_PORTS = { 15 };
         public static final boolean EXTENSOR_ENCODER_IS_INVERTED = false;
-        public static final TypeOfMotor[] EXTENSOR_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
+        public static final TypeOfMotor[] EXTENSOR_MOTOR_TYPES = { TypeOfMotor.TALON_SRX };
 
         //////////////////////// ARM ////////////////////////
 
@@ -70,5 +70,9 @@ public class RobotMap {
         public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = {};
         public static final boolean GRIPPER_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
+
+        // Limit switch
+        public static final boolean GRIPPER_LIMIT_SWITCH_IS_AVAILABLE = false;
+        public static final int GRIPPER_LIMIT_SWITCH_PORT = 0;
 
 }
