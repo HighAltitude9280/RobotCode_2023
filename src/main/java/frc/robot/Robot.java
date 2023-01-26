@@ -4,9 +4,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -21,6 +25,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static RobotContainer m_robotContainer;
+  VictorSPX motor1, motor2;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -35,6 +40,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     getRobotContainer().getDriveTrain().resetOdometry();
     getRobotContainer().configureButtonBindings();
+    motor1 = new VictorSPX(7);
+    motor1 = new VictorSPX(8);
   }
 
   /**
@@ -115,6 +122,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
+    motor1.set(ControlMode.PercentOutput, OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y));
+    motor2.set(ControlMode.PercentOutput, -OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y));
   }
 
   public static RobotContainer getRobotContainer() {

@@ -185,10 +185,10 @@ public class DriveTrain extends SubsystemBase {
 
         if (desiredDirection < minAngleAtMaxPower) {
             xPower = x;
-            yPower = Math.tan(desiredDirection) * xPower;
+            yPower = Math.tan(desiredDirection) * Math.abs(xPower) * (y/Math.abs(y));
         } else {
             yPower = y;
-            xPower = y / Math.tan(desiredDirection);
+            xPower = Math.abs(y) / Math.tan(desiredDirection) * x/Math.abs(x);
         }
 
         arcadeDrive(yPower, correction);
