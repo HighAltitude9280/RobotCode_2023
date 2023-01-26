@@ -30,12 +30,12 @@ public final class HighAltitudeConstants {
         // assisted mode with the dragonfly. The higher the constant, the sharper the
         // correction.
         // 0.01 -> 0.05 -> 0.025
-        public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.01;
+        public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.025;
 
         // The sides of the robot normally move faster than the dragonfly module, this
         // constant indicates their rate. A constant of 0.60 means that the dragonfly
         // module has 60% of the speed of the sides.
-        // 0.6 -> 0.7 -> 0.65
+        // 0.6 -> 0.7 -> 0.65 -> 0.625
         public static double DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION = 0.6;
 
         //// DEFAULT INITIAL PARAMETERS
@@ -180,23 +180,45 @@ public final class HighAltitudeConstants {
 
         //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
+        /////////////////// CONE MODE ///////////////////
+
         ////////// TOP ROW
 
-        public static final double WRIST_TOP_ROW_DEGREES = -1.0;
-        public static final double EXTENSOR_TOP_ROW_METERS = -1.0;
-        public static final double ARM_TOP_ROW_DEGREES = -1.0;
+        public static final double WRIST_TOP_ROW_DEGREES_CONE = -1.0;
+        public static final double EXTENSOR_TOP_ROW_METERS_CONE = -1.0;
+        public static final double ARM_TOP_ROW_DEGREES_CONE = -1.0;
 
         ////////// MIDDLE ROW
 
-        public static final double WRIST_MIDDLE_ROW_DEGREES = -1.0;
-        public static final double EXTENSOR_MIDDLE_ROW_METERS = -1.0;
-        public static final double ARM_MIDDLE_ROW_DEGREES = -1.0;
+        public static final double WRIST_MIDDLE_ROW_DEGREES_CONE = -1.0;
+        public static final double EXTENSOR_MIDDLE_ROW_METERS_CONE = -1.0;
+        public static final double ARM_MIDDLE_ROW_DEGREES_CONE = -1.0;
 
         ////////// BOTTOM ROW
 
-        public static final double WRIST_BOTTOM_ROW_DEGREES = -1.0;
-        public static final double EXTENSOR_BOTTOM_ROW_METERS = -1.0;
-        public static final double ARM_BOTTOM_ROW_DEGREES = -1.0;
+        public static final double WRIST_BOTTOM_ROW_DEGREES_CONE = -1.0;
+        public static final double EXTENSOR_BOTTOM_ROW_METERS_CONE = -1.0;
+        public static final double ARM_BOTTOM_ROW_DEGREES_CONE = -1.0;
+
+        /////////////////// CUBE MODE ///////////////////
+
+        ////////// TOP ROW
+
+        public static final double WRIST_TOP_ROW_DEGREES_CUBE = -1.0;
+        public static final double EXTENSOR_TOP_ROW_METERS_CUBE = -1.0;
+        public static final double ARM_TOP_ROW_DEGREES_CUBE = -1.0;
+
+        ////////// MIDDLE ROW
+
+        public static final double WRIST_MIDDLE_ROW_DEGREES_CUBE = -1.0;
+        public static final double EXTENSOR_MIDDLE_ROW_METERS_CUBE = -1.0;
+        public static final double ARM_MIDDLE_ROW_DEGREES_CUBE = -1.0;
+
+        ////////// BOTTOM ROW
+
+        public static final double WRIST_BOTTOM_ROW_DEGREES_CUBE = -1.0;
+        public static final double EXTENSOR_BOTTOM_ROW_METERS_CUBE = -1.0;
+        public static final double ARM_BOTTOM_ROW_DEGREES_CUBE = -1.0;
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
 
