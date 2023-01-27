@@ -30,13 +30,13 @@ public final class HighAltitudeConstants {
         // assisted mode with the dragonfly. The higher the constant, the sharper the
         // correction.
         // 0.01 -> 0.05 -> 0.025
-        public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.025;
+        public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.02;
 
         // The sides of the robot normally move faster than the dragonfly module, this
         // constant indicates their rate. A constant of 0.60 means that the dragonfly
         // module has 60% of the speed of the sides.
         // 0.6 -> 0.7 -> 0.65 -> 0.625
-        public static double DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION = 0.6;
+        public static double DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION = 0.6125;
 
         //// DEFAULT INITIAL PARAMETERS
 
@@ -232,6 +232,14 @@ public final class HighAltitudeConstants {
 
         public static final double GRIPPER_DEFAULT_IN_SPEED = GRIPPER_CONE_IN_SPEED;
         public static final double GRIPPER_DEFAULT_OUT_SPEED = GRIPPER_CONE_OUT_SPEED;
+
+        ///////////////////////////// INTAKE //////////////////////////////////////////
+
+        // Default braking mode, true for brake, false for coast.
+        public static final boolean INTAKE_MOTORS_BRAKING_MODE = true;
+
+        public static final double INTAKE_IN_SPEED = 0.5;
+        public static final double INTAKE_OUT_SPEED = -0.5;
 
         ///////////////////// LEDS ////////////////////////
 

@@ -176,7 +176,7 @@ public class DriveTrain extends SubsystemBase {
             drivingAngle = currentAngle;
 
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
-        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION;
+        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION * x;
 
         double desiredDirection = Math.atan(Math.abs(y / x));
         double minAngleAtMaxPower = Math.atan(1 / HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION);
@@ -185,10 +185,10 @@ public class DriveTrain extends SubsystemBase {
 
         if (desiredDirection < minAngleAtMaxPower) {
             xPower = x;
-            yPower = Math.tan(desiredDirection) * xPower;
+            yPower = Math.tan(desiredDirection) * Math.abs(xPower) * (y / Math.abs(y));
         } else {
             yPower = y;
-            xPower = y / Math.tan(desiredDirection);
+            xPower = Math.abs(y) / Math.tan(desiredDirection) * x / Math.abs(x);
         }
 
         arcadeDrive(yPower, correction);
@@ -657,10 +657,10 @@ public class DriveTrain extends SubsystemBase {
 
     // Vision
     public void follow(double target, double dist) {
-        double turnPower = (target / 320) * 0.125;
-        double speedPower = (Math.abs(100 - dist) / 50) * 0.225;
+        double turnPower = (target / 320) * 0.65;
+        // double speedPower = (Math.abs(100 - dist) / 50) * 0.225;
         Robot.debugPrint("Power = " + turnPower + " Target = " + target);
-        defaultDrive(turnPower, speedPower, 0, 0);
+        defaultDrive(turnPower, 0, 0, 0);
     }
 
     @Override

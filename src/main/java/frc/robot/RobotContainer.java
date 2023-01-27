@@ -14,6 +14,7 @@ import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Extensor;
 import frc.robot.subsystems.transport.Wrist;
@@ -44,6 +45,7 @@ public class RobotContainer {
   private Gripper gripper;
   private Arm arm;
   private Extensor extensor;
+  private Intake intake;
 
   private GamePieceMode currentGamePieceMode;
 
@@ -56,9 +58,10 @@ public class RobotContainer {
     driveTrain = new DriveTrain();
     wrist = new Wrist();
     gripper = new Gripper();
-    // parkerVision = new Vision();
+    parkerVision = new Vision();
     arm = new Arm();
     extensor = new Extensor();
+    intake = new Intake();
 
     currentGamePieceMode = GamePieceMode.OTHER;
   }
@@ -122,6 +125,10 @@ public class RobotContainer {
 
   public Extensor getExtensor() {
     return extensor;
+  }
+
+  public Intake getIntake() {
+    return intake;
   }
 
   public void setCurrentGamePieceMode(GamePieceMode mode) {

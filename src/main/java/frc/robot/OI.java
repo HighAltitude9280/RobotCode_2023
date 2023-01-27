@@ -1,12 +1,13 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.drivetrain.drivingParameters.dragonflySolenoid.DrivetrainToggleDragonflySolenoid;
+import frc.robot.commands.FollowAprilTag;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
+import frc.robot.commands.intake.IntakeIn;
+import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
-import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
@@ -32,16 +33,19 @@ public class OI {
 
         pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.OTHER), ButtonType.START, ButtonType.BACK);
 
-        pilot.onTrue(ButtonType.B, new ResetTransportEncoders());
+        // pilot.onTrue(ButtonType.B, new ResetTransportEncoders());
 
         // pilot.onTrue(ButtonType.Y, new ToggleGamePieceMode());
 
-        pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
+        // pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
 
         pilot.onTrue(ButtonType.Y, new DrivetrainToggleDrivingMode(DrivingMode.Mecanum));
+        pilot.onTrue(ButtonType.X, new DrivetrainToggleDrivingMode(DrivingMode.Swerve));
 
-        pilot.whileTrue(ButtonType.LB, new GripperIn());
-        pilot.whileTrue(ButtonType.RB, new GripperOut());
+        pilot.whileTrue(ButtonType.B, new FollowAprilTag());
+
+        pilot.whileTrue(ButtonType.LB, new IntakeIn());
+        pilot.whileTrue(ButtonType.RB, new IntakeOut());
 
         // pilot.toggleOnTrue(ButtonType.A, new FollowAprilTag());
     }
