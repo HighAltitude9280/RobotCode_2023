@@ -176,7 +176,10 @@ public class DriveTrain extends SubsystemBase {
             drivingAngle = currentAngle;
 
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
-        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION * x;
+        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION;
+
+        Robot.debugNumberSmartDashboard("deltangle", deltaAngle);
+        Robot.debugNumberSmartDashboard("correction", correction);
 
         double desiredDirection = Math.atan(Math.abs(y / x));
         double minAngleAtMaxPower = Math.atan(1 / HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION);
@@ -191,7 +194,7 @@ public class DriveTrain extends SubsystemBase {
             xPower = Math.abs(y) / Math.tan(desiredDirection) * x / Math.abs(x);
         }
 
-        arcadeDrive(yPower, correction);
+        arcadeDrive(yPower, correction + turn);
         setDragonflyPower(xPower);
     }
 
@@ -260,8 +263,8 @@ public class DriveTrain extends SubsystemBase {
      * @param turn  From -1 to 1, represents the angular velocity of the robot.
      */
     public void arcadeDrive(double speed, double turn) {
-        double leftPower = speed + turn;
-        double rightPower = speed - turn;
+        double leftPower = speed - turn;
+        double rightPower = speed + turn;
 
         tankDrive(leftPower, rightPower);
     }

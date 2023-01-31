@@ -18,14 +18,14 @@ public class RobotMap {
 
         // Left side
         public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 1, 2 };
-        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = {};
+        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = { 1, 2 };
         public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = true;
         public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
                         TypeOfMotor.TALON_SRX };
 
         // Right side
         public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 3, 4 };
-        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = { 3, 4 };
+        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {};
         public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
                         TypeOfMotor.TALON_SRX };
@@ -39,7 +39,7 @@ public class RobotMap {
         public static final Value DRIVETRAIN_DRAGONFLY_RAISED = Value.kReverse;
 
         public static final int[] DRIVETRAIN_DRAGONFLY_MOTOR_PORTS = { 5 };
-        public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = { 5 };
+        public static final int[] DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS = {};
         public static final boolean DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] DRIVETRAIN_DRAGONFLY_MOTOR_TYPES = { TypeOfMotor.TALON_SRX };
 
