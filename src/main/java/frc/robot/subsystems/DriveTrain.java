@@ -176,7 +176,10 @@ public class DriveTrain extends SubsystemBase {
             drivingAngle = currentAngle;
 
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
-        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION * x;
+
+        double proportionalCorrection = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION;
+        double expectedCorrection = -x*HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION;
+        double correction = proportionalCorrection + expectedCorrection;
 
         double desiredDirection = Math.atan(Math.abs(y / x));
         double minAngleAtMaxPower = Math.atan(1 / HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION);

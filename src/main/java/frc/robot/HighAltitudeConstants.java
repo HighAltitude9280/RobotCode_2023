@@ -27,12 +27,18 @@ public final class HighAltitudeConstants {
     // The constant that helps the robot stay in the same angle while driving on an
     // assisted mode with the dragonfly. The higher the constant, the sharper the
     // correction.
-    public static double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0.01;
+    public static final double DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION = 0.01;
+    // This constants also helps the robot stay in the same angle while driving on an 
+    // assited mode with the dragonfly. It helps predict the error that will be generated
+    // by the dragonfly and corrects based on that. The higher the constant, the higher it will
+    // turn while driving. 
+    public static final double DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION = 0.5;
 
     // The sides of the robot normally move faster than the dragonfly module, this
     // constant indicates their rate. A constant of 0.60 means that the dragonfly
     // module has 60% of the speed of the sides.
     public static double DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION = 0.6;
+
 
     //// DEFAULT INITIAL PARAMETERS
 
@@ -92,5 +98,6 @@ public final class HighAltitudeConstants {
             / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_TORQUE);
     public static final double DRIVETRAIN_METERS_PER_PULSE_SPEED = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
             / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_SPEED);
+
 
 }
