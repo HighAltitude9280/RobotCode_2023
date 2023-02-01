@@ -6,9 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.drivetrain.autonomous.Paths;
+import frc.robot.commands.drivetrain.autonomous.stepControl.SplineMove;
 import frc.robot.resources.components.Navx;
+import frc.robot.resources.math.splines.CubicSpline;
+import frc.robot.resources.math.splines.SplineGenerator;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -21,6 +27,7 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
 
   private Command m_autoCommand;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private Navx navx;
   private DriveTrain driveTrain;
@@ -43,6 +50,21 @@ public class RobotContainer {
     driveTrain.setDefaultCommand(new DefaultDrive());
     
     OI.getInstance().ConfigureButtonBindings();
+  }
+
+  public void generateAutos()
+  {
+    CubicSpline examplePath = SplineGenerator.generateNaturalSpline(Paths.examplePathControlPoints);
+    SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
+    
+    m_chooser.setDefaultOption("Example path", followExamplePath);
+    
+    m_autoCommand = followExamplePath;
+  }
+
+  public void putAutoChooser()
+  {
+    SmartDashboard.putData("Autonomous", m_chooser);
   }
 
   /**
