@@ -316,7 +316,7 @@ public class Math {
      *     
      * Vertical: 
      *  
-     *      0
+     *      0°
      *      x
      *      | 
      * ------------ y -90°
@@ -328,7 +328,7 @@ public class Math {
      *      -90°
      *      y
      *      |
-     * ------------- 0
+     * ------------- x 0°
      *      |
 	 * 
 	 * @param slope      The slope to convert. 
