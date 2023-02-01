@@ -15,13 +15,13 @@ import frc.robot.commands.transport.wrist.DriveWristToPosition;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class GoToTopRow extends SequentialCommandGroup {
+public class GoToFeeder extends SequentialCommandGroup {
   GamePieceMode currentGamePieceMode;
   double extensorTarget, armTarget, wristTarget;
   double extensorMaxPower, armMaxPower, wristMaxPower;
 
   /** Creates a new GoToTopRow. */
-  public GoToTopRow() {
+  public GoToFeeder() {
     currentGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
     wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
@@ -30,14 +30,14 @@ public class GoToTopRow extends SequentialCommandGroup {
 
     switch (currentGamePieceMode) {
       case CONE:
-        wristTarget = HighAltitudeConstants.WRIST_TOP_ROW_DEGREES_CONE;
-        armTarget = HighAltitudeConstants.ARM_TOP_ROW_DEGREES_CONE;
-        extensorTarget = HighAltitudeConstants.EXTENSOR_TOP_ROW_METERS_CONE;
+        wristTarget = HighAltitudeConstants.WRIST_FEEDER_DEGREES_CONE;
+        armTarget = HighAltitudeConstants.ARM_FEEDER_DEGREES_CONE;
+        extensorTarget = HighAltitudeConstants.EXTENSOR_FEEDER_METERS_CONE;
         break;
       case CUBE:
-        wristTarget = HighAltitudeConstants.WRIST_TOP_ROW_DEGREES_CUBE;
-        armTarget = HighAltitudeConstants.ARM_TOP_ROW_DEGREES_CUBE;
-        extensorTarget = HighAltitudeConstants.EXTENSOR_TOP_ROW_METERS_CUBE;
+        wristTarget = HighAltitudeConstants.WRIST_FEEDER_DEGREES_CUBE;
+        armTarget = HighAltitudeConstants.ARM_FEEDER_DEGREES_CUBE;
+        extensorTarget = HighAltitudeConstants.EXTENSOR_FEEDER_METERS_CUBE;
         break;
       case OTHER:
         return;

@@ -20,6 +20,8 @@ public class ResetTransportEncoders extends CommandBase {
     wrist = Robot.getRobotContainer().getWrist();
     arm = Robot.getRobotContainer().getArm();
     extensor = Robot.getRobotContainer().getExtensor();
+
+    addRequirements(wrist, arm, extensor);
   }
 
   // Called when the command is initially scheduled.

@@ -192,6 +192,12 @@ public final class HighAltitudeConstants {
 
         //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
+        ////////////////////// AUTONOMOUS MOVEMENT
+
+        public static final double WRIST_AUTO_MAX_POWER = 0.2;
+        public static final double EXTENSOR_AUTO_MAX_POWER = 0.2;
+        public static final double ARM_AUTO_MAX_POWER = 0.2;
+
         /////////////////// CONE MODE ///////////////////
 
         ////////// TOP ROW
@@ -212,6 +218,18 @@ public final class HighAltitudeConstants {
         public static final double EXTENSOR_BOTTOM_ROW_METERS_CONE = -1.0;
         public static final double ARM_BOTTOM_ROW_DEGREES_CONE = -1.0;
 
+        ////////// GRAB FROM FEEDER
+
+        public static final double WRIST_FEEDER_DEGREES_CONE = -1.0;
+        public static final double EXTENSOR_FEEDER_METERS_CONE = -1.0;
+        public static final double ARM_FEEDER_DEGREES_CONE = -1.0;
+
+        ////////// GRAB FROM INTAKE
+
+        public static final double WRIST_INTAKE_DEGREES_CONE = -1.0;
+        public static final double EXTENSOR_INTAKE_METERS_CONE = -1.0;
+        public static final double ARM_INTAKE_DEGREES_CONE = -1.0;
+
         /////////////////// CUBE MODE ///////////////////
 
         ////////// TOP ROW
@@ -231,6 +249,18 @@ public final class HighAltitudeConstants {
         public static final double WRIST_BOTTOM_ROW_DEGREES_CUBE = -1.0;
         public static final double EXTENSOR_BOTTOM_ROW_METERS_CUBE = -1.0;
         public static final double ARM_BOTTOM_ROW_DEGREES_CUBE = -1.0;
+
+        ////////// GRAB FROM FEEDER
+
+        public static final double WRIST_FEEDER_DEGREES_CUBE = -1.0;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = -1.0;
+        public static final double ARM_FEEDER_DEGREES_CUBE = -1.0;
+
+        ////////// GRAB FROM INTAKE
+
+        public static final double WRIST_INTAKE_DEGREES_CUBE = -1.0;
+        public static final double EXTENSOR_INTAKE_METERS_CUBE = -1.0;
+        public static final double ARM_INTAKE_DEGREES_CUBE = -1.0;
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
 
