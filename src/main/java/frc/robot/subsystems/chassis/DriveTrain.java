@@ -176,7 +176,9 @@ public class DriveTrain extends SubsystemBase {
             drivingAngle = currentAngle;
 
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
-        double correction = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_TURN_CORRECTION;
+        double proportionalCorrection = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION;
+        double expectedCorrection = -x * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION;
+        double correction = proportionalCorrection + expectedCorrection;
 
         Robot.debugNumberSmartDashboard("deltangle", deltaAngle);
         Robot.debugNumberSmartDashboard("correction", correction);

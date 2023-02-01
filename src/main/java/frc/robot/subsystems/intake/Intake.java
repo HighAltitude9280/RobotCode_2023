@@ -6,7 +6,6 @@ package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
-import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.resources.components.speedController.HighAltitudeMotorGroup;
 
@@ -25,7 +24,6 @@ public class Intake extends SubsystemBase {
 
   public void driveIntake(double speed) {
     intakeMotors.setAll(speed);
-    Robot.debugPrint("IntakeSpeed: " + speed);
   }
 
   public void stopIntake() {

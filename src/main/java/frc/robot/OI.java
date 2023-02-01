@@ -3,8 +3,6 @@ package frc.robot;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.FollowAprilTag;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
-import frc.robot.commands.gripper.GripperIn;
-import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
