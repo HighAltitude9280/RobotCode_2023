@@ -77,14 +77,18 @@ public class DriveTrain extends SubsystemBase {
 
         rightMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_RIGHT_MOTOR_PORTS,
                 RobotMap.DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_RIGHT_MOTOR_TYPES);
-
-        dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
-                RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
-
+                
         leftMotors.setEncoderInverted(RobotMap.DRIVETRAIN_LEFT_ENCODER_IS_INVERTED);
         rightMotors.setEncoderInverted(RobotMap.DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED);
-        dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
 
+        if(RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
+        {
+            dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
+                RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
+
+            dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
+        }
+        
         setBrakeMode(HighAltitudeConstants.DRIVETRAIN_MOTORS_BRAKING_MODE);
         setTransmissionState(HighAltitudeConstants.DRIVETRAIN_INITIAL_TRANSMISSION_MODE);
         setDragonflySolenoid(HighAltitudeConstants.DRIVETRAIN_INITIAL_DRAGONFLY_STATE);
@@ -503,6 +507,10 @@ public class DriveTrain extends SubsystemBase {
      * @param state The desired transmission state (torque or speed).
      */
     public void setTransmissionState(TransmissionMode state) {
+
+        if(!RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
+            return;
+
         transmissionState = state;
         if (state == TransmissionMode.torque)
             transmission.set(RobotMap.DRIVETRAIN_TRANSMISSION_TORQUE);
@@ -622,6 +630,14 @@ public class DriveTrain extends SubsystemBase {
      */
     public double getRightEncoderDistance() {
         return rightEncoderDistance;
+    }
+
+    /**
+     * @return The differential drive odometry object.
+     */
+    public DifferentialDriveOdometry getOdometry()
+    {
+        return odometry;
     }
 
     /**

@@ -24,6 +24,10 @@ public final class HighAltitudeConstants {
 
     //////////////////////// DRIVETRAIN///////////////////////////////////
 
+
+    //// DRAGONFLY
+
+
     // The constant that helps the robot stay in the same angle while driving on an
     // assisted mode with the dragonfly. It helps correct the current error in the angle.
     // The higher this constant, the more it will turn to correct, specially after braking.  
@@ -42,13 +46,16 @@ public final class HighAltitudeConstants {
 
     //// DEFAULT INITIAL PARAMETERS
 
+
     public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.speed;
     public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Raised;
 
     // Default braking mode, true for brake, false for coast.
     public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = true;
 
+
     ///// AUTOS
+
 
     /// Turning
 
@@ -62,7 +69,9 @@ public final class HighAltitudeConstants {
     // considered on target.
     public static double DRIVETRAIN_AUTO_TURNING_ARRIVE_OFFSET = 3;
 
+
     /// Straight motion
+
 
     // When moving straight (straightMove()) in autonomous at power 1, if the
     // difference between the target and the current position (in meters) is less
@@ -78,7 +87,23 @@ public final class HighAltitudeConstants {
     // sharper the angle correction.
     public static double DRIVETRAIN_AUTO_STRAIGHT_ANGLE_CORRECTION = 0.01;
 
+
+    /// Splines
+
+
+    //When following a spline, this constant will help correct the error in y.
+    public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70;
+    // When following a spline, if the difference between the target 
+    // and the current position (in meters) is less than this constant, it be consider on target.
+    public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0;
+    //When following a spline, this constant will determine 
+    //how sharp the angle correction is. The higher the values, the sharper the angle correction. 
+    public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
+    public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
+
+
     ///// ENCODERS AND GEARBOX
+    
 
     // The reported encoder position after one revolution, check encoder
     // specifications.

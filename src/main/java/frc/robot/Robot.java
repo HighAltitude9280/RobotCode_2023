@@ -10,7 +10,11 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.drivetrain.autonomous.Paths;
+import frc.robot.commands.drivetrain.autonomous.stepControl.SplineMove;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
+import frc.robot.resources.math.splines.CubicSpline;
+import frc.robot.resources.math.splines.SplineGenerator;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -42,6 +46,10 @@ public class Robot extends TimedRobot {
     getRobotContainer().configureButtonBindings();
     motor1 = new VictorSPX(7);
     motor1 = new VictorSPX(8);
+
+    CubicSpline examplePath = SplineGenerator.generateNaturalSpline(Paths.examplePathControlPoints);
+    SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
+    m_autonomousCommand = followExamplePath;
   }
 
   /**
