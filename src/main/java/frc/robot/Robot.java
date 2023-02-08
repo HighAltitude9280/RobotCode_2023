@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
     robotContainer = new RobotContainer();
     robotContainer.getDriveTrain().resetOdometry();
     robotContainer.configureRobotContainer();
+    robotContainer.generateAutos();
   }
 
   /**

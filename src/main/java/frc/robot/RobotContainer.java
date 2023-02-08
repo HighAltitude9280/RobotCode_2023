@@ -6,11 +6,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.drivetrain.autonomous.Paths;
+import frc.robot.commands.drivetrain.autonomous.stepControl.SplineMove;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
+import frc.robot.resources.math.splines.CubicSpline;
+import frc.robot.resources.math.splines.SplineGenerator;
+import frc.robot.subsystems.DriverCameras;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
@@ -36,6 +42,7 @@ public class RobotContainer {
   }
 
   private Command m_autoCommand;
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private Navx navx;
   private DriveTrain driveTrain;
@@ -46,8 +53,8 @@ public class RobotContainer {
   private Arm arm;
   private Extensor extensor;
   private Intake intake;
-
   private GamePieceMode currentGamePieceMode;
+  private DriverCameras bision;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -56,11 +63,11 @@ public class RobotContainer {
     navx = new Navx();
     leds = new LEDs();
     driveTrain = new DriveTrain();
-    wrist = new Wrist();
-    gripper = new Gripper();
-    parkerVision = new Vision();
-    arm = new Arm();
-    extensor = new Extensor();
+    // wrist = new Wrist();
+    // gripper = new Gripper();
+    bision = new DriverCameras();
+    // arm = new Arm();
+    // extensor = new Extensor();
     intake = new Intake();
 
     currentGamePieceMode = GamePieceMode.OTHER;
@@ -83,6 +90,13 @@ public class RobotContainer {
     leds.setDefaultCommand(new DisplayGamePieceMode());
 
     OI.getInstance().ConfigureButtonBindings();
+  }
+
+  public void generateAutos() {
+    CubicSpline examplePath = SplineGenerator.generateNaturalSpline(Paths.examplePathControlPoints);
+    SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
+
+    m_chooser.setDefaultOption("Example path", followExamplePath);
   }
 
   /**
@@ -129,6 +143,10 @@ public class RobotContainer {
 
   public Intake getIntake() {
     return intake;
+  }
+
+  public DriverCameras getDriverCameras() {
+    return bision;
   }
 
   public void setCurrentGamePieceMode(GamePieceMode mode) {

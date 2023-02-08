@@ -75,7 +75,7 @@ public class RobotMap {
         public static final boolean GRIPPER_LIMIT_SWITCH_IS_AVAILABLE = false;
         public static final int GRIPPER_LIMIT_SWITCH_PORT = 0;
 
-        //////////////////////// GRIPPER ////////////////////////
+        //////////////////////// INTAKE ////////////////////////
 
         public static final int[] INTAKE_MOTOR_PORTS = { 6, 7 };
         public static final int[] INTAKE_INVERTED_MOTORS_PORTS = { 7 };

@@ -2,6 +2,8 @@ package frc.robot.resources.math;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class Math {
 
     public static final double PI = 3.141592653589793238462643383279502884197;
@@ -162,15 +164,7 @@ public class Math {
 
         double delta = target - angle;
 
-        if (delta > 180) {
-            delta -= 360;
-        }
-
-        if (delta < -180) {
-            delta = 360 + delta;
-        }
-
-        return delta;
+        return normalizeAngle(delta);
 
     }
 
@@ -186,6 +180,175 @@ public class Math {
 
     public static double atan2(double y, double x) {
         return java.lang.Math.atan2(y, x);
+    }
+
+    /**
+     * Deletes a certain row and column of the given matrix.
+     * 
+     * @param i      The column to delete.
+     * @param j      The row to delete.
+     * @param matrix The matrix from which the row and column will be deleted.
+     * @return A new matrix, without the indicated row and column.
+     */
+    public static double[][] matrixDeleteRowColumn(int i, int j, double[][] matrix) {
+        double[][] newMatrix = new double[matrix.length - 1][matrix[0].length - 1];
+
+        for (int a = 0; a < matrix.length - 1; a++) {
+            for (int b = 0; b < matrix.length - 1; b++) {
+
+                int thisLine = a + (i <= a ? 1 : 0);
+                int thisColumn = b + (j <= b ? 1 : 0);
+
+                newMatrix[a][b] = matrix[thisLine][thisColumn];
+
+            }
+        }
+        return (newMatrix);
+    }
+
+    /**
+     * Transposes a matrix.
+     * 
+     * @param matrix The matrix to transpose.
+     * @return The transpose of the given matrix.
+     */
+    public static double[][] transposeMatrix(double[][] matrix) {
+        double[][] newMatrix = new double[matrix[0].length][matrix.length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+
+                newMatrix[j][i] = matrix[i][j];
+
+            }
+        }
+
+        return newMatrix;
+    }
+
+    /**
+     * Multiplies two matrices.
+     * 
+     * @param a The first matrix to multiply.
+     * @param b The second matrix to multiply
+     * @return aXb.
+     */
+    public static double[][] multiplyMatrices(double[][] a, double[][] b) {
+        if (a[0].length != b.length) {
+            DriverStation.reportError(
+                    "Could not perform matrix multiplication, the number of columns in the first matrix should be equal to the number of rows in the second.",
+                    true);
+            return null;
+        }
+
+        double[][] result = new double[a.length][b[0].length];
+
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[0].length; j++) {
+                double total = 0;
+
+                for (int current = 0; current < a[0].length; current++) {
+                    total += a[i][current] * b[current][j];
+                }
+
+                result[i][j] = total;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Calculates the determinant of the given matrix.
+     * 
+     * @param matrix The matrix to calculate the determinant.
+     * @return The determinant of the given matrix.
+     */
+    public static double calculateDeterminant(double[][] matrix) {
+        double[][] newMatrix = new double[matrix.length][matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                newMatrix[i][j] = matrix[i][j];
+            }
+
+        }
+
+        return new DeterminantCalculator(newMatrix).determinant().doubleValue();
+    }
+
+    /**
+     * Inverses a matrix.
+     * 
+     * @param matrix The matrix to inverse.
+     * @return The inverse of the matrix.
+     */
+    public static double[][] inverseMatrix(double[][] matrix) {
+        if (calculateDeterminant(matrix) == 0) {
+            double[][] zero = {};
+            return zero;
+        }
+
+        double[][] inverse = new double[matrix.length][matrix[0].length];
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                double cofactor = (double) Math.pow(-1, i + j)
+                        * calculateDeterminant(matrixDeleteRowColumn(i, j, matrix));
+                inverse[i][j] = 1 / calculateDeterminant(matrix) * cofactor;
+            }
+        }
+
+        inverse = transposeMatrix(inverse);
+        return inverse;
+    }
+
+    /**
+     * Converts a slope to an angle. Useful for spline movement. Note that a
+     * vertical angle to slope
+     * means that the axis will be swaped, resulting in a, maybe unexpected,
+     * mirrored beheaviour.
+     * 
+     * Vertical:
+     * 
+     * 0°
+     * x
+     * |
+     * ------------ y -90°
+     * |
+     * 
+     * 
+     * Normal:
+     * 
+     * -90°
+     * y
+     * |
+     * ------------- x 0°
+     * |
+     * 
+     * @param slope    The slope to convert.
+     * @param vertical True to swap angles.
+     *
+     * @return The angle (from -180 to 180).
+     */
+    public static double angleFromSlope(double slope, boolean vertical) {
+
+        double result = 0;
+
+        if (!vertical)
+            result = -toDegrees(atan(slope));
+
+        if (slope < 0) {
+            slope = abs(slope);
+
+            result = -toDegrees(atan(slope)) - 90;
+        } else if (slope == 0)
+            result = -90;
+
+        else
+            result = -toDegrees(atan(1 / slope));
+
+        return (normalizeAngle(result));
     }
 
 }

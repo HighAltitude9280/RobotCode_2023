@@ -78,11 +78,12 @@ public class DriveTrain extends SubsystemBase {
         rightMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_RIGHT_MOTOR_PORTS,
                 RobotMap.DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_RIGHT_MOTOR_TYPES);
 
+        leftMotors.setEncoderInverted(RobotMap.DRIVETRAIN_LEFT_ENCODER_IS_INVERTED);
+        rightMotors.setEncoderInverted(RobotMap.DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED);
+
         dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
                 RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
 
-        leftMotors.setEncoderInverted(RobotMap.DRIVETRAIN_LEFT_ENCODER_IS_INVERTED);
-        rightMotors.setEncoderInverted(RobotMap.DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED);
         dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
 
         setBrakeMode(HighAltitudeConstants.DRIVETRAIN_MOTORS_BRAKING_MODE);
@@ -176,12 +177,10 @@ public class DriveTrain extends SubsystemBase {
             drivingAngle = currentAngle;
 
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
+
         double proportionalCorrection = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION;
         double expectedCorrection = -x * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION;
         double correction = proportionalCorrection + expectedCorrection;
-
-        Robot.debugNumberSmartDashboard("deltangle", deltaAngle);
-        Robot.debugNumberSmartDashboard("correction", correction);
 
         double desiredDirection = Math.atan(Math.abs(y / x));
         double minAngleAtMaxPower = Math.atan(1 / HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_SIDES_CORRECTION);
@@ -196,7 +195,7 @@ public class DriveTrain extends SubsystemBase {
             xPower = Math.abs(y) / Math.tan(desiredDirection) * x / Math.abs(x);
         }
 
-        arcadeDrive(yPower, correction + turn);
+        arcadeDrive(yPower, correction);
         setDragonflyPower(xPower);
     }
 
@@ -505,9 +504,11 @@ public class DriveTrain extends SubsystemBase {
      * @param state The desired transmission state (torque or speed).
      */
     public void setTransmissionState(TransmissionMode state) {
-        transmissionState = state;
+
         if (!RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
             return;
+
+        transmissionState = state;
         if (state == TransmissionMode.torque)
             transmission.set(RobotMap.DRIVETRAIN_TRANSMISSION_TORQUE);
 
@@ -629,6 +630,13 @@ public class DriveTrain extends SubsystemBase {
     }
 
     /**
+     * @return The differential drive odometry object.
+     */
+    public DifferentialDriveOdometry getOdometry() {
+        return odometry;
+    }
+
+    /**
      * DO NOT FORGET TO CALL THIS METHOD ON {@link #periodic()}
      * Updates odometry and encoder positions.
      */
@@ -671,6 +679,5 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
-        Robot.debugStringSmartDashboard("Driving mode", getCurrentDrivingMode().toString());
     }
 }

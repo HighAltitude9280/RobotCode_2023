@@ -26,8 +26,6 @@ public final class HighAltitudeConstants {
 
         /////////////////////////// DRIVE TRAIN ///////////////////////////////////////
 
-        // TODO: corregir documentación
-
         // The constant that helps the robot stay in the same angle while driving on an
         // assisted mode with the dragonfly. It helps correct the current error in the
         // angle. The higher this constant, the more it will turn to correct, specially
@@ -36,7 +34,7 @@ public final class HighAltitudeConstants {
         public static final double DRIVETRAIN_DRAGONFLY_TURN_CORRECTION = 0;
 
         // 0.02
-        public static final double DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION = -0.02;
+        public static final double DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION = 0.02;
 
         // This constants also helps the robot stay in the same angle while driving on
         // an assited mode with the dragonfly. It helps predict the error that will be
@@ -87,6 +85,20 @@ public final class HighAltitudeConstants {
         // will determine how sharp the angle correction is. The higher the values, the
         // sharper the angle correction.
         public static double DRIVETRAIN_AUTO_STRAIGHT_ANGLE_CORRECTION = 0.01;
+
+        /// Splines
+
+        // When following a spline, this constant will help correct the error in y.
+        public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70;
+        // When following a spline, if the difference between the target
+        // and the current position (in meters) is less than this constant, it be
+        // consider on target.
+        public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0;
+        // When following a spline, this constant will determine
+        // how sharp the angle correction is. The higher the values, the sharper the
+        // angle correction.
+        public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
+        public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
 
         ///// ENCODERS AND GEARBOX
 
