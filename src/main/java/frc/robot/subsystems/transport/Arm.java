@@ -15,7 +15,7 @@ import frc.robot.resources.math.Math;
 public class Arm extends SubsystemBase {
 
   HighAltitudeMotorGroup armMotors;
-  double armEncoderPosition, armPositionDegrees;
+  double currentArmEncoderPosition, currentArmPositionDegrees;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -33,7 +33,7 @@ public class Arm extends SubsystemBase {
   }
 
   public boolean moveTo(double targetDegrees, double maxPower) {
-    double delta = targetDegrees - armPositionDegrees;
+    double delta = targetDegrees - currentArmPositionDegrees;
 
     if (Math.abs(delta) < HighAltitudeConstants.ARM_ARRIVE_OFFSET) {
       armMotors.setAll(0);
@@ -53,11 +53,11 @@ public class Arm extends SubsystemBase {
 
   @Override
   public void periodic() {
-    armEncoderPosition = armMotors.getEncoderPosition();
-    armPositionDegrees = armEncoderPosition * HighAltitudeConstants.ARM_DEGREES_PER_PULSE;
+    currentArmEncoderPosition = armMotors.getEncoderPosition();
+    currentArmPositionDegrees = currentArmEncoderPosition * HighAltitudeConstants.ARM_DEGREES_PER_PULSE;
 
-    SmartDashboard.putNumber("Arm Encoder", armEncoderPosition);
-    SmartDashboard.putNumber("Arm Degrees", armPositionDegrees);
+    SmartDashboard.putNumber("Arm Encoder", currentArmEncoderPosition);
+    SmartDashboard.putNumber("Arm Degrees", currentArmPositionDegrees);
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +
     // armPositionDegrees);
   }

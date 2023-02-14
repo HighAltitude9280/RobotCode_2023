@@ -36,7 +36,7 @@ public class GripperIn extends CommandBase {
       case CUBE:
         gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_IN_SPEED);
         break;
-      case OTHER:
+      case MANUAL:
         gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
         break;
     }

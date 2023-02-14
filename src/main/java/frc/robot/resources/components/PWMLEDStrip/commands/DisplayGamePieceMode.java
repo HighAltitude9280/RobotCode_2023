@@ -29,7 +29,7 @@ public class DisplayGamePieceMode extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (a.get().equals(GamePieceMode.OTHER))
+    if (a.get().equals(GamePieceMode.MANUAL))
       hue = HighAltitudeConstants.LEDS_9280_HUE;
     else if (a.get().equals(GamePieceMode.CUBE))
       hue = HighAltitudeConstants.LEDS_CUBE_HUE;

@@ -28,7 +28,7 @@ public class OI {
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
 
-        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.OTHER), ButtonType.START, ButtonType.BACK);
+        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL), ButtonType.START, ButtonType.BACK);
 
         // pilot.onTrue(ButtonType.B, new ResetTransportEncoders());
 

@@ -39,7 +39,7 @@ public class GoToMiddleRow extends SequentialCommandGroup {
         armTarget = HighAltitudeConstants.ARM_MIDDLE_ROW_DEGREES_CUBE;
         extensorTarget = HighAltitudeConstants.EXTENSOR_MIDDLE_ROW_METERS_CUBE;
         break;
-      case OTHER:
+      case MANUAL:
         return;
       default:
         return;

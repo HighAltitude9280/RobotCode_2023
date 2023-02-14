@@ -39,7 +39,7 @@ public class GoToIntake extends SequentialCommandGroup {
         armTarget = HighAltitudeConstants.ARM_INTAKE_DEGREES_CUBE;
         extensorTarget = HighAltitudeConstants.EXTENSOR_INTAKE_METERS_CUBE;
         break;
-      case OTHER:
+      case MANUAL:
         return;
       default:
         return;

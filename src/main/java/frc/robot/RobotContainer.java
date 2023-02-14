@@ -38,7 +38,7 @@ import frc.robot.subsystems.transport.Wrist;
 public class RobotContainer {
 
   public enum GamePieceMode {
-    CUBE, CONE, OTHER
+    CUBE, CONE, MANUAL
   }
 
   private Command m_autoCommand;
@@ -70,7 +70,7 @@ public class RobotContainer {
     // extensor = new Extensor();
     intake = new Intake();
 
-    currentGamePieceMode = GamePieceMode.OTHER;
+    currentGamePieceMode = GamePieceMode.MANUAL;
   }
 
   /**

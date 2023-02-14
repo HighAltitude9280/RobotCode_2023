@@ -39,7 +39,7 @@ public class GoToTopRow extends SequentialCommandGroup {
         armTarget = HighAltitudeConstants.ARM_TOP_ROW_DEGREES_CUBE;
         extensorTarget = HighAltitudeConstants.EXTENSOR_TOP_ROW_METERS_CUBE;
         break;
-      case OTHER:
+      case MANUAL:
         return;
       default:
         return;

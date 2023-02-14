@@ -39,7 +39,7 @@ public class GoToFeeder extends SequentialCommandGroup {
         armTarget = HighAltitudeConstants.ARM_FEEDER_DEGREES_CUBE;
         extensorTarget = HighAltitudeConstants.EXTENSOR_FEEDER_METERS_CUBE;
         break;
-      case OTHER:
+      case MANUAL:
         return;
       default:
         return;
