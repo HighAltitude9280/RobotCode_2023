@@ -679,5 +679,6 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
+        Robot.debugStringSmartDashboard("Current Driving Mode", currentDrivingMode.toString());
     }
 }
