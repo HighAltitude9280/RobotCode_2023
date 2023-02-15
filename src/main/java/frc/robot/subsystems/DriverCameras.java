@@ -40,15 +40,15 @@ public class DriverCameras extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    if (OI.getInstance().getPilot().getButtonObj(ButtonType.B).getAsBoolean()) {
-      System.out.println("Setting camera 2");
-      server.setSource(camera2);
-    } else {
-      System.out.println("Setting camera 1");
-      server.setSource(camera1);
-    }
-
+    /*
+     * if (OI.getInstance().getPilot().getButtonObj(ButtonType.B).getAsBoolean()) {
+     * System.out.println("Setting camera 2");
+     * server.setSource(camera2);
+     * } else {
+     * System.out.println("Setting camera 1");
+     * server.setSource(camera1);
+     * }
+     */
     // This method will be called once per scheduler run
   }
 }

@@ -27,6 +27,10 @@ public class LEDs extends SubsystemBase {
     leds.setBasicFire(hue, 255, 2, 200);
   }
 
+  public void setFireAnimation(int hue, int saturation, int cooling, int sparking) {
+    leds.setBasicFire(hue, saturation, cooling, sparking);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
