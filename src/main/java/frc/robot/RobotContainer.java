@@ -41,7 +41,6 @@ public class RobotContainer {
     CUBE, CONE, MANUAL
   }
 
-  private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private Navx navx;
@@ -61,15 +60,14 @@ public class RobotContainer {
    */
   public RobotContainer() {
     navx = new Navx();
-    leds = new LEDs();
     driveTrain = new DriveTrain();
+    // intake = new Intake();
+    //leds = new LEDs();
     // wrist = new Wrist();
     // gripper = new Gripper();
-    bision = new DriverCameras();
+    // bision = new DriverCameras();
     // arm = new Arm();
     // extensor = new Extensor();
-    intake = new Intake();
-
     currentGamePieceMode = GamePieceMode.MANUAL;
   }
 
@@ -106,7 +104,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_chooser.getSelected();
   }
 
   public Navx getNavx() {

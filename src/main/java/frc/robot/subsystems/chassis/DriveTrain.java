@@ -64,7 +64,7 @@ public class DriveTrain extends SubsystemBase {
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[1]);
 
-        if (RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_AVAILABLE)
             dragonflySolenoid = new DoubleSolenoid(RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE,
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[1]);
@@ -81,10 +81,11 @@ public class DriveTrain extends SubsystemBase {
         leftMotors.setEncoderInverted(RobotMap.DRIVETRAIN_LEFT_ENCODER_IS_INVERTED);
         rightMotors.setEncoderInverted(RobotMap.DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED);
 
-        dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
-                RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
-
-        dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE) {
+            dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
+                    RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
+            dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
+        }
 
         setBrakeMode(HighAltitudeConstants.DRIVETRAIN_MOTORS_BRAKING_MODE);
         setTransmissionState(HighAltitudeConstants.DRIVETRAIN_INITIAL_TRANSMISSION_MODE);
@@ -430,7 +431,7 @@ public class DriveTrain extends SubsystemBase {
      *              lowered.
      */
     public void setDragonflySolenoid(WheelState state) {
-        if (!RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
+        if (!RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_AVAILABLE)
             return;
 
         if (state == WheelState.Lowered) {

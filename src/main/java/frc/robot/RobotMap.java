@@ -31,7 +31,8 @@ public class RobotMap {
                         TypeOfMotor.TALON_SRX };
 
         // Dragonfly
-        public static final boolean DRIVETRAIN_DRAGONFLY_IS_AVAILABLE = false;
+        public static final boolean DRIVETRAIN_DRAGONFLY_SOLENOID_AVAILABLE = false;
+        public static final boolean DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE = false;
         public static final int[] DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS = { 2, 3 };
         public static final PneumaticsModuleType DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE = PneumaticsModuleType.REVPH;
 
