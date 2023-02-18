@@ -154,7 +154,7 @@ public class HighAltitudeMotorController {
             case TALON_SRX:
                 return phoenixMotor.getSelectedSensorPosition(0);
             case TALON_FX:
-                return phoenixMotor.getSelectedSensorPosition(1);
+                return phoenixMotor.getSelectedSensorPosition(0);
             case CAN_SPARK_BRUSHLESS:
                 return ((CANSparkMax) frcMotor).getEncoder().getPosition();
 

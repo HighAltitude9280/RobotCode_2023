@@ -104,14 +104,14 @@ public final class HighAltitudeConstants {
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
-        public static final double DRIVETRAIN_PULSES_PER_REVOLUTION = 1;
+        public static final double DRIVETRAIN_PULSES_PER_REVOLUTION = 2048;
 
         // In meters
-        public static final double DRIVETRAIN_WHEEL_DIAMETER = 4 * 0.0254;
+        public static final double DRIVETRAIN_WHEEL_DIAMETER = 6 * 0.0254;
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS.
-        public static final double DRIVETRAIN_GEAR_RATIO_SPEED = 405.0 / 98.0;
+        public static final double DRIVETRAIN_GEAR_RATIO_SPEED = 75.0 / 7.0; // KOP - MOTOR REVS / WHEEL REVS
         public static final double DRIVETRAIN_GEAR_RATIO_TORQUE = 225.0 / 28.0;
 
         // Use these constants to convert from encoder position to meters

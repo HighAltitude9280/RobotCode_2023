@@ -2,8 +2,6 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
-import frc.robot.commands.intake.IntakeIn;
-import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
@@ -41,8 +39,8 @@ public class OI {
 
         // pilot.whileTrue(ButtonType.B, new FollowAprilTag());
 
-        pilot.whileTrue(ButtonType.LB, new IntakeIn());
-        pilot.whileTrue(ButtonType.RB, new IntakeOut());
+        // pilot.whileTrue(ButtonType.LB, new IntakeIn());
+        // pilot.whileTrue(ButtonType.RB, new IntakeOut());
 
         // pilot.toggleOnTrue(ButtonType.A, new FollowAprilTag());
     }

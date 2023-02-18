@@ -291,7 +291,8 @@ public class DriveTrain extends SubsystemBase {
      *              motors.
      */
     public void setDragonflyPower(double power) {
-        dragonflyMotors.setAll(power);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.setAll(power);
     }
 
     /**
@@ -566,7 +567,8 @@ public class DriveTrain extends SubsystemBase {
     public void setBrakeMode(boolean doBrake) {
         leftMotors.setBrakeMode(doBrake);
         rightMotors.setBrakeMode(doBrake);
-        dragonflyMotors.setBrakeMode(doBrake);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.setBrakeMode(doBrake);
     }
 
     //// Encoders and odometry
@@ -613,7 +615,8 @@ public class DriveTrain extends SubsystemBase {
 
         rightMotors.resetEncoder();
         leftMotors.resetEncoder();
-        dragonflyMotors.resetEncoder();
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.resetEncoder();
     }
 
     /**
@@ -681,5 +684,16 @@ public class DriveTrain extends SubsystemBase {
     public void periodic() {
         updateOdometry();
         Robot.debugStringSmartDashboard("Current Driving Mode", currentDrivingMode.toString());
+
+        Robot.debugNumberSmartDashboard("Left encoder", leftMotors.getEncoderPosition());
+        Robot.debugNumberSmartDashboard("Left distance",
+                leftMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED);
+
+        Robot.debugNumberSmartDashboard("Right encoder", rightMotors.getEncoderPosition());
+        Robot.debugNumberSmartDashboard("Right distance",
+                rightMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED);
+
+        Robot.debugNumberSmartDashboard("Odometry X", odometry.getPoseMeters().getX());
+        Robot.debugNumberSmartDashboard("Odometry Y", odometry.getPoseMeters().getY());
     }
 }

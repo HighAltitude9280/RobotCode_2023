@@ -7,13 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.drivetrain.autonomous.Paths;
 import frc.robot.commands.drivetrain.autonomous.stepControl.SplineMove;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
-import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
 import frc.robot.resources.math.splines.CubicSpline;
 import frc.robot.resources.math.splines.SplineGenerator;
 import frc.robot.subsystems.DriverCameras;
@@ -42,6 +42,7 @@ public class RobotContainer {
   }
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<String> m_chooser2 = new SendableChooser<>();
 
   private Navx navx;
   private DriveTrain driveTrain;
@@ -62,7 +63,7 @@ public class RobotContainer {
     navx = new Navx();
     driveTrain = new DriveTrain();
     // intake = new Intake();
-    //leds = new LEDs();
+    // leds = new LEDs();
     // wrist = new Wrist();
     // gripper = new Gripper();
     // bision = new DriverCameras();
@@ -85,7 +86,7 @@ public class RobotContainer {
     // arm.setDefaultCommand(new DriveArm()); // Triggers
     // extensor.setDefaultCommand(new DriveExtensor()); // POV-X
 
-    leds.setDefaultCommand(new DisplayGamePieceMode());
+    // leds.setDefaultCommand(new DisplayGamePieceMode());
 
     OI.getInstance().ConfigureButtonBindings();
   }
@@ -95,6 +96,10 @@ public class RobotContainer {
     SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
 
     m_chooser.setDefaultOption("Example path", followExamplePath);
+    m_chooser2.setDefaultOption("xd", "a");
+
+    SmartDashboard.putData("Auto choices", m_chooser);
+    SmartDashboard.putData("ummm", m_chooser2);
   }
 
   /**

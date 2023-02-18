@@ -9,9 +9,7 @@ import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 import edu.wpi.first.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
 
 public class DriverCameras extends SubsystemBase {
 
