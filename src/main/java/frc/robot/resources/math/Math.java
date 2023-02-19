@@ -344,7 +344,7 @@ public class Math {
 		if (!vertical) 
             result = -toDegrees(atan(slope));
 
-        if(slope < 0)
+        else if(slope < 0)
         {
             slope = abs(slope);
            
