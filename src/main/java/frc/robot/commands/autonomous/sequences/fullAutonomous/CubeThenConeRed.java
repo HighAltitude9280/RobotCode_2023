@@ -17,7 +17,7 @@ public class CubeThenConeRed extends SequentialCommandGroup
             //Start intake
             new MoveStraight(4.68, 1, 2),
             //stop intake
-            new SplineMove(Paths.piece1ToPositionBRed, 
+            new SplineMove(Paths.piece1ToPositionCRed, 
                 1, true, false, true, true)
         );
     }

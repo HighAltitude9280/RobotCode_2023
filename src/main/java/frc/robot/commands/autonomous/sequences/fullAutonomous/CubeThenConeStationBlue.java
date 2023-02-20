@@ -17,10 +17,10 @@ public class CubeThenConeStationBlue extends SequentialCommandGroup
             //Start intake
             new MoveStraight(4.68, 1,-2),
             //stop intake
-            new SplineMove(Paths.piece1ToPositionBBlue, 
+            new SplineMove(Paths.piece1ToPositionCBlue, 
                 1, true, false, true, true),
             //place cone,
-            new SplineMove(Paths.positionBToChargingBlue, 
+            new SplineMove(Paths.positionCToChargingBlue, 
             1, true, false, false, false)
             //Balance station
         );
