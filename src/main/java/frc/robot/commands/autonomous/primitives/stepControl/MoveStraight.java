@@ -1,4 +1,4 @@
-package frc.robot.commands.drivetrain.autonomous.stepControl;
+package frc.robot.commands.autonomous.primitives.stepControl;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;

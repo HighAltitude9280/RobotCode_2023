@@ -1,4 +1,4 @@
-package frc.robot.commands.drivetrain.autonomous;
+package frc.robot.commands.autonomous;
 
 public class Paths 
 {

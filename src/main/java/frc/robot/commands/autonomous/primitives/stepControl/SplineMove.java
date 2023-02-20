@@ -1,4 +1,4 @@
-package frc.robot.commands.drivetrain.autonomous.stepControl;
+package frc.robot.commands.autonomous.primitives.stepControl;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -139,6 +139,9 @@ public class SplineMove extends CommandBase {
                     .clamp(distanceToTarget / (HighAltitudeConstants.SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE*maxSpeed), 0, 1);
 
             power = speedReductionCorrection * maxSpeed;
+
+            if(distanceToTarget < HighAltitudeConstants.DRIVETRAIN_SPLINE_ARRIVE_OFFSET)
+                Robot.getRobotContainer().getDriveTrain().stop();
         }
 
         double deltaAngle = Math.deltaAngle(Robot.getRobotContainer().getNavx().getYaw(), targetAngle);
