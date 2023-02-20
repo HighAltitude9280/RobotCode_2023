@@ -6,10 +6,10 @@ import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.drivetrain.drivingSensors.resetOdometry;
 
-public class CubeThenConeBlue extends SequentialCommandGroup
+public class CubeThenConeStationBlue extends SequentialCommandGroup
 {
 
-    public CubeThenConeBlue()
+    public CubeThenConeStationBlue()
     {
         super(
             //Place pre-loaded cube
@@ -18,7 +18,11 @@ public class CubeThenConeBlue extends SequentialCommandGroup
             new MoveStraight(4.68, 1,-2),
             //stop intake
             new SplineMove(Paths.piece1ToPositionBBlue, 
-                1, true, false, true, true)
+                1, true, false, true, true),
+            //place cone,
+            new SplineMove(Paths.positionBToChargingBlue, 
+            1, true, false, false, false)
+            //Balance station
         );
     }
 }

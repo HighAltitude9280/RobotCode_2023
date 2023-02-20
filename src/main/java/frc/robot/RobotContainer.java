@@ -54,8 +54,8 @@ public class RobotContainer {
 
   public void generateAutos()
   {
-    CubicSpline examplePath = SplineGenerator.generateNaturalSpline(Paths.examplePathControlPoints);
-    SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
+    SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5, 
+      true, false, false, false);
     
     m_chooser.setDefaultOption("Example path", followExamplePath);
     

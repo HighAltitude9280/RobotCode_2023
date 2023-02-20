@@ -6,18 +6,18 @@ import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.drivetrain.drivingSensors.resetOdometry;
 
-public class CubeThenConeBlue extends SequentialCommandGroup
+public class CubeThenConeRed extends SequentialCommandGroup
 {
 
-    public CubeThenConeBlue()
+    public CubeThenConeRed()
     {
         super(
             //Place pre-loaded cube
             new resetOdometry(1.91, 4.42),
             //Start intake
-            new MoveStraight(4.68, 1,-2),
+            new MoveStraight(4.68, 1, 2),
             //stop intake
-            new SplineMove(Paths.piece1ToPositionBBlue, 
+            new SplineMove(Paths.piece1ToPositionBRed, 
                 1, true, false, true, true)
         );
     }
