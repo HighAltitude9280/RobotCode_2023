@@ -54,7 +54,7 @@ public final class HighAltitudeConstants {
         public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Lowered;
 
         // Default braking mode, true for brake, false for coast.
-        public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = true;
+        public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = false;
 
         ///// AUTOS
 
@@ -80,7 +80,7 @@ public final class HighAltitudeConstants {
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static double DRIVETRAIN_AUTO_STRAIGHT_ARRIVE_OFFSET = 0.05;
+        public static double DRIVETRAIN_AUTO_STRAIGHT_ARRIVE_OFFSET = 0.1;
         // When moving straight while keeping an angle (straightMove()), this constant
         // will determine how sharp the angle correction is. The higher the values, the
         // sharper the angle correction.
@@ -112,7 +112,7 @@ public final class HighAltitudeConstants {
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS.
         public static final double DRIVETRAIN_GEAR_RATIO_SPEED = 75.0 / 7.0; // KOP - MOTOR REVS / WHEEL REVS
-        public static final double DRIVETRAIN_GEAR_RATIO_TORQUE = 225.0 / 28.0;
+        public static final double DRIVETRAIN_GEAR_RATIO_TORQUE = (50.0 / 14.0) * (48.0 / 16.0);
 
         // Use these constants to convert from encoder position to meters
         // (position*these constants = meters)

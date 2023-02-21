@@ -66,6 +66,7 @@ public class Robot extends TimedRobot {
     // OI.getInstance().getPilot().getAxis(AxisType.POV_X) + "POVy: "
     // + OI.getInstance().getPilot().getAxis(AxisType.POV_Y));
     debugStringSmartDashboard("GamePieceMode", getRobotContainer().getCurrentGamePieceMode().toString());
+    debugNumberSmartDashboard("Navx ", getRobotContainer().getNavx().getYaw());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

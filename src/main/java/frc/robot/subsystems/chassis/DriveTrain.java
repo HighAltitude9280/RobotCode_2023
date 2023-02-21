@@ -265,8 +265,8 @@ public class DriveTrain extends SubsystemBase {
      * @param turn  From -1 to 1, represents the angular velocity of the robot.
      */
     public void arcadeDrive(double speed, double turn) {
-        double leftPower = -speed - turn;
-        double rightPower = -speed + turn;
+        double leftPower = speed + turn;
+        double rightPower = speed - turn;
 
         tankDrive(leftPower, rightPower);
     }
@@ -655,7 +655,7 @@ public class DriveTrain extends SubsystemBase {
 
         } else {
 
-            leftEncoderDistance -= deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
+            leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
             rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
 
         }
@@ -688,10 +688,16 @@ public class DriveTrain extends SubsystemBase {
         Robot.debugNumberSmartDashboard("Left encoder", leftMotors.getEncoderPosition());
         Robot.debugNumberSmartDashboard("Left distance",
                 leftMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED);
+        Robot.debugNumberSmartDashboard("Left wheel angle",
+                ((leftMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED)
+                        / HighAltitudeConstants.DRIVETRAIN_WHEEL_DIAMETER));
 
         Robot.debugNumberSmartDashboard("Right encoder", rightMotors.getEncoderPosition());
         Robot.debugNumberSmartDashboard("Right distance",
                 rightMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED);
+        Robot.debugNumberSmartDashboard("Right wheel angle",
+                rightMotors.getEncoderPosition() * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED
+                        / HighAltitudeConstants.DRIVETRAIN_WHEEL_DIAMETER);
 
         Robot.debugNumberSmartDashboard("Odometry X", odometry.getPoseMeters().getX());
         Robot.debugNumberSmartDashboard("Odometry Y", odometry.getPoseMeters().getY());

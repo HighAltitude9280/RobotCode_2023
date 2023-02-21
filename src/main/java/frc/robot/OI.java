@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
+import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
@@ -16,11 +17,11 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
+        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
         copilot = new HighAltitudeJoystick(1, JoystickType.UNKNOWN);
 
-        pilot.setAxisDeadzone(AxisType.LEFT_X, 0.09);
-        pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.09);
+        pilot.setAxisDeadzone(AxisType.LEFT_X, 0.04);
+        pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.04);
         pilot.setAxisDeadzone(AxisType.LEFT_TRIGGER, 0.2);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
@@ -36,6 +37,8 @@ public class OI {
 
         pilot.onTrue(ButtonType.Y, new DrivetrainToggleDrivingMode(DrivingMode.Mecanum));
         pilot.onTrue(ButtonType.X, new DrivetrainToggleDrivingMode(DrivingMode.Swerve));
+
+        pilot.onTrue(ButtonType.TOUCHPAD, new ResetNavx());
 
         // pilot.whileTrue(ButtonType.B, new FollowAprilTag());
 

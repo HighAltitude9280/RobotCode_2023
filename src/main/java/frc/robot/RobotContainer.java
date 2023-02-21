@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.drivetrain.autonomous.Paths;
+import frc.robot.commands.drivetrain.autonomous.stepControl.MoveStraight;
 import frc.robot.commands.drivetrain.autonomous.stepControl.SplineMove;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
@@ -94,12 +95,12 @@ public class RobotContainer {
   public void generateAutos() {
     CubicSpline examplePath = SplineGenerator.generateNaturalSpline(Paths.examplePathControlPoints);
     SplineMove followExamplePath = new SplineMove(examplePath, 0.5, true, false, false, false);
+    MoveStraight oneMeter = new MoveStraight(1, 0.25);
 
     m_chooser.setDefaultOption("Example path", followExamplePath);
-    m_chooser2.setDefaultOption("xd", "a");
+    m_chooser.addOption("driveStraight oneMeter", oneMeter);
 
     SmartDashboard.putData("Auto choices", m_chooser);
-    SmartDashboard.putData("ummm", m_chooser2);
   }
 
   /**

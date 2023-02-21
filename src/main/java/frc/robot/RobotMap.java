@@ -17,16 +17,16 @@ public class RobotMap {
         public static final Value DRIVETRAIN_TRANSMISSION_TORQUE = Value.kForward;
 
         // Left side
-        public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 1, 2 };
-        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = { 1, 2 };
+        public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 2, 4 };
+        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = {};
         public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = true;
         public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_FX,
                         TypeOfMotor.TALON_FX };
 
         // Right side
-        public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 3, 4 };
-        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {};
-        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
+        public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 1, 3 };
+        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = { 1, 3 };
+        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = true;
         public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_FX,
                         TypeOfMotor.TALON_FX };
 
