@@ -265,8 +265,8 @@ public class DriveTrain extends SubsystemBase {
      * @param turn  From -1 to 1, represents the angular velocity of the robot.
      */
     public void arcadeDrive(double speed, double turn) {
-        double leftPower = -speed - turn;
-        double rightPower = -speed + turn;
+        double leftPower = speed - turn;
+        double rightPower = speed + turn;
 
         tankDrive(leftPower, rightPower);
     }
@@ -291,7 +291,8 @@ public class DriveTrain extends SubsystemBase {
      *              motors.
      */
     public void setDragonflyPower(double power) {
-        dragonflyMotors.setAll(power);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.setAll(power);
     }
 
     /**
@@ -566,7 +567,8 @@ public class DriveTrain extends SubsystemBase {
     public void setBrakeMode(boolean doBrake) {
         leftMotors.setBrakeMode(doBrake);
         rightMotors.setBrakeMode(doBrake);
-        dragonflyMotors.setBrakeMode(doBrake);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.setBrakeMode(doBrake);
     }
 
     //// Encoders and odometry
@@ -613,7 +615,8 @@ public class DriveTrain extends SubsystemBase {
 
         rightMotors.resetEncoder();
         leftMotors.resetEncoder();
-        dragonflyMotors.resetEncoder();
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_AVAILABLE)
+            dragonflyMotors.resetEncoder();
     }
 
     /**
@@ -670,8 +673,8 @@ public class DriveTrain extends SubsystemBase {
     }
 
     // Vision
-    public void follow(double target, double dist) {
-        double turnPower = (target / 320) * 0.65;
+    public void follow(double target) {
+        double turnPower = (target / 28) * 0.25;
         // double speedPower = (Math.abs(100 - dist) / 50) * 0.225;
         Robot.debugPrint("Power = " + turnPower + " Target = " + target);
         defaultDrive(turnPower, 0, 0, 0);

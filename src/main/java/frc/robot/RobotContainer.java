@@ -17,6 +17,7 @@ import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
 import frc.robot.resources.math.splines.CubicSpline;
 import frc.robot.resources.math.splines.SplineGenerator;
 import frc.robot.subsystems.DriverCameras;
+import frc.robot.subsystems.LimelightVision;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
@@ -54,6 +55,7 @@ public class RobotContainer {
   private Intake intake;
   private GamePieceMode currentGamePieceMode;
   private DriverCameras bision;
+  private LimelightVision llv;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -61,13 +63,14 @@ public class RobotContainer {
   public RobotContainer() {
     navx = new Navx();
     driveTrain = new DriveTrain();
-    // intake = new Intake();
-    //leds = new LEDs();
+    intake = new Intake();
+    // leds = new LEDs();
     // wrist = new Wrist();
     // gripper = new Gripper();
     // bision = new DriverCameras();
     // arm = new Arm();
     // extensor = new Extensor();
+    llv = new LimelightVision();
     currentGamePieceMode = GamePieceMode.MANUAL;
   }
 
@@ -85,7 +88,7 @@ public class RobotContainer {
     // arm.setDefaultCommand(new DriveArm()); // Triggers
     // extensor.setDefaultCommand(new DriveExtensor()); // POV-X
 
-    leds.setDefaultCommand(new DisplayGamePieceMode());
+    // leds.setDefaultCommand(new DisplayGamePieceMode());
 
     OI.getInstance().ConfigureButtonBindings();
   }
@@ -153,6 +156,10 @@ public class RobotContainer {
 
   public GamePieceMode getCurrentGamePieceMode() {
     return currentGamePieceMode;
+  }
+
+  public LimelightVision getLimelightVision() {
+    return llv;
   }
 
 }

@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.chassis.DriveTrain;
 
-public class FollowAprilTag extends CommandBase {
+public class FollowTarget extends CommandBase {
   DriveTrain driveTrain;
 
   /** Creates a new FollowAprilTag. */
-  public FollowAprilTag() {
+  public FollowTarget() {
     driveTrain = Robot.getRobotContainer().getDriveTrain();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(driveTrain);
@@ -27,14 +27,11 @@ public class FollowAprilTag extends CommandBase {
   @Override
   public void execute() {
 
-    double position = Robot.getRobotContainer().getVision().getCenterX();
-    double dist = Robot.getRobotContainer().getVision().getDist();
+    double position = Robot.getRobotContainer().getLimelightVision().getTx();
 
-    Robot.debugPrint("dist: " + dist);
+    Robot.debugPrint("dist: " + position);
 
-    double centeredPos = position - 320;
-
-    driveTrain.follow(centeredPos);
+    driveTrain.follow(position);
   }
 
   // Called once the command ends or is interrupted.

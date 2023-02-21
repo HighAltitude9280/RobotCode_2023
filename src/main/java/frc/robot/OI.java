@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
+import frc.robot.commands.FollowTarget;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
 import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
@@ -43,6 +44,8 @@ public class OI {
 
         pilot.whileTrue(ButtonType.LB, new IntakeIn());
         pilot.whileTrue(ButtonType.RB, new IntakeOut());
+
+        pilot.whileTrue(ButtonType.B, new FollowTarget());
 
         // pilot.toggleOnTrue(ButtonType.A, new FollowAprilTag());
     }

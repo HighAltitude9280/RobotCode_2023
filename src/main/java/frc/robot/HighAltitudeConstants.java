@@ -54,7 +54,7 @@ public final class HighAltitudeConstants {
         public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Lowered;
 
         // Default braking mode, true for brake, false for coast.
-        public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = true;
+        public static boolean DRIVETRAIN_MOTORS_BRAKING_MODE = false;
 
         ///// AUTOS
 
