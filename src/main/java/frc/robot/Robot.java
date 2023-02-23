@@ -4,13 +4,12 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -24,7 +23,7 @@ import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private static RobotContainer m_robotContainer;
+  private static RobotContainer robotContainer;
   VictorSPX motor1, motor2;
 
   /**
@@ -37,11 +36,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
     getRobotContainer().getDriveTrain().resetOdometry();
     getRobotContainer().configureButtonBindings();
-    motor1 = new VictorSPX(7);
-    motor1 = new VictorSPX(8);
 
     getRobotContainer().generateAutos();
   }
@@ -88,7 +85,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -126,11 +123,32 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    motor1.set(ControlMode.PercentOutput, OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y));
-    motor2.set(ControlMode.PercentOutput, -OI.getInstance().getPilot().getAxis(AxisType.RIGHT_Y));
+  }
+
+  public static void debugPrint(String s) {
+    if (HighAltitudeConstants.DEBUG)
+      System.out.println(s);
+  }
+
+  public static void debugNumberSmartDashboard(String key, double value) {
+    if (HighAltitudeConstants.DEBUG)
+      SmartDashboard.putNumber(key, value);
+  }
+
+  public static void debugStringSmartDashboard(String key, String value) {
+    if (HighAltitudeConstants.DEBUG)
+      SmartDashboard.putString(key, value);
   }
 
   public static RobotContainer getRobotContainer() {
-    return m_robotContainer;
+    return robotContainer;
+  }
+
+  boolean goingToLose() {
+    return false;
+  }
+
+  void dont() {
+
   }
 }

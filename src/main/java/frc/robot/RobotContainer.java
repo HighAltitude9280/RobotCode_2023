@@ -14,6 +14,11 @@ import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.resources.components.Navx;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.gripper.Gripper;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.transport.Arm;
+import frc.robot.subsystems.transport.Extensor;
+import frc.robot.subsystems.transport.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -27,11 +32,25 @@ import frc.robot.subsystems.DriveTrain;
 
 public class RobotContainer {
 
+  public enum GamePieceMode {
+    CUBE, CONE, MANUAL
+  }
+
   private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private Navx navx;
   private DriveTrain driveTrain;
+  // private LEDs leds;
+  // private Vision parkerVision;
+  private Wrist wrist;
+  private Gripper gripper;
+  private Arm arm;
+  private Extensor extensor;
+  private Intake intake;
+  private GamePieceMode currentGamePieceMode;
+  // private DriverCameras bision;
+  // private LimelightVision llv;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -85,5 +104,33 @@ public class RobotContainer {
 
   public DriveTrain getDriveTrain() {
     return driveTrain;
+  }
+
+  public Wrist getWrist() {
+    return wrist;
+  }
+
+  public Gripper getGripper() {
+    return gripper;
+  }
+
+  public Arm getArm() {
+    return arm;
+  }
+
+  public Extensor getExtensor() {
+    return extensor;
+  }
+
+  public Intake getIntake() {
+    return intake;
+  }
+
+  public void setCurrentGamePieceMode(GamePieceMode mode) {
+    currentGamePieceMode = mode;
+  }
+
+  public GamePieceMode getCurrentGamePieceMode() {
+    return currentGamePieceMode;
   }
 }
