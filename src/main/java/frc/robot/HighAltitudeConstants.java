@@ -4,8 +4,9 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.DriveTrain.TransmissionMode;
-import frc.robot.subsystems.DriveTrain.WheelState;
+import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
+import frc.robot.subsystems.chassis.DriveTrain.WheelState;
+import frc.robot.subsystems.intake.Intake.IntakePosition;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -291,6 +292,8 @@ public final class HighAltitudeConstants {
 
         // Default braking mode, true for brake, false for coast.
         public static final boolean INTAKE_MOTORS_BRAKING_MODE = true;
+
+        public static final IntakePosition INTAKE_INITIAL_POSITION = IntakePosition.STORED;
 
         public static final double INTAKE_IN_SPEED = 0.5;
         public static final double INTAKE_OUT_SPEED = -0.5;

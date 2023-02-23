@@ -13,7 +13,9 @@ import frc.robot.commands.autonomous.Paths;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.resources.components.Navx;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.resources.components.PWMLEDStrip.LEDs;
+import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
+import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transport.Arm;
@@ -41,7 +43,7 @@ public class RobotContainer {
 
   private Navx navx;
   private DriveTrain driveTrain;
-  // private LEDs leds;
+  private LEDs leds;
   // private Vision parkerVision;
   private Wrist wrist;
   private Gripper gripper;
@@ -57,8 +59,10 @@ public class RobotContainer {
    */
   public RobotContainer() {
     navx = new Navx();
-
     driveTrain = new DriveTrain();
+
+    leds = new LEDs();
+    currentGamePieceMode = GamePieceMode.MANUAL;
   }
 
   /**
@@ -71,7 +75,7 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-
+    leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();
   }
 
@@ -124,6 +128,10 @@ public class RobotContainer {
 
   public Intake getIntake() {
     return intake;
+  }
+
+  public LEDs getLeds() {
+    return leds;
   }
 
   public void setCurrentGamePieceMode(GamePieceMode mode) {

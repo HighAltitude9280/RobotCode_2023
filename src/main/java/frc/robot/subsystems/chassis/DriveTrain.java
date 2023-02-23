@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.chassis;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -64,7 +64,7 @@ public class DriveTrain extends SubsystemBase {
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[1]);
 
-        if (RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_IS_AVAILABLE)
             dragonflySolenoid = new DoubleSolenoid(RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE,
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[1]);
@@ -77,18 +77,17 @@ public class DriveTrain extends SubsystemBase {
 
         rightMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_RIGHT_MOTOR_PORTS,
                 RobotMap.DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_RIGHT_MOTOR_TYPES);
-                
+
         leftMotors.setEncoderInverted(RobotMap.DRIVETRAIN_LEFT_ENCODER_IS_INVERTED);
         rightMotors.setEncoderInverted(RobotMap.DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED);
 
-        if(RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
-        {
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_IS_AVAILABLE) {
             dragonflyMotors = new HighAltitudeMotorGroup(RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_PORTS,
-                RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
+                    RobotMap.DRIVETRAIN_DRAGONFLY_INVERTED_MOTORS_PORTS, RobotMap.DRIVETRAIN_DRAGONFLY_MOTOR_TYPES);
 
             dragonflyMotors.setEncoderInverted(RobotMap.DRIVETRAIN_DRAGONFLY_ENCODER_IS_INVERTED);
         }
-        
+
         setBrakeMode(HighAltitudeConstants.DRIVETRAIN_MOTORS_BRAKING_MODE);
         setTransmissionState(HighAltitudeConstants.DRIVETRAIN_INITIAL_TRANSMISSION_MODE);
         setDragonflySolenoid(HighAltitudeConstants.DRIVETRAIN_INITIAL_DRAGONFLY_STATE);
@@ -182,7 +181,7 @@ public class DriveTrain extends SubsystemBase {
         double deltaAngle = Math.deltaAngle(currentAngle, drivingAngle);
 
         double proportionalCorrection = deltaAngle * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_ANGLE_CORRECTION;
-        double expectedCorrection = -x*HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION;
+        double expectedCorrection = -x * HighAltitudeConstants.DRIVETRAIN_DRAGONFLY_EXPECTED_CORRECTION;
         double correction = proportionalCorrection + expectedCorrection;
 
         double desiredDirection = Math.atan(Math.abs(y / x));
@@ -192,10 +191,10 @@ public class DriveTrain extends SubsystemBase {
 
         if (desiredDirection < minAngleAtMaxPower) {
             xPower = x;
-            yPower = Math.tan(desiredDirection) * Math.abs(xPower) * (y/Math.abs(y));
+            yPower = Math.tan(desiredDirection) * Math.abs(xPower) * (y / Math.abs(y));
         } else {
             yPower = y;
-            xPower = Math.abs(y) / Math.tan(desiredDirection) * x/Math.abs(x);
+            xPower = Math.abs(y) / Math.tan(desiredDirection) * x / Math.abs(x);
         }
 
         arcadeDrive(yPower, correction);
@@ -293,7 +292,8 @@ public class DriveTrain extends SubsystemBase {
      *              motors.
      */
     public void setDragonflyPower(double power) {
-        dragonflyMotors.setAll(power);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_IS_AVAILABLE)
+            dragonflyMotors.setAll(power);
     }
 
     /**
@@ -433,7 +433,7 @@ public class DriveTrain extends SubsystemBase {
      *              lowered.
      */
     public void setDragonflySolenoid(WheelState state) {
-        if (!RobotMap.DRIVETRAIN_DRAGONFLY_IS_AVAILABLE)
+        if (!RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_IS_AVAILABLE)
             return;
 
         if (state == WheelState.Lowered) {
@@ -508,7 +508,7 @@ public class DriveTrain extends SubsystemBase {
      */
     public void setTransmissionState(TransmissionMode state) {
 
-        if(!RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
+        if (!RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
             return;
 
         transmissionState = state;
@@ -568,7 +568,8 @@ public class DriveTrain extends SubsystemBase {
     public void setBrakeMode(boolean doBrake) {
         leftMotors.setBrakeMode(doBrake);
         rightMotors.setBrakeMode(doBrake);
-        dragonflyMotors.setBrakeMode(doBrake);
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_IS_AVAILABLE)
+            dragonflyMotors.setBrakeMode(doBrake);
     }
 
     //// Encoders and odometry
@@ -615,7 +616,8 @@ public class DriveTrain extends SubsystemBase {
 
         rightMotors.resetEncoder();
         leftMotors.resetEncoder();
-        dragonflyMotors.resetEncoder();
+        if (RobotMap.DRIVETRAIN_DRAGONFLY_WHEEL_IS_AVAILABLE)
+            dragonflyMotors.resetEncoder();
     }
 
     /**
@@ -635,8 +637,7 @@ public class DriveTrain extends SubsystemBase {
     /**
      * @return The differential drive odometry object.
      */
-    public DifferentialDriveOdometry getOdometry()
-    {
+    public DifferentialDriveOdometry getOdometry() {
         return odometry;
     }
 
