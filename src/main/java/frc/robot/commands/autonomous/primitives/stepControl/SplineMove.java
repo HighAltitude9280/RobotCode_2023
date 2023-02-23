@@ -1,7 +1,6 @@
 package frc.robot.commands.autonomous.primitives.stepControl;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -69,56 +68,44 @@ public class SplineMove extends CommandBase {
 
     // Returns true when the command should end.
     @Override
-    public boolean isFinished() 
-    {
+    public boolean isFinished() {
 
         DifferentialDriveOdometry odometry = Robot.getRobotContainer().getDriveTrain().getOdometry();
 
-        //The error in the Y axis (or x if vertical)
+        // The error in the Y axis (or x if vertical)
         double error = 0;
         double currentSlope = 0;
         double targetAngle = 0;
 
-        if (vertical) 
-        {
+        if (vertical) {
             currentSlope = spline.fPrime(odometry.getPoseMeters().getY());
             error = odometry.getPoseMeters().getX() - spline.f(odometry.getPoseMeters().getY());
-        } 
-        else 
-        {
+        } else {
             currentSlope = spline.fPrime(odometry.getPoseMeters().getX());
             error = odometry.getPoseMeters().getY() - spline.f(odometry.getPoseMeters().getX());
         }
 
         targetAngle = Math.angleFromSlope(currentSlope, vertical);
 
-        if( (vertical || reverse || inverted) && !(vertical && reverse && inverted))
-        {
+        if ((vertical || reverse || inverted) && !(vertical && reverse && inverted)) {
             targetAngle -= error * HighAltitudeConstants.SPLINE_DRIVE_ERROR_CORRECTION;
-        }
-        else    
-        {
+        } else {
             targetAngle += error * HighAltitudeConstants.SPLINE_DRIVE_ERROR_CORRECTION;
         }
-            
 
-        if ((inverted || reverse) && !(inverted&&reverse))
-        {
+        if ((inverted || reverse) && !(inverted && reverse)) {
             targetAngle = Math.getOppositeAngle(targetAngle);
         }
-        
 
         double finalXPosition = spline.getFinalXPosition();
 
-        if (inverted) 
-        {
+        if (inverted) {
             finalXPosition = spline.getInitialXPosition();
         }
-        
+
         double finalYPosition = spline.f(finalXPosition);
 
-        if(vertical)
-        {
+        if (vertical) {
             double bubble = finalXPosition;
             finalXPosition = finalYPosition;
             finalYPosition = bubble;
@@ -127,25 +114,24 @@ public class SplineMove extends CommandBase {
         double distanceToTarget = Math.distance(odometry.getPoseMeters().getX(), finalXPosition,
                 odometry.getPoseMeters().getY(), finalYPosition);
 
-
-        if (reverse) 
+        if (reverse)
             maxSpeed = -Math.abs(maxSpeed);
-            
+
         double power = maxSpeed;
 
-        if (speedReduction) 
-        {
+        if (speedReduction) {
             double speedReductionCorrection = Math
-                    .clamp(distanceToTarget / (HighAltitudeConstants.SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE*maxSpeed), 0, 1);
+                    .clamp(distanceToTarget
+                            / (HighAltitudeConstants.SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE * maxSpeed), 0, 1);
 
             power = speedReductionCorrection * maxSpeed;
 
-            if(distanceToTarget < HighAltitudeConstants.DRIVETRAIN_SPLINE_ARRIVE_OFFSET)
+            if (distanceToTarget < HighAltitudeConstants.DRIVETRAIN_SPLINE_ARRIVE_OFFSET)
                 Robot.getRobotContainer().getDriveTrain().stop();
         }
 
         double deltaAngle = Math.deltaAngle(Robot.getRobotContainer().getNavx().getYaw(), targetAngle);
-        double turnCorrectionPower = deltaAngle*HighAltitudeConstants.DRIVETRAIN_SPLINE_ANGLE_CORRECTION;
+        double turnCorrectionPower = deltaAngle * HighAltitudeConstants.DRIVETRAIN_SPLINE_ANGLE_CORRECTION;
 
         Robot.getRobotContainer().getDriveTrain().arcadeDrive(power, turnCorrectionPower);
 
