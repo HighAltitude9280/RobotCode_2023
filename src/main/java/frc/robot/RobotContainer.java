@@ -21,6 +21,7 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Extensor;
 import frc.robot.subsystems.transport.Wrist;
+import frc.robot.subsystems.vision.LimeLightVision;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -44,7 +45,7 @@ public class RobotContainer {
   private Navx navx;
   private DriveTrain driveTrain;
   private LEDs leds;
-  // private Vision parkerVision;
+  private LimeLightVision limeLightVision;
   private Wrist wrist;
   private Gripper gripper;
   private Arm arm;
@@ -60,7 +61,7 @@ public class RobotContainer {
   public RobotContainer() {
     navx = new Navx();
     driveTrain = new DriveTrain();
-
+    limeLightVision = new LimeLightVision();
     leds = new LEDs();
     currentGamePieceMode = GamePieceMode.MANUAL;
   }
@@ -132,6 +133,10 @@ public class RobotContainer {
 
   public LEDs getLeds() {
     return leds;
+  }
+
+  public LimeLightVision getLimeLightVision() {
+    return limeLightVision;
   }
 
   public void setCurrentGamePieceMode(GamePieceMode mode) {
