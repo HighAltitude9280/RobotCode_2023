@@ -148,6 +148,9 @@ public final class HighAltitudeConstants {
         // constant, it will be considered on target.
         public static final double WRIST_ARRIVE_OFFSET = 4;
 
+        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
+        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;
+
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
@@ -171,11 +174,14 @@ public final class HighAltitudeConstants {
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
         public static final double EXTENSOR_BRAKING_METERS = 15;
+
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-
         public static final double EXTENSOR_ARRIVE_OFFSET = 4;
+
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 999999999;
+        public static final double EXTENSOR_LOWER_LIMIT_METERS = -999999999;
 
         //////////////////////////////// ARM ///////////////////////////////////////////
 
@@ -202,6 +208,9 @@ public final class HighAltitudeConstants {
         // constant, it will be considered on target.
 
         public static final double ARM_ARRIVE_OFFSET = 4;
+
+        public static final double ARM_UPPER_LIMIT_DEGREES = 999999999;
+        public static final double ARM_LOWER_LIMIT_DEGREES = -999999999;
 
         //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
