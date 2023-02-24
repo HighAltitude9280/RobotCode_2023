@@ -61,6 +61,12 @@ public class RobotContainer {
   public RobotContainer() {
     navx = new Navx();
     driveTrain = new DriveTrain();
+    wrist = new Wrist();
+    gripper = new Gripper();
+    arm = new Arm();
+
+    intake = new Intake();
+
     limeLightVision = new LimeLightVision();
     leds = new LEDs();
     currentGamePieceMode = GamePieceMode.MANUAL;

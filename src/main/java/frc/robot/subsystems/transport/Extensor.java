@@ -47,7 +47,9 @@ public class Extensor extends SubsystemBase {
       return true;
     }
 
-    double power = delta / (HighAltitudeConstants.EXTENSOR_BRAKING_METERS * maxPower * maxPower);
+    // double power = delta / (HighAltitudeConstants.EXTENSOR_BRAKING_METERS *
+    // maxPower * maxPower);
+    double power = delta / HighAltitudeConstants.EXTENSOR_BRAKING_METERS;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     extensorMotors.setAll(power);

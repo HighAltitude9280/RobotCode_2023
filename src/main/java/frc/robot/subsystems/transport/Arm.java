@@ -40,7 +40,9 @@ public class Arm extends SubsystemBase {
       return true;
     }
 
-    double power = delta / (HighAltitudeConstants.ARM_BRAKING_DEGREES * maxPower * maxPower);
+    // double power = delta / (HighAltitudeConstants.ARM_BRAKING_DEGREES * maxPower
+    // * maxPower);
+    double power = delta / HighAltitudeConstants.ARM_BRAKING_DEGREES;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     armMotors.setAll(power);
