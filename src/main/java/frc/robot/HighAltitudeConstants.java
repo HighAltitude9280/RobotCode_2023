@@ -101,6 +101,10 @@ public final class HighAltitudeConstants {
         public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
         public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
 
+        /// Alignment
+
+        public static final double DRIVETRAIN_ALIGN_MAX_SPEED = 0.5;
+
         ///// ENCODERS AND GEARBOX
 
         // The reported encoder position after one revolution, check encoder
