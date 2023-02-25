@@ -19,8 +19,8 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
-        copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
+        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        copilot = new HighAltitudeJoystick(1, JoystickType.UNKNOWN);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));

@@ -68,6 +68,11 @@ public class Robot extends TimedRobot {
     getRobotContainer().putAutoChooser();
 
     debugStringSmartDashboard("Current Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
+    debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
+    debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
+    debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
+    debugNumberSmartDashboard("AngAccPitch", getRobotContainer().getNavx().getAngularAccelerationPitch());
+    debugNumberSmartDashboard("AngAccRoll", getRobotContainer().getNavx().getAngularAccelerationPitch());
 
   }
 

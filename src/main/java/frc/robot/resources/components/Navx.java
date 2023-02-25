@@ -19,10 +19,8 @@ public class Navx {
     private double kCollisionThreshold_DeltaG = 1.5f;
 
     private double last_time;
-    private double last_angular_velocity_pitch;
-    private double angular_acceleration_pitch;
-
-    
+    private double last_angular_velocity_pitch, last_angular_velocity_roll;
+    private double angular_acceleration_pitch, angular_acceleration_roll;
 
     public Navx() {
         try {
@@ -35,6 +33,7 @@ public class Navx {
         last_world_linear_accel_y = 0.0f;
 
         last_angular_velocity_pitch = 0;
+        last_angular_velocity_roll = 0;
         last_time = Timer.getFPGATimestamp();
     }
 
@@ -45,6 +44,8 @@ public class Navx {
 
         double delta_angular_velocity_pitch = last_angular_velocity_pitch - ahrs.getRawGyroX();
         angular_acceleration_pitch = delta_angular_velocity_pitch / (Timer.getFPGATimestamp() - last_time);
+        double delta_angular_velocity_roll = last_angular_velocity_roll - ahrs.getRawGyroY();
+        angular_acceleration_roll = delta_angular_velocity_roll / (Timer.getFPGATimestamp() - last_time);
 
         last_time = Timer.getFPGATimestamp();
     }
@@ -75,12 +76,20 @@ public class Navx {
 
     /**
      * 
-     * @return the rate at which the angular velocity of the x-axis (pitch) changes 
-     * in degrees per square second.
+     * @return the rate at which the angular velocity of the x-axis (pitch) changes
+     *         in degrees per square second.
      */
-    public double getAngularAccelerationPitch()
-    {
+    public double getAngularAccelerationPitch() {
         return angular_acceleration_pitch;
+    }
+
+    /**
+     * 
+     * @return the rate at which the angular velocity of the x-axis (pitch) changes
+     *         in degrees per square second.
+     */
+    public double getAngularAccelerationRoll() {
+        return angular_acceleration_roll;
     }
 
     public void reset() {
