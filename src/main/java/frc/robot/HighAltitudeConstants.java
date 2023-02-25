@@ -101,28 +101,33 @@ public final class HighAltitudeConstants {
         public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
         public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
 
-        ///Auto balancing 
+        /// Alignment
+        public static final double DRIVETRAIN_ALIGN_MAX_SPEED = 0.5;
 
+        /// Auto balancing
 
-        //Units are in degrees and seconds
+        // Units are in degrees and seconds
 
-        //If the absolute value of the angular acceleration is smaller than this value, 
-        //The robot will be consider as stable on the charging station
+        // If the absolute value of the angular acceleration is smaller than this value,
+        // The robot will be consider as stable on the charging station
         public static final double BALANCING_ACCELERATION_THRESHOLD = 180;
 
-        //If the absolute value of the angle (pitch) is smaller than this value, 
-        //The robot will be consider as balanced on the charging station.
-        //Be careful with small values (less than about 10°), because some bounciness can occur. 
+        // If the absolute value of the angle (pitch) is smaller than this value,
+        // The robot will be consider as balanced on the charging station.
+        // Be careful with small values (less than about 10°), because some bounciness
+        // can occur.
         public static final double BALANCING_ANGLE_THRESHOLD = 20;
 
-        // When trying to balance, this is the default power at which the robot will move to 
-        // Try to balance the charging station. It is recommended to set it low to improve accuracy.
+        // When trying to balance, this is the default power at which the robot will
+        // move to
+        // Try to balance the charging station. It is recommended to set it low to
+        // improve accuracy.
         public static final double BALANCING_DEFAULT_POWER = 0.3;
 
-        //To prevent the robot from falling off the charging station, it will not move
-        //Unless it's properly aligned, that is to say, its angle is less than this value.
+        // To prevent the robot from falling off the charging station, it will not move
+        // Unless it's properly aligned, that is to say, its angle is less than this
+        // value.
         public static final double BALANCING_ALIGNED_THRESHOLD = 5;
-
 
         ///// ENCODERS AND GEARBOX
 
@@ -171,6 +176,9 @@ public final class HighAltitudeConstants {
         // constant, it will be considered on target.
         public static final double WRIST_ARRIVE_OFFSET = 4;
 
+        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
+        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;
+
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
@@ -200,6 +208,9 @@ public final class HighAltitudeConstants {
 
         public static final double EXTENSOR_ARRIVE_OFFSET = 4;
 
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 999999999;
+        public static final double EXTENSOR_LOWER_LIMIT_METERS = -999999999;
+
         //////////////////////////////// ARM ///////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
@@ -225,6 +236,9 @@ public final class HighAltitudeConstants {
         // constant, it will be considered on target.
 
         public static final double ARM_ARRIVE_OFFSET = 4;
+
+        public static final double ARM_UPPER_LIMIT_DEGREES = 999999999;
+        public static final double ARM_LOWER_LIMIT_DEGREES = -999999999;
 
         //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
