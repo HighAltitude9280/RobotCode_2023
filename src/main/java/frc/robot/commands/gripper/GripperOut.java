@@ -27,22 +27,21 @@ public class GripperOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
-    if (currentMode != null) {
-      switch (currentMode) {
-        case CONE:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED);
-          break;
-        case CUBE:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED);
-          break;
-        case MANUAL:
-          gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
-          break;
-      }
-    } else
-      gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
+    GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
+    switch (currentMode) {
+      case CONE:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED);
+        break;
+      case CUBE:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED);
+        break;
+      case MANUAL:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
+        break;
+      default:
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
+    }
   }
 
   // Called once the command ends or is interrupted.

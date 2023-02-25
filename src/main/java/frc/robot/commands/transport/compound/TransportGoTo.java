@@ -4,8 +4,10 @@
 
 package frc.robot.commands.transport.compound;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.HighAltitudeConstants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.transport.arm.DriveArmToPosition;
 import frc.robot.commands.transport.extensor.DriveExtensorToPosition;
@@ -45,14 +47,14 @@ public class TransportGoTo extends SequentialCommandGroup {
     private double extensorTargetCone, armTargetCone, wristTargetCone;
     private double extensorTargetCube, armTargetCube, wristTargetCube;
 
-    private TransportTarget(double eCone, double aCone, double wCone,
-        double eCube, double aCube, double wCube) {
-      extensorTargetCone = eCone;
-      armTargetCone = aCone;
-      wristTargetCone = wCone;
-      extensorTargetCube = eCube;
-      armTargetCube = aCube;
-      wristTargetCube = wCube;
+    private TransportTarget(double extensorTargetCone, double armTargetCone, double wristTargetCone,
+        double extensorTargetCube, double armTargetCube, double wristTargetCube) {
+      this.extensorTargetCone = extensorTargetCone;
+      this.armTargetCone = armTargetCone;
+      this.wristTargetCone = wristTargetCone;
+      this.extensorTargetCube = extensorTargetCube;
+      this.armTargetCube = armTargetCube;
+      this.wristTargetCube = wristTargetCube;
     }
 
     public double getExtensorTargetCone() {
@@ -82,11 +84,11 @@ public class TransportGoTo extends SequentialCommandGroup {
 
   /** Creates a new TransportGoTo. */
   public TransportGoTo(TransportTarget target) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
     wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
     armMaxPower = HighAltitudeConstants.ARM_AUTO_MAX_POWER;
     extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
+
+    currentGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
     switch (currentGamePieceMode) {
       case CONE:
@@ -106,8 +108,9 @@ public class TransportGoTo extends SequentialCommandGroup {
     }
 
     addCommands(
-        new DriveExtensorToPosition(extensorTarget, extensorMaxPower),
-        new DriveArmToPosition(armTarget, armMaxPower),
+        Commands.parallel(
+            new DriveArmToPosition(armTarget, armMaxPower),
+            new DriveExtensorToPosition(extensorTarget, extensorMaxPower)),
         new DriveWristToPosition(wristTarget, wristMaxPower));
   }
 }

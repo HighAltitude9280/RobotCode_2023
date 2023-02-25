@@ -1,13 +1,16 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
+import frc.robot.commands.intake.IntakeIn;
+import frc.robot.commands.intake.IntakeOut;
+import frc.robot.commands.intake.ToggleIntakePosition;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.transport.compound.TransportGoTo;
+import frc.robot.commands.transport.compound.TransportGoTo.TransportTarget;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.JoystickType;
-import frc.robot.subsystems.chassis.DriveTrain.DrivingMode;
 
 public class OI {
 
@@ -17,32 +20,20 @@ public class OI {
 
     public void ConfigureButtonBindings() {
         pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
-        copilot = new HighAltitudeJoystick(1, JoystickType.UNKNOWN);
-
-        pilot.setAxisDeadzone(AxisType.LEFT_X, 0.09);
-        pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.09);
-        pilot.setAxisDeadzone(AxisType.LEFT_TRIGGER, 0.2);
+        copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
-
         pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL), ButtonType.START, ButtonType.BACK);
 
-        // pilot.onTrue(ButtonType.B, new ResetTransportEncoders());
+        pilot.onTrue(ButtonType.A, new ToggleIntakePosition());
+        pilot.onTrue(ButtonType.LB, new IntakeIn());
+        pilot.onTrue(ButtonType.RB, new IntakeOut());
 
-        // pilot.onTrue(ButtonType.Y, new ToggleGamePieceMode());
-
-        // pilot.onTrue(ButtonType.X, new DrivetrainToggleDragonflySolenoid());
-
-        pilot.onTrue(ButtonType.Y, new DrivetrainToggleDrivingMode(DrivingMode.Mecanum));
-        pilot.onTrue(ButtonType.X, new DrivetrainToggleDrivingMode(DrivingMode.Swerve));
-
-        // pilot.whileTrue(ButtonType.B, new FollowAprilTag());
-
-        // pilot.whileTrue(ButtonType.LB, new IntakeIn());
-        // pilot.whileTrue(ButtonType.RB, new IntakeOut());
-
-        // pilot.toggleOnTrue(ButtonType.A, new FollowAprilTag());
+        copilot.onTrue(ButtonType.A, new TransportGoTo(TransportTarget.BOTTOM_ROW));
+        copilot.onTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
+        copilot.onTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
+        copilot.onTrue(ButtonType.B, new TransportGoTo(TransportTarget.INTAKE));
     }
 
     public static OI getInstance() {
@@ -50,6 +41,34 @@ public class OI {
             instance = new OI();
         }
         return instance;
+    }
+
+    public double getDefaultDriveX() {
+        return pilot.getAxis(AxisType.LEFT_X);
+    }
+
+    public double getDefaultDriveY() {
+        return pilot.getAxis(AxisType.LEFT_Y);
+    }
+
+    public double getDefaultDriveTurn() {
+        return pilot.getAxis(AxisType.RIGHT_X);
+    }
+
+    public double getDefaultDriveDragonfly() {
+        return pilot.getAxis(AxisType.RIGHT_X);
+    }
+
+    public double getWristInput() {
+        return pilot.getPovXAxis();
+    }
+
+    public double getArmInput() {
+        return pilot.getPovYAxis();
+    }
+
+    public double getExtensorInput() {
+        return pilot.getTriggers();
     }
 
     public HighAltitudeJoystick getPilot() {

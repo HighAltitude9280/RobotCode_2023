@@ -28,6 +28,9 @@ public class Wrist extends SubsystemBase {
   }
 
   public void driveWrist(double speed) {
+    if (wristPositionDegrees < HighAltitudeConstants.WRIST_LOWER_LIMIT_DEGREES
+        || wristPositionDegrees > HighAltitudeConstants.WRIST_UPPER_LIMIT_DEGREES)
+      return;
     wristMotors.setAll(speed);
     Robot.debugPrint("WristPower: " + speed);
   }
@@ -40,7 +43,9 @@ public class Wrist extends SubsystemBase {
       return true;
     }
 
-    double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES * maxPower * maxPower);
+    // double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES *
+    // maxPower * maxPower);
+    double power = delta / HighAltitudeConstants.WRIST_BRAKING_DEGREES;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     wristMotors.setAll(power);

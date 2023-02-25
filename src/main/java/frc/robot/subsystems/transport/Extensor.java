@@ -35,6 +35,9 @@ public class Extensor extends SubsystemBase {
   }
 
   public void driveExtensor(double speed) {
+    if (extensorPositionMeters < HighAltitudeConstants.EXTENSOR_LOWER_LIMIT_METERS
+        || extensorPositionMeters > HighAltitudeConstants.EXTENSOR_UPPER_LIMIT_METERS)
+      return;
     Robot.debugPrint("ExtensorPower: " + speed);
     extensorMotors.setAll(speed);
   }
@@ -47,7 +50,9 @@ public class Extensor extends SubsystemBase {
       return true;
     }
 
-    double power = delta / (HighAltitudeConstants.EXTENSOR_BRAKING_METERS * maxPower * maxPower);
+    // double power = delta / (HighAltitudeConstants.EXTENSOR_BRAKING_METERS *
+    // maxPower * maxPower);
+    double power = delta / HighAltitudeConstants.EXTENSOR_BRAKING_METERS;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     extensorMotors.setAll(power);

@@ -34,12 +34,12 @@ public class DriveExtensorToPosition extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    extensor.moveTo(targetDegrees, maxPower);
+    extensor.driveExtensor(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return extensor.moveTo(targetDegrees, maxPower);
   }
 }

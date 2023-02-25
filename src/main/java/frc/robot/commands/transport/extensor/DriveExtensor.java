@@ -7,6 +7,7 @@ package frc.robot.commands.transport.extensor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
+import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.subsystems.transport.Extensor;
 
 public class DriveExtensor extends CommandBase {
@@ -27,7 +28,8 @@ public class DriveExtensor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    extensor.driveExtensor(OI.getInstance().getPilot().getPovXAxis() * 0.1);
+    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.MANUAL)
+      extensor.driveExtensor(OI.getInstance().getExtensorInput() * 0.25);
   }
 
   // Called once the command ends or is interrupted.
