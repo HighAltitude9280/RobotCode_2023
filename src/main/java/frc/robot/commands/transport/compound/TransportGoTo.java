@@ -4,6 +4,7 @@
 
 package frc.robot.commands.transport.compound;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -107,8 +108,9 @@ public class TransportGoTo extends SequentialCommandGroup {
     }
 
     addCommands(
-        new DriveExtensorToPosition(extensorTarget, extensorMaxPower),
-        new DriveArmToPosition(armTarget, armMaxPower),
+        Commands.parallel(
+            new DriveArmToPosition(armTarget, armMaxPower),
+            new DriveExtensorToPosition(extensorTarget, extensorMaxPower)),
         new DriveWristToPosition(wristTarget, wristMaxPower));
   }
 }

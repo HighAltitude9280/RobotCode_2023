@@ -7,7 +7,6 @@ package frc.robot.subsystems.vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 
 public class LimeLightVision extends SubsystemBase {
   NetworkTable table;
@@ -19,7 +18,7 @@ public class LimeLightVision extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Robot.debugPrint("Target available?: " + getTv());
+    // Robot.debugPrint("Target available?: " + getTv());
     // This method will be called once per scheduler run
   }
 
@@ -29,6 +28,10 @@ public class LimeLightVision extends SubsystemBase {
 
   public double getTx() {
     return table.getEntry("tx").getDouble(0);
+  }
+
+  public double getTy() {
+    return table.getEntry("ty").getDouble(0);
   }
 
   public double getTa() {

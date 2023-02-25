@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.autonomous.Paths;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.transport.arm.DriveArm;
+import frc.robot.commands.transport.extensor.DriveExtensor;
+import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
@@ -64,6 +67,7 @@ public class RobotContainer {
     wrist = new Wrist();
     gripper = new Gripper();
     arm = new Arm();
+    extensor = new Extensor();
 
     intake = new Intake();
 
@@ -82,6 +86,10 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     driveTrain.setDefaultCommand(new DefaultDrive());
+    wrist.setDefaultCommand(new DriveWrist());
+    arm.setDefaultCommand(new DriveArm());
+    wrist.setDefaultCommand(new DriveWrist());
+    extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();
   }

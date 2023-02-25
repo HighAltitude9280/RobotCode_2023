@@ -19,7 +19,7 @@ public class OI {
     private HighAltitudeJoystick pilot, copilot;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
         copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
@@ -60,15 +60,15 @@ public class OI {
     }
 
     public double getWristInput() {
-        return copilot.getPovXAxis();
+        return pilot.getPovXAxis();
     }
 
     public double getArmInput() {
-        return copilot.getPovYAxis();
+        return pilot.getPovYAxis();
     }
 
     public double getExtensorInput() {
-        return copilot.getTriggers();
+        return pilot.getTriggers();
     }
 
     public HighAltitudeJoystick getPilot() {
