@@ -2,7 +2,6 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.drivingModes.DrivetrainToggleDrivingMode;
-import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
@@ -38,7 +37,7 @@ public class OI {
         pilot.onTrue(ButtonType.Y, new DrivetrainToggleDrivingMode(DrivingMode.Mecanum));
         pilot.onTrue(ButtonType.X, new DrivetrainToggleDrivingMode(DrivingMode.Swerve));
 
-        pilot.onTrue(ButtonType.TOUCHPAD, new ResetNavx());
+        // pilot.onTrue(ButtonType.TOUCHPAD, new ResetNavx());
 
         // pilot.whileTrue(ButtonType.B, new FollowAprilTag());
 
