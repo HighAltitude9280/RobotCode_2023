@@ -11,7 +11,7 @@ public class CubeThenConeRed extends SequentialCommandGroup
 
     public CubeThenConeRed()
     {
-        super(
+        addCommands(
             //Place pre-loaded cube
             new resetOdometry(1.91, 4.42),
             //Start intake

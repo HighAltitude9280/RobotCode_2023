@@ -3,6 +3,7 @@ package frc.robot.resources.components;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 
 public class Navx {
     private double yaw;
@@ -17,6 +18,12 @@ public class Navx {
     private double currentJerkY;
     private double kCollisionThreshold_DeltaG = 1.5f;
 
+    private double last_time;
+    private double last_angular_velocity_pitch;
+    private double angular_acceleration_pitch;
+
+    
+
     public Navx() {
         try {
             ahrs = new AHRS(SPI.Port.kMXP);
@@ -26,12 +33,20 @@ public class Navx {
         }
         last_world_linear_accel_x = 0.0f;
         last_world_linear_accel_y = 0.0f;
+
+        last_angular_velocity_pitch = 0;
+        last_time = Timer.getFPGATimestamp();
     }
 
     public void run() {
         yaw = ahrs.getYaw();
         rate = ahrs.getRawMagY();
         acceleration = ahrs.getRawAccelY();
+
+        double delta_angular_velocity_pitch = last_angular_velocity_pitch - ahrs.getRawGyroX();
+        angular_acceleration_pitch = delta_angular_velocity_pitch / (Timer.getFPGATimestamp() - last_time);
+
+        last_time = Timer.getFPGATimestamp();
     }
 
     public double getYaw() {
@@ -56,6 +71,16 @@ public class Navx {
 
     public double getAcceleration() {
         return acceleration;
+    }
+
+    /**
+     * 
+     * @return the rate at which the angular velocity of the x-axis (pitch) changes 
+     * in degrees per square second.
+     */
+    public double getAngularAccelerationPitch()
+    {
+        return angular_acceleration_pitch;
     }
 
     public void reset() {
