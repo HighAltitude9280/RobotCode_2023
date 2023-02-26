@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems.transport;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -61,8 +60,8 @@ public class Arm extends SubsystemBase {
     currentArmEncoderPosition = armMotors.getEncoderPosition();
     armPositionDegrees = currentArmEncoderPosition * HighAltitudeConstants.ARM_DEGREES_PER_PULSE;
 
-    SmartDashboard.putNumber("Arm Encoder", currentArmEncoderPosition);
-    SmartDashboard.putNumber("Arm Degrees", armPositionDegrees);
+    Robot.debugNumberSmartDashboard("Arm Encoder", currentArmEncoderPosition);
+    Robot.debugNumberSmartDashboard("Arm Degrees", armPositionDegrees);
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +
     // armPositionDegrees);
   }

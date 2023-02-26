@@ -140,8 +140,8 @@ public final class HighAltitudeConstants {
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS.
-        public static final double DRIVETRAIN_GEAR_RATIO_SPEED = 405.0 / 98.0;
-        public static final double DRIVETRAIN_GEAR_RATIO_TORQUE = 225.0 / 28.0;
+        public static final double DRIVETRAIN_GEAR_RATIO_SPEED = 100.0 / 21.0;
+        public static final double DRIVETRAIN_GEAR_RATIO_TORQUE = 500.0 / 49.0;
 
         // Use these constants to convert from encoder position to meters
         // (position*these constants = meters)
@@ -161,7 +161,7 @@ public final class HighAltitudeConstants {
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / WRIST REVS
-        public static final double WRIST_RATIO = 3249.0 / 49.0;
+        public static final double WRIST_RATIO = 1653.0 / 49.0;
 
         public static final double WRIST_DEGREES_PER_PULSE = 360 / (WRIST_PULSES_PER_REVOLUTION * WRIST_RATIO);
 
@@ -190,9 +190,9 @@ public final class HighAltitudeConstants {
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / ARM REVS
-        public static final double EXTENSOR_RATIO = 1.0 / 1.0;
+        public static final double EXTENSOR_RATIO = 42.0 / 1.0;
 
-        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.0;
+        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.273 * 0.0254;
 
         public static final double EXTENSOR_METERS_PER_PULSE = (Math.PI * EXTENSOR_PITCH_DIAMETER_METERS)
                         / (EXTENSOR_PULSES_PER_REVOLUTION * EXTENSOR_RATIO);
@@ -222,7 +222,7 @@ public final class HighAltitudeConstants {
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / ARM REVS
-        public static final double ARM_RATIO = 94221.0 / 343.0;
+        public static final double ARM_RATIO = 31407.0 / 343.0;
 
         public static final double ARM_DEGREES_PER_PULSE = 360 / (ARM_PULSES_PER_REVOLUTION * ARM_RATIO);
 

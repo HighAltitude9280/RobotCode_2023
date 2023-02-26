@@ -5,8 +5,6 @@ import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.intake.ToggleIntakePosition;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
-import frc.robot.commands.transport.compound.TransportGoTo;
-import frc.robot.commands.transport.compound.TransportGoTo.TransportTarget;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
@@ -30,10 +28,11 @@ public class OI {
         pilot.onTrue(ButtonType.LB, new IntakeIn());
         pilot.onTrue(ButtonType.RB, new IntakeOut());
 
-        copilot.onTrue(ButtonType.A, new TransportGoTo(TransportTarget.BOTTOM_ROW));
-        copilot.onTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
-        copilot.onTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
-        copilot.onTrue(ButtonType.B, new TransportGoTo(TransportTarget.INTAKE));
+        // TODO: Habilitar comandos cuando sea posible
+        // copilot.onTrue(ButtonType.A, new TransportGoTo(TransportTarget.BOTTOM_ROW));
+        // copilot.onTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
+        // copilot.onTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
+        // copilot.onTrue(ButtonType.B, new TransportGoTo(TransportTarget.INTAKE));
     }
 
     public static OI getInstance() {

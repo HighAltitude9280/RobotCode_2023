@@ -85,11 +85,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new DriveWrist());
-    arm.setDefaultCommand(new DriveArm());
-    wrist.setDefaultCommand(new DriveWrist());
-    extensor.setDefaultCommand(new DriveExtensor());
+    // driveTrain.setDefaultCommand(new DefaultDrive());
+    // wrist.setDefaultCommand(new DriveWrist());
+    // arm.setDefaultCommand(new DriveArm());
+    // extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();
   }
