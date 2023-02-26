@@ -1,4 +1,4 @@
-package frc.robot.commands.autonomous.sequences.fullAutonomous;
+package frc.robot.commands.autonomous.sequences.fullAutonomous.blue;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autonomous.Paths;
@@ -8,7 +8,9 @@ import frc.robot.commands.drivetrain.drivingSensors.resetOdometry;
 
 public class CubeThenConeBlue extends SequentialCommandGroup
 {
-
+    /**
+     * Leaves pre-loaded cube at position B, intakes cone number 1 and places it at position C.
+     */
     public CubeThenConeBlue()
     {
         addCommands(
