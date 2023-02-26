@@ -19,7 +19,8 @@ public class preloadedThenCharging extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       //Place pre-loaded cube.
-      new MoveStraight(1.8, 0.5),
+      new MoveStraight(4, 0.7),
+      new MoveStraight(-1.8, 0.5),
       new AutoBalance()
       );
   }

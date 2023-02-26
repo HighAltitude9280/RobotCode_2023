@@ -17,7 +17,8 @@ public class Charging extends SequentialCommandGroup {
   public Charging() 
   {
     addCommands(
-      new MoveStraight(1.8, 0.5),
+      new MoveStraight(4, 0.7),
+      new MoveStraight(-1.8, 0.7),
       new AutoBalance()
       );
   }
