@@ -1,25 +1,22 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainSetTransmission;
 import frc.robot.commands.gripper.GripperIn;
 import frc.robot.commands.gripper.GripperOut;
 import frc.robot.commands.intake.IntakeIn;
 import frc.robot.commands.intake.IntakeOut;
 import frc.robot.commands.intake.SetIntakePosition;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.robotParameters.ToggleGamePieceMode;
 import frc.robot.commands.robotParameters.ToggleShouldManualBeLimited;
-import frc.robot.commands.transport.arm.DriveArmToPosition;
 import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.commands.transport.compound.TransportGoTo;
-import frc.robot.commands.transport.compound.TransportGoTo.TransportTarget;
+import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.extensor.DriveExtensorToPosition;
-import frc.robot.commands.transport.wrist.DriveWristToPosition;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.JoystickType;
-import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 import frc.robot.subsystems.intake.Intake.IntakePosition;
 
 public class OI {
@@ -40,12 +37,14 @@ public class OI {
         pilot.whileTrue(ButtonType.RB, new IntakeOut());
         pilot.whileTrue(ButtonType.Y, new GripperIn());
         pilot.whileTrue(ButtonType.X, new GripperOut());
-        pilot.onTrue(ButtonType.A, new DrivetrainSetTransmission(TransmissionMode.speed));
-        pilot.onTrue(ButtonType.B, new DrivetrainSetTransmission(TransmissionMode.torque));
+        // pilot.onTrue(ButtonType.A, new
+        // DrivetrainSetTransmission(TransmissionMode.speed));
+        // pilot.onTrue(ButtonType.B, new
+        // DrivetrainSetTransmission(TransmissionMode.torque));
         pilot.onTrue(ButtonType.BACK, new SetIntakePosition(IntakePosition.STORED));
         // pilot.onTrue(ButtonType.START, new
         // SetIntakePosition(IntakePosition.LOWERED));
-        pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
+        pilot.onTrue(ButtonType.START, new ToggleGamePieceMode());
 
         copilot.onTrue(ButtonType.POV_N, new ResetTransportEncoders());
         copilot.onTrue(ButtonType.POV_S, new ToggleShouldManualBeLimited());
@@ -65,7 +64,8 @@ public class OI {
         // pilot.onTrue(ButtonType.LB, new IntakeIn());
         // pilot.onTrue(ButtonType.RB, new IntakeOut());
 
-        pilot.onTrue(ButtonType.A, new TransportGoTo(TransportTarget.MIDDLE_ROW));
+        pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.MIDDLE_ROW));
+        pilot.whileTrue(ButtonType.B, new DriveExtensorToPosition(0.47, 1));
 
         // copilot.onTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
         // copilot.onTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));

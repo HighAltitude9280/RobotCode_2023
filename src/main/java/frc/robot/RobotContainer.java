@@ -75,7 +75,7 @@ public class RobotContainer {
     limeLightVision = new LimeLightVision();
     // driverCameras = new DriverCameras();
     leds = new LEDs();
-    currentGamePieceMode = GamePieceMode.MANUAL;
+    currentGamePieceMode = GamePieceMode.CONE;
   }
 
   /**
