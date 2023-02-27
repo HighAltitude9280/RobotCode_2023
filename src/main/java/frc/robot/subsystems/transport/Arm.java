@@ -39,7 +39,7 @@ public class Arm extends SubsystemBase {
       return;
     }
     armMotors.setAll(speed);
-    Robot.debugPrint("Armpower: " + speed);
+    // Robot.debugPrint("Armpower: " + speed);
   }
 
   public boolean moveTo(double targetDegrees, double maxPower) {

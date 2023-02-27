@@ -45,7 +45,7 @@ public class Extensor extends SubsystemBase {
       Robot.debugPrint("YA TE PASASTE DEL LIMITE DEL LIFT YA MAMÓ");
       return;
     }
-    Robot.debugPrint("ExtensorPower: " + speed);
+    // Robot.debugPrint("ExtensorPower: " + speed);
     extensorMotors.setAll(speed);
   }
 

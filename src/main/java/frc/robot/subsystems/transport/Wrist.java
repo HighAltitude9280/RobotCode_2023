@@ -40,7 +40,7 @@ public class Wrist extends SubsystemBase {
     }
 
     wristMotors.setAll(speed);
-    Robot.debugPrint("WristPower: " + speed);
+    // Robot.debugPrint("WristPower: " + speed);
   }
 
   public boolean moveTo(double targetDegrees, double maxPower) {
