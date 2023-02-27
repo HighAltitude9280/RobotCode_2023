@@ -133,7 +133,7 @@ public final class HighAltitudeConstants {
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
-        public static final double DRIVETRAIN_PULSES_PER_REVOLUTION = 1;
+        public static final double DRIVETRAIN_PULSES_PER_REVOLUTION = 2048.0;
 
         // In meters
         public static final double DRIVETRAIN_WHEEL_DIAMETER = 4 * 0.0254;
@@ -157,11 +157,11 @@ public final class HighAltitudeConstants {
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
-        public static final double WRIST_PULSES_PER_REVOLUTION = 1;
+        public static final double WRIST_PULSES_PER_REVOLUTION = 2048;
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / WRIST REVS
-        public static final double WRIST_RATIO = 1653.0 / 49.0;
+        public static final double WRIST_RATIO = (4959.0 / 49.0);
 
         public static final double WRIST_DEGREES_PER_PULSE = 360 / (WRIST_PULSES_PER_REVOLUTION * WRIST_RATIO);
 
@@ -169,12 +169,12 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double WRIST_BRAKING_DEGREES = 15;
+        public static final double WRIST_BRAKING_DEGREES = 20;
 
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static final double WRIST_ARRIVE_OFFSET = 4;
+        public static final double WRIST_ARRIVE_OFFSET = 5;
 
         public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;
@@ -186,7 +186,7 @@ public final class HighAltitudeConstants {
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
-        public static final double EXTENSOR_PULSES_PER_REVOLUTION = 1.0;
+        public static final double EXTENSOR_PULSES_PER_REVOLUTION = 2048.0;
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / ARM REVS
@@ -201,14 +201,14 @@ public final class HighAltitudeConstants {
         // and the current position (in meters) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double EXTENSOR_BRAKING_METERS = 15;
+        public static final double EXTENSOR_BRAKING_METERS = 0.05;
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
 
-        public static final double EXTENSOR_ARRIVE_OFFSET = 4;
+        public static final double EXTENSOR_ARRIVE_OFFSET = 0.025;
 
-        public static final double EXTENSOR_UPPER_LIMIT_METERS = 999999999;
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.475;
         public static final double EXTENSOR_LOWER_LIMIT_METERS = -999999999;
 
         //////////////////////////////// ARM ///////////////////////////////////////////
@@ -218,11 +218,12 @@ public final class HighAltitudeConstants {
 
         // The reported encoder position after one revolution, check encoder
         // specifications.
-        public static final double ARM_PULSES_PER_REVOLUTION = 2048;
+        public static final double ARM_PULSES_PER_REVOLUTION = 2048.0;
 
         // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
         // NUMBERS. MOTOR REVS / ARM REVS
-        public static final double ARM_RATIO = 31407.0 / 343.0;
+        public static final double ARM_RATIO = (94221.0 / 343.0) / 1.0895; // El 1.0895 no sé de dónde salió pero
+                                                                           // funciona bien
 
         public static final double ARM_DEGREES_PER_PULSE = 360 / (ARM_PULSES_PER_REVOLUTION * ARM_RATIO);
 
@@ -230,12 +231,12 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double ARM_BRAKING_DEGREES = 15;
+        public static final double ARM_BRAKING_DEGREES = 18;
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.
 
-        public static final double ARM_ARRIVE_OFFSET = 4;
+        public static final double ARM_ARRIVE_OFFSET = 5;
 
         public static final double ARM_UPPER_LIMIT_DEGREES = 999999999;
         public static final double ARM_LOWER_LIMIT_DEGREES = -999999999;
@@ -244,9 +245,9 @@ public final class HighAltitudeConstants {
 
         ////////////////////// AUTONOMOUS MOVEMENT
 
-        public static final double WRIST_AUTO_MAX_POWER = 0.2;
-        public static final double EXTENSOR_AUTO_MAX_POWER = 0.2;
-        public static final double ARM_AUTO_MAX_POWER = 0.2;
+        public static final double WRIST_AUTO_MAX_POWER = 0.4125;
+        public static final double EXTENSOR_AUTO_MAX_POWER = 0.875;
+        public static final double ARM_AUTO_MAX_POWER = 0.875;
 
         /////////////////// CONE MODE ///////////////////
 
@@ -258,9 +259,9 @@ public final class HighAltitudeConstants {
 
         ////////// MIDDLE ROW
 
-        public static final double WRIST_MIDDLE_ROW_DEGREES_CONE = -1.0;
-        public static final double EXTENSOR_MIDDLE_ROW_METERS_CONE = -1.0;
-        public static final double ARM_MIDDLE_ROW_DEGREES_CONE = -1.0;
+        public static final double WRIST_MIDDLE_ROW_DEGREES_CONE = 407.0;
+        public static final double EXTENSOR_MIDDLE_ROW_METERS_CONE = 0.2;
+        public static final double ARM_MIDDLE_ROW_DEGREES_CONE = 198.0;
 
         ////////// BOTTOM ROW
 
@@ -317,13 +318,13 @@ public final class HighAltitudeConstants {
         // Default braking mode, true for brake, false for coast.
         public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
 
-        public static final double GRIPPER_CUBE_IN_SPEED = -0.2;
-        public static final double GRIPPER_CUBE_OUT_SPEED = 1;
-        public static final double GRIPPER_CONE_IN_SPEED = 0.2;
-        public static final double GRIPPER_CONE_OUT_SPEED = -1;
+        public static final double GRIPPER_CUBE_IN_SPEED = 0.3;
+        public static final double GRIPPER_CUBE_OUT_SPEED = -1;
+        public static final double GRIPPER_CONE_IN_SPEED = -0.3;
+        public static final double GRIPPER_CONE_OUT_SPEED = 1;
 
-        public static final double GRIPPER_DEFAULT_IN_SPEED = GRIPPER_CONE_IN_SPEED;
-        public static final double GRIPPER_DEFAULT_OUT_SPEED = GRIPPER_CONE_OUT_SPEED;
+        public static final double GRIPPER_DEFAULT_IN_SPEED = -0.3;
+        public static final double GRIPPER_DEFAULT_OUT_SPEED = 0.3;
 
         ///////////////////////////// INTAKE //////////////////////////////////////////
 

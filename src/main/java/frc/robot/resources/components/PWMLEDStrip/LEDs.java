@@ -12,7 +12,7 @@ public class LEDs extends SubsystemBase {
   /** Creates a new LEDs. */
 
   public LEDs() {
-    leds = new OldHighAltitudePWMLEDStrip(0, 59);
+    leds = new OldHighAltitudePWMLEDStrip(9, 60);
   }
 
   public void allLedsOff() {

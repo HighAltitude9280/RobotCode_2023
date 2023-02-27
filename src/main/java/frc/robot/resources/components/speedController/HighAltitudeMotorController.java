@@ -123,7 +123,7 @@ public class HighAltitudeMotorController {
 
                 phoenixMotor = new TalonFX(port);
 
-                phoenixMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+                phoenixMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 0);
 
                 break;
 

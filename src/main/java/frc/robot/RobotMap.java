@@ -6,29 +6,31 @@ import frc.robot.resources.components.speedController.HighAltitudeMotorControlle
 
 public class RobotMap {
 
+        public static final int REVPH_MODULE_ID = 62;
+
         //////////////////////// DRIVE TRAIN////////////////////////
 
         // Transmission
-        public static final boolean DRIVETRAIN_TRANSMISSION_IS_AVAILABLE = false;
-        public static final int[] DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS = { 5, 10 };
+        public static final boolean DRIVETRAIN_TRANSMISSION_IS_AVAILABLE = true;
+        public static final int[] DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS = { 11, 4 };
         public static final PneumaticsModuleType DRIVETRAIN_TRANSMISSION_MODULE_TYPE = PneumaticsModuleType.REVPH;
 
         public static final Value DRIVETRAIN_TRANSMISSION_SPEED = Value.kReverse;
         public static final Value DRIVETRAIN_TRANSMISSION_TORQUE = Value.kForward;
 
         // Left side
-        public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 1, 2 };
-        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = {};
-        public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = true;
-        public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-                        TypeOfMotor.TALON_SRX };
+        public static final int[] DRIVETRAIN_LEFT_MOTOR_PORTS = { 1, 2, 3 }; // 1 2 3
+        public static final int[] DRIVETRAIN_LEFT_INVERTED_MOTORS_PORTS = { 1, 2, 3 }; // 1 2 3
+        public static final boolean DRIVETRAIN_LEFT_ENCODER_IS_INVERTED = false;
+        public static final TypeOfMotor[] DRIVETRAIN_LEFT_MOTOR_TYPES = { TypeOfMotor.TALON_FX, TypeOfMotor.TALON_FX,
+                        TypeOfMotor.TALON_FX };
 
         // Right side
-        public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 3, 4 };
-        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {};
-        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
-        public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_SRX,
-                        TypeOfMotor.TALON_SRX };
+        public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 4, 5, 6 }; // 4 5
+        public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {}; // -
+        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = true;
+        public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_FX, TypeOfMotor.TALON_FX,
+                        TypeOfMotor.TALON_FX };
 
         // Dragonfly
         public static final boolean DRIVETRAIN_DRAGONFLY_SOLENOID_IS_AVAILABLE = false;
@@ -48,7 +50,7 @@ public class RobotMap {
 
         public static final int[] WRIST_MOTOR_PORTS = { 22 };
         public static final int[] WRIST_INVERTED_MOTORS_PORTS = {};
-        public static final boolean WRIST_ENCODER_IS_INVERTED = true;
+        public static final boolean WRIST_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] WRIST_MOTOR_TYPES = { TypeOfMotor.TALON_FX };
 
         //////////////////////// EXTENSOR ////////////////////////
@@ -79,14 +81,14 @@ public class RobotMap {
         //////////////////////// INTAKE ////////////////////////
 
         public static final int[] INTAKE_MOTOR_PORTS = { 10, 11 };
-        public static final int[] INTAKE_INVERTED_MOTORS_PORTS = {};
+        public static final int[] INTAKE_INVERTED_MOTORS_PORTS = { 10 };
         public static final boolean INTAKE_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] INTAKE_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS,
                         TypeOfMotor.CAN_SPARK_BRUSHLESS };
 
-        public static final int[] INTAKE_SOLENOID_PORTS = { 11, 4 };
+        public static final int[] INTAKE_SOLENOID_PORTS = { 10, 5 };
         public static final PneumaticsModuleType INTAKE_SOLENOID_MODULE_TYPE = PneumaticsModuleType.REVPH;
 
-        public static final Value INTAKE_LOWERED_VALUE = Value.kReverse;
-        public static final Value INTAKE_STORED_VALUE = Value.kForward;
+        public static final Value INTAKE_LOWERED_VALUE = Value.kForward;
+        public static final Value INTAKE_STORED_VALUE = Value.kReverse;
 }

@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.autonomous.Paths;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
+import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.transport.arm.DriveArm;
+import frc.robot.commands.transport.extensor.DriveExtensor;
+import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
@@ -53,6 +57,8 @@ public class RobotContainer {
   private LimeLightVision limeLightVision;
   private DriverCameras driverCameras;
   private LEDs leds;
+  // IMPORTANT: with this boolean in false, limits won't affect manual movement
+  private boolean shouldManualBeLimited = true;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -67,7 +73,7 @@ public class RobotContainer {
     intake = new Intake();
 
     limeLightVision = new LimeLightVision();
-    driverCameras = new DriverCameras();
+    // driverCameras = new DriverCameras();
     leds = new LEDs();
     currentGamePieceMode = GamePieceMode.MANUAL;
   }
@@ -82,10 +88,10 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     // TODO: Habilitar comandos cuando sea posible
-    // driveTrain.setDefaultCommand(new DefaultDrive());
-    // wrist.setDefaultCommand(new DriveWrist());
-    // arm.setDefaultCommand(new DriveArm());
-    // extensor.setDefaultCommand(new DriveExtensor());
+    driveTrain.setDefaultCommand(new DefaultDrive());
+    wrist.setDefaultCommand(new DriveWrist());
+    arm.setDefaultCommand(new DriveArm());
+    extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();
   }
@@ -159,5 +165,13 @@ public class RobotContainer {
 
   public GamePieceMode getCurrentGamePieceMode() {
     return currentGamePieceMode;
+  }
+
+  public void setShouldManualBeLimited(boolean shouldBeLimited) {
+    shouldManualBeLimited = shouldBeLimited;
+  }
+
+  public boolean getShouldManualBeLimited() {
+    return shouldManualBeLimited;
   }
 }

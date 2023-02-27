@@ -84,6 +84,7 @@ public class TransportGoTo extends SequentialCommandGroup {
 
   /** Creates a new TransportGoTo. */
   public TransportGoTo(TransportTarget target) {
+    Robot.debugPrint("started transportgoto");
     wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
     armMaxPower = HighAltitudeConstants.ARM_AUTO_MAX_POWER;
     extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
@@ -106,6 +107,8 @@ public class TransportGoTo extends SequentialCommandGroup {
       default:
         return;
     }
+
+    Robot.debugPrint("ESTÁ CORRIENDO EL TRANSPORTGOTOOOOOOOOO");
 
     addCommands(
         Commands.parallel(

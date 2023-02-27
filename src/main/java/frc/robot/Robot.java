@@ -68,12 +68,17 @@ public class Robot extends TimedRobot {
     getRobotContainer().putAutoChooser();
 
     debugStringSmartDashboard("Current Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
+    debugStringSmartDashboard("Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
+    debugBooleanSmartDashboard("Should Manual Be Limited", getRobotContainer().getShouldManualBeLimited());
     debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
     debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
     debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
     debugNumberSmartDashboard("AngAccPitch", getRobotContainer().getNavx().getAngularAccelerationPitch());
     debugNumberSmartDashboard("AngAccRoll", getRobotContainer().getNavx().getAngularAccelerationPitch());
 
+    SmartDashboard.putData(getRobotContainer().getWrist());
+    SmartDashboard.putData(getRobotContainer().getArm());
+    SmartDashboard.putData(getRobotContainer().getExtensor());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -144,6 +149,11 @@ public class Robot extends TimedRobot {
   public static void debugStringSmartDashboard(String key, String value) {
     if (HighAltitudeConstants.DEBUG)
       SmartDashboard.putString(key, value);
+  }
+
+  public static void debugBooleanSmartDashboard(String key, boolean value) {
+    if (HighAltitudeConstants.DEBUG)
+      SmartDashboard.putBoolean(key, value);
   }
 
   public static RobotContainer getRobotContainer() {

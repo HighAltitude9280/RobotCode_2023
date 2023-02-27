@@ -28,8 +28,9 @@ public class DriveWrist extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.MANUAL)
-      wrist.driveWrist(OI.getInstance().getWristInput() * 0.25);
+    // if (Robot.getRobotContainer().getCurrentGamePieceMode() ==
+    // GamePieceMode.MANUAL)
+    wrist.driveWrist(OI.getInstance().getWristInput() * 0.25);
   }
 
   // Called once the command ends or is interrupted.

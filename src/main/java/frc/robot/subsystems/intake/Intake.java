@@ -28,7 +28,7 @@ public class Intake extends SubsystemBase {
     intakeMotors.setEncoderInverted(RobotMap.INTAKE_ENCODER_IS_INVERTED);
     intakeMotors.setBrakeMode(HighAltitudeConstants.INTAKE_MOTORS_BRAKING_MODE);
 
-    intakeSolenoid = new DoubleSolenoid(RobotMap.INTAKE_SOLENOID_MODULE_TYPE,
+    intakeSolenoid = new DoubleSolenoid(RobotMap.REVPH_MODULE_ID, RobotMap.INTAKE_SOLENOID_MODULE_TYPE,
         RobotMap.INTAKE_SOLENOID_PORTS[0], RobotMap.INTAKE_SOLENOID_PORTS[1]);
     setIntakePosition(HighAltitudeConstants.INTAKE_INITIAL_POSITION);
 

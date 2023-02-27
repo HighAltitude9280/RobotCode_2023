@@ -23,13 +23,22 @@ public class Wrist extends SubsystemBase {
     wristMotors.setEncoderInverted(RobotMap.WRIST_ENCODER_IS_INVERTED);
     wristMotors.setBrakeMode(HighAltitudeConstants.WRIST_MOTORS_BRAKING_MODE);
 
-    resetEncoders();
+    // resetEncoders();
   }
 
   public void driveWrist(double speed) {
-    if (wristPositionDegrees < HighAltitudeConstants.WRIST_LOWER_LIMIT_DEGREES
-        || wristPositionDegrees > HighAltitudeConstants.WRIST_UPPER_LIMIT_DEGREES)
+    boolean isBelowLimitsAndSpeedIsNegative = (wristPositionDegrees < HighAltitudeConstants.WRIST_LOWER_LIMIT_DEGREES
+        && speed < 0);
+    boolean isOverLimitsAndSpeedIsPositive = (wristPositionDegrees > HighAltitudeConstants.WRIST_UPPER_LIMIT_DEGREES
+        && speed > 0);
+
+    if (Robot.getRobotContainer().getShouldManualBeLimited()
+        && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
+      wristMotors.setAll(0);
+      Robot.debugPrint("YA TE PASASTE DEL LIMITE DE LA MUÑECA YA MAMÓ");
       return;
+    }
+
     wristMotors.setAll(speed);
     Robot.debugPrint("WristPower: " + speed);
   }

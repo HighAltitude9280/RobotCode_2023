@@ -23,13 +23,21 @@ public class Arm extends SubsystemBase {
     armMotors.setEncoderInverted(RobotMap.ARM_ENCODER_IS_INVERTED);
     armMotors.setBrakeMode(HighAltitudeConstants.ARM_MOTORS_BRAKING_MODE);
 
-    resetEncoders();
+    // resetEncoders();
   }
 
   public void driveArm(double speed) {
-    if (armPositionDegrees < HighAltitudeConstants.ARM_LOWER_LIMIT_DEGREES
-        || armPositionDegrees > HighAltitudeConstants.ARM_UPPER_LIMIT_DEGREES)
+    boolean isBelowLimitsAndSpeedIsNegative = (armPositionDegrees < HighAltitudeConstants.ARM_LOWER_LIMIT_DEGREES
+        && speed < 0);
+    boolean isOverLimitsAndSpeedIsPositive = (armPositionDegrees > HighAltitudeConstants.ARM_UPPER_LIMIT_DEGREES
+        && speed > 0);
+
+    if (Robot.getRobotContainer().getShouldManualBeLimited()
+        && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
+      armMotors.setAll(0);
+      Robot.debugPrint("YA TE PASASTE DEL LIMITE DEL BRAZO YA MAMÓ");
       return;
+    }
     armMotors.setAll(speed);
     Robot.debugPrint("Armpower: " + speed);
   }
@@ -48,6 +56,7 @@ public class Arm extends SubsystemBase {
     power = Math.clamp(power, -1, 1) * maxPower;
 
     armMotors.setAll(power);
+    Robot.debugPrint("ARM MOVING TOOOOO: " + power);
     return false;
   }
 

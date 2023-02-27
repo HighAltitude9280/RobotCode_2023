@@ -14,7 +14,6 @@ import frc.robot.OI;
 
 public class DefaultDrive extends CommandBase {
 
-
     public DefaultDrive() {
         addRequirements(Robot.getRobotContainer().getDriveTrain());
     }
@@ -26,12 +25,12 @@ public class DefaultDrive extends CommandBase {
     @Override
     public void execute() {
 
-        double x = OI.getInstance().getPilot().getAxis(AxisType.LEFT_X);
-        double y = -OI.getInstance().getPilot().getAxis(AxisType.LEFT_Y);
+        double x = OI.getInstance().getDefaultDriveX();
+        double y = OI.getInstance().getDefaultDriveY();
 
         double turn = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
         double dragonfly = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
-        
+
         Robot.getRobotContainer().getDriveTrain().defaultDrive(x, y, turn, dragonfly);
     }
 

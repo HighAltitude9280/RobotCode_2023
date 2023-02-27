@@ -60,12 +60,13 @@ public class DriveTrain extends SubsystemBase {
      */
     public DriveTrain() {
         if (RobotMap.DRIVETRAIN_TRANSMISSION_IS_AVAILABLE)
-            transmission = new DoubleSolenoid(RobotMap.DRIVETRAIN_TRANSMISSION_MODULE_TYPE,
+            transmission = new DoubleSolenoid(RobotMap.REVPH_MODULE_ID, RobotMap.DRIVETRAIN_TRANSMISSION_MODULE_TYPE,
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_TRANSMISSION_SOLENOID_PORTS[1]);
 
         if (RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_IS_AVAILABLE)
-            dragonflySolenoid = new DoubleSolenoid(RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE,
+            dragonflySolenoid = new DoubleSolenoid(RobotMap.REVPH_MODULE_ID,
+                    RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_MODULE_TYPE,
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[0],
                     RobotMap.DRIVETRAIN_DRAGONFLY_SOLENOID_PORTS[1]);
 
@@ -676,5 +677,10 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
+        Robot.debugNumberSmartDashboard("Left encoder distance", leftEncoderDistance);
+        Robot.debugNumberSmartDashboard("Right encoder distance", rightEncoderDistance);
+        Robot.debugNumberSmartDashboard("Odometry x", odometry.getPoseMeters().getX());
+        Robot.debugNumberSmartDashboard("Odometry y", odometry.getPoseMeters().getY());
+        Robot.debugStringSmartDashboard("Current transmission mode", transmissionState.toString());
     }
 }

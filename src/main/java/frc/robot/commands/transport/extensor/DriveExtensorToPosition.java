@@ -13,10 +13,10 @@ public class DriveExtensorToPosition extends CommandBase {
   double targetDegrees, maxPower;
 
   /** Creates a new DriveExtensorToPosition. */
-  public DriveExtensorToPosition(double targetDegrees, double maxPower) {
+  public DriveExtensorToPosition(double taretMeters, double maxPower) {
     extensor = Robot.getRobotContainer().getExtensor();
     addRequirements(extensor);
-    this.targetDegrees = targetDegrees;
+    this.targetDegrees = taretMeters;
     this.maxPower = maxPower;
     // Use addRequirements() here to declare subsystem dependencies.
   }
