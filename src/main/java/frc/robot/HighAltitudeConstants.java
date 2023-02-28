@@ -351,6 +351,6 @@ public final class HighAltitudeConstants {
         ///////////////////// LEDS ////////////////////////
 
         public static final int LEDS_9280_HUE = 64;
-        public static final int LEDS_CUBE_HUE = 138;
+        public static final int LEDS_CUBE_HUE = 135;
         public static final int LEDS_CONE_HUE = 28;
 }

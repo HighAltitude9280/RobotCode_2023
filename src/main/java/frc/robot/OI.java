@@ -38,10 +38,10 @@ public class OI {
 
         pilot.whileTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
         pilot.whileTrue(ButtonType.B, new TransportGoTo(TransportTarget.FEEDER));
-        pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
+        // pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
         pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
 
-        pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode());
+        pilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode());
     }
 
     /*

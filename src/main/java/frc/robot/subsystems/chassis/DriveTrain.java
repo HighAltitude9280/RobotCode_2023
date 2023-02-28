@@ -532,6 +532,10 @@ public class DriveTrain extends SubsystemBase {
             setTransmissionState(TransmissionMode.speed);
     }
 
+    public TransmissionMode getCurrentTransmissionMode() {
+        return transmissionState;
+    }
+
     // Reverse
 
     /**

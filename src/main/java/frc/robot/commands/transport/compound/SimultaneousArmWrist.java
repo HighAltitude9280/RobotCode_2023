@@ -5,9 +5,7 @@
 package frc.robot.commands.transport.compound;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Wrist;
 
