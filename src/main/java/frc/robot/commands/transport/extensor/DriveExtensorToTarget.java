@@ -22,13 +22,13 @@ public class DriveExtensorToTarget extends CommandBase {
     addRequirements(extensor);
     this.target = target;
     this.maxPower = maxPower;
-    initialGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    initialGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

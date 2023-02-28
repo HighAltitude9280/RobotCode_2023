@@ -7,7 +7,6 @@ package frc.robot.commands.transport.wrist;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.subsystems.transport.Wrist;
 
 public class DriveWrist extends CommandBase {
@@ -30,7 +29,7 @@ public class DriveWrist extends CommandBase {
   public void execute() {
     // if (Robot.getRobotContainer().getCurrentGamePieceMode() ==
     // GamePieceMode.MANUAL)
-    wrist.driveWrist(OI.getInstance().getWristInput() * 0.25);
+    wrist.driveWrist(OI.getInstance().getWristInput());
   }
 
   // Called once the command ends or is interrupted.

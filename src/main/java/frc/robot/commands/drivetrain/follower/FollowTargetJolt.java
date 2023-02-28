@@ -10,12 +10,12 @@ import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.chassis.DriveTrain;
 
-public class ContinousTurnToTarget extends CommandBase {
+public class FollowTargetJolt extends CommandBase {
   DriveTrain driveTrain;
   double maxPower;
 
-  /** Creates a new FollowLimeLightTarget. */
-  public ContinousTurnToTarget() {
+  /* Creates a new FollowTargetJolt. */
+  public FollowTargetJolt() {
     driveTrain = Robot.getRobotContainer().getDriveTrain();
     addRequirements(driveTrain);
     // Use addRequirements() here to declare subsystem dependencies.

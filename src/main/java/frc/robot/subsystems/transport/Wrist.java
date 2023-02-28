@@ -51,9 +51,9 @@ public class Wrist extends SubsystemBase {
       return true;
     }
 
-    // double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES *
-    // maxPower * maxPower);
-    double power = delta / HighAltitudeConstants.WRIST_BRAKING_DEGREES;
+    double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES *
+        maxPower * maxPower);
+    // double power = delta / HighAltitudeConstants.WRIST_BRAKING_DEGREES;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     wristMotors.setAll(power);
@@ -73,5 +73,9 @@ public class Wrist extends SubsystemBase {
     Robot.debugNumberSmartDashboard("Wrist Degrees", wristPositionDegrees);
     // Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " +
     // wristPositionDegrees);
+  }
+
+  public double getCurrentAngle() {
+    return wristPositionDegrees;
   }
 }

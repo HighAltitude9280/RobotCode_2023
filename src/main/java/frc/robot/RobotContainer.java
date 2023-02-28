@@ -73,7 +73,7 @@ public class RobotContainer {
     intake = new Intake();
 
     limeLightVision = new LimeLightVision();
-    // driverCameras = new DriverCameras();
+    driverCameras = new DriverCameras();
     leds = new LEDs();
     currentGamePieceMode = GamePieceMode.CONE;
   }
@@ -87,7 +87,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    // TODO: Habilitar comandos cuando sea posible
     driveTrain.setDefaultCommand(new DefaultDrive());
     wrist.setDefaultCommand(new DriveWrist());
     arm.setDefaultCommand(new DriveArm());

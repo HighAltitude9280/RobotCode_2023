@@ -30,13 +30,12 @@ public class TransportGoTo extends SequentialCommandGroup {
     wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
     armMaxPower = HighAltitudeConstants.ARM_AUTO_MAX_POWER;
     extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
-
     Robot.debugPrint("ESTÁ CORRIENDO EL TRANSPORTGOTOOOOOOOOO");
 
     addCommands(
         Commands.parallel(
-            new DriveArmToTarget(target, armMaxPower),
-            new DriveExtensorToTarget(target, extensorMaxPower)),
-        new DriveWristToTarget(target, wristMaxPower));
+            new DriveArmToTarget(target, target.getArmMaxPower()),
+            new DriveWristToTarget(target, target.getWristMaxPower())),
+        new DriveExtensorToTarget(target, target.getExtensorMaxPower()));
   }
 }

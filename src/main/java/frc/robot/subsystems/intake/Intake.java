@@ -58,6 +58,10 @@ public class Intake extends SubsystemBase {
 
   }
 
+  public IntakePosition getCurrentPosition() {
+    return currentPosition;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

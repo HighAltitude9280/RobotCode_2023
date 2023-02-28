@@ -74,4 +74,8 @@ public class Arm extends SubsystemBase {
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +
     // armPositionDegrees);
   }
+
+  public double getCurrentAngle() {
+    return armPositionDegrees;
+  }
 }
