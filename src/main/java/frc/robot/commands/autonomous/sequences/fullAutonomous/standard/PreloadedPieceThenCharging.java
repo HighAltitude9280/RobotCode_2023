@@ -14,19 +14,20 @@ import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.TransportGoTo;
 
-public class preloadedConeThenCharging extends SequentialCommandGroup {
+public class PreloadedPieceThenCharging extends SequentialCommandGroup {
+  GamePieceMode gamePieceMode;
 
   /**
    * Places pre-loaded cone, then moves forward 2.5m
    * 
    */
-  public preloadedConeThenCharging() {
+  public PreloadedPieceThenCharging(GamePieceMode gamePieceMode) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-
+    this.gamePieceMode = gamePieceMode;
     // TODO: test autonomous. Remember to first test BreakInitialConfig()
     addCommands(
-        new SetGamePieceMode(GamePieceMode.CONE),
+        new SetGamePieceMode(gamePieceMode),
         new BreakInitialConfig(),
         // Place pre-loaded cone.
         new TransportGoTo(TransportTarget.TOP_ROW),

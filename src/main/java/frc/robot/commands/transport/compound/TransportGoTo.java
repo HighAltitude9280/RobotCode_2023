@@ -7,7 +7,6 @@ package frc.robot.commands.transport.compound;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.HighAltitudeConstants;
-import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.arm.DriveArmToTarget;
@@ -26,11 +25,9 @@ public class TransportGoTo extends SequentialCommandGroup {
 
   /** Creates a new TransportGoTo. */
   public TransportGoTo(TransportTarget target) {
-    Robot.debugPrint("started transportgoto");
     wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
     armMaxPower = HighAltitudeConstants.ARM_AUTO_MAX_POWER;
     extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
-    Robot.debugPrint("ESTÁ CORRIENDO EL TRANSPORTGOTOOOOOOOOO");
 
     addCommands(
         Commands.parallel(

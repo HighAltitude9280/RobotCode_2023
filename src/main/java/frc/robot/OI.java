@@ -7,6 +7,7 @@ import frc.robot.commands.pieceHandlers.compound.GlobalIntake;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
 import frc.robot.commands.pieceHandlers.intake.ToggleIntakePosition;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.robotParameters.ToggleShouldExtensorBeLimitedManual;
 import frc.robot.commands.robotParameters.ToggleShouldManualBeLimited;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.TransportGoTo;
@@ -26,10 +27,13 @@ public class OI {
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
-        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL), ButtonType.START, ButtonType.BACK);
+        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL),
+                ButtonType.START, ButtonType.BACK);
 
         pilot.whileTrue(ButtonType.LB, new GlobalIntake());
         pilot.whileTrue(ButtonType.RB, new GlobalOuttake());
+        pilot.onTrueCombo(new ToggleShouldExtensorBeLimitedManual(),
+                ButtonType.LB, ButtonType.RB);
 
         pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
         pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualBeLimited());
@@ -38,10 +42,10 @@ public class OI {
 
         pilot.whileTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
         pilot.whileTrue(ButtonType.B, new TransportGoTo(TransportTarget.FEEDER));
-        // pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
+        pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
         pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
 
-        pilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode());
+        pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode());
     }
 
     /*

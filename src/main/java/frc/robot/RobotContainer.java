@@ -9,8 +9,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.autonomous.Paths;
-import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
+import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Charging;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Forward;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.PreloadedPieceThenCharging;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
@@ -43,7 +45,8 @@ public class RobotContainer {
     CUBE, CONE, MANUAL
   }
 
-  private Command m_autoCommand;
+  // TODO: add m_autoCommand back if deemed necessary
+  // private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   private GamePieceMode currentGamePieceMode;
@@ -59,6 +62,7 @@ public class RobotContainer {
   private LEDs leds;
   // IMPORTANT: with this boolean in false, limits won't affect manual movement
   private boolean shouldManualBeLimited = true;
+  private boolean shouldExtensorBeLimitedInManual = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -96,12 +100,21 @@ public class RobotContainer {
   }
 
   public void generateAutos() {
-    SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5,
-        true, false, false, false);
+    // SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5,
+    // true, false, false, false);
+    BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
+    PreloadedPieceThenCharging coneThenCharging = new PreloadedPieceThenCharging(GamePieceMode.CONE);
+    PreloadedPieceThenCharging cubeThenCharging = new PreloadedPieceThenCharging(GamePieceMode.CUBE);
+    Charging charging = new Charging();
+    Forward forward = new Forward();
 
-    m_chooser.setDefaultOption("Example path", followExamplePath);
+    // m_chooser.setDefaultOption("Example path", followExamplePath);
+    m_chooser.setDefaultOption("Cone then charging", coneThenCharging);
+    m_chooser.addOption("Cube then charging", cubeThenCharging);
+    m_chooser.addOption("Break init config", breakInitialConfig);
+    m_chooser.addOption("Charging only", charging);
+    m_chooser.addOption("Forward only", forward);
 
-    m_autoCommand = followExamplePath;
   }
 
   public void putAutoChooser() {
@@ -114,8 +127,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_chooser.getSelected();
   }
 
   public Navx getNavx() {
@@ -172,5 +184,13 @@ public class RobotContainer {
 
   public boolean getShouldManualBeLimited() {
     return shouldManualBeLimited;
+  }
+
+  public void setShouldExtensorBeLimitedManual(boolean shouldBeLimited) {
+    shouldExtensorBeLimitedInManual = shouldBeLimited;
+  }
+
+  public boolean getShouldExtensorBeLimitedManual() {
+    return shouldExtensorBeLimitedInManual;
   }
 }
