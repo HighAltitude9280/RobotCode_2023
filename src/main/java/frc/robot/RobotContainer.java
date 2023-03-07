@@ -9,12 +9,21 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Charging;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.ChargingSimple;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceOnly;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenMoveStraight;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenSimpleBalance;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Forward;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.PreloadedPieceOnly;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.PreloadedPieceThenCharging;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.transport.arm.DriveArm;
+import frc.robot.commands.transport.compound.SimultaneousArmWrist;
+import frc.robot.commands.transport.compound.SimultaneousArmWristMovement2;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
@@ -49,7 +58,7 @@ public class RobotContainer {
   // private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private GamePieceMode currentGamePieceMode;
+  private GamePieceMode currentGamePieceMode = GamePieceMode.MANUAL;
   private Navx navx;
   private DriveTrain driveTrain;
   private Wrist wrist;
@@ -61,8 +70,8 @@ public class RobotContainer {
   private DriverCameras driverCameras;
   private LEDs leds;
   // IMPORTANT: with this boolean in false, limits won't affect manual movement
-  private boolean shouldManualBeLimited = true;
-  private boolean shouldExtensorBeLimitedInManual = false;
+  private boolean shouldManualHaveLimits = true;
+  private boolean shouldExtensorBeSlowerInManual = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -79,7 +88,6 @@ public class RobotContainer {
     limeLightVision = new LimeLightVision();
     // driverCameras = new DriverCameras();
     leds = new LEDs();
-    currentGamePieceMode = GamePieceMode.CONE;
   }
 
   /**
@@ -102,18 +110,41 @@ public class RobotContainer {
   public void generateAutos() {
     // SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5,
     // true, false, false, false);
-    BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
-    PreloadedPieceThenCharging coneThenCharging = new PreloadedPieceThenCharging(GamePieceMode.CONE);
-    PreloadedPieceThenCharging cubeThenCharging = new PreloadedPieceThenCharging(GamePieceMode.CUBE);
-    Charging charging = new Charging();
-    Forward forward = new Forward();
+    // BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
+    // PreloadedPieceThenCharging coneThenCharging = new
+    // PreloadedPieceThenCharging(GamePieceMode.CONE);
+    // PreloadedPieceThenCharging cubeThenCharging = new
+    // PreloadedPieceThenCharging(GamePieceMode.CUBE);
+    // Charging charging = new Charging();
+    // Forward forward = new Forward();
+    // PreloadedPieceOnly preloadedConeOnly = new
+    // PreloadedPieceOnly(GamePieceMode.CONE);
+    // PreloadedPieceOnly preloadedCubeOnly = new
+    // PreloadedPieceOnly(GamePieceMode.CUBE);
+
+    FasterPreloadedPieceThenMoveStraight coneThenMove = new FasterPreloadedPieceThenMoveStraight(GamePieceMode.CONE);
+    FasterPreloadedPieceThenMoveStraight cubeThenMove = new FasterPreloadedPieceThenMoveStraight(GamePieceMode.CUBE);
+    FasterPreloadedPieceOnly coneThenStayStill = new FasterPreloadedPieceOnly(
+        GamePieceMode.CONE);
+    FasterPreloadedPieceOnly cubeThenStayStill = new FasterPreloadedPieceOnly(
+        GamePieceMode.CUBE);
+    FasterPreloadedPieceThenSimpleBalance cubeThenBalance = new FasterPreloadedPieceThenSimpleBalance(
+        GamePieceMode.CUBE);
+    FasterPreloadedPieceThenSimpleBalance coneThenBalance = new FasterPreloadedPieceThenSimpleBalance(
+        GamePieceMode.CONE);
+
+    ChargingSimple xd2 = new ChargingSimple();
+    DoNothing nothing = new DoNothing();
+    m_chooser.setDefaultOption("Charging", xd2);
+    m_chooser.addOption("Do nothing", nothing);
+    m_chooser.addOption("Cone Move", coneThenMove);
+    m_chooser.addOption("Cube Move", cubeThenMove);
+    m_chooser.addOption("Cone Balance", coneThenBalance);
+    m_chooser.addOption("Cube Balance", cubeThenBalance);
+    m_chooser.addOption("Cone Only", coneThenStayStill);
+    m_chooser.addOption("Cube Only", cubeThenStayStill);
 
     // m_chooser.setDefaultOption("Example path", followExamplePath);
-    m_chooser.setDefaultOption("Cone then charging", coneThenCharging);
-    m_chooser.addOption("Cube then charging", cubeThenCharging);
-    m_chooser.addOption("Break init config", breakInitialConfig);
-    m_chooser.addOption("Charging only", charging);
-    m_chooser.addOption("Forward only", forward);
 
   }
 
@@ -127,7 +158,9 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    FasterPreloadedPieceOnly xd = new FasterPreloadedPieceOnly(GamePieceMode.CUBE);
+    ChargingSimple xd2 = new ChargingSimple();
+    return xd.andThen(xd2);
   }
 
   public Navx getNavx() {
@@ -178,19 +211,19 @@ public class RobotContainer {
     return currentGamePieceMode;
   }
 
-  public void setShouldManualBeLimited(boolean shouldBeLimited) {
-    shouldManualBeLimited = shouldBeLimited;
+  public void setShouldManualHaveLimits(boolean shouldHaveLimits) {
+    shouldManualHaveLimits = shouldHaveLimits;
   }
 
-  public boolean getShouldManualBeLimited() {
-    return shouldManualBeLimited;
+  public boolean getShouldManualHaveLimits() {
+    return shouldManualHaveLimits;
   }
 
-  public void setShouldExtensorBeLimitedManual(boolean shouldBeLimited) {
-    shouldExtensorBeLimitedInManual = shouldBeLimited;
+  public void setShouldExtensorBeLimitedManual(boolean shouldBeSlower) {
+    shouldExtensorBeSlowerInManual = shouldBeSlower;
   }
 
-  public boolean getShouldExtensorBeLimitedManual() {
-    return shouldExtensorBeLimitedInManual;
+  public boolean getShouldExtensorBeSlowerInManual() {
+    return shouldExtensorBeSlowerInManual;
   }
 }

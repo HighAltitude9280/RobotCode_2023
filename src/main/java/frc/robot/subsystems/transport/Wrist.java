@@ -32,7 +32,7 @@ public class Wrist extends SubsystemBase {
     boolean isOverLimitsAndSpeedIsPositive = (wristPositionDegrees > HighAltitudeConstants.WRIST_UPPER_LIMIT_DEGREES
         && speed > 0);
 
-    if (Robot.getRobotContainer().getShouldManualBeLimited()
+    if (Robot.getRobotContainer().getShouldManualHaveLimits()
         && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
       wristMotors.setAll(0);
       Robot.debugPrint("YA TE PASASTE DEL LIMITE DE LA MUÑECA YA MAMÓ");
@@ -53,7 +53,6 @@ public class Wrist extends SubsystemBase {
 
     double power = delta / (HighAltitudeConstants.WRIST_BRAKING_DEGREES *
         maxPower * maxPower);
-    // double power = delta / HighAltitudeConstants.WRIST_BRAKING_DEGREES;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     wristMotors.setAll(power);
@@ -69,7 +68,7 @@ public class Wrist extends SubsystemBase {
     wristEncoderPosition = wristMotors.getEncoderPosition();
     wristPositionDegrees = wristEncoderPosition * HighAltitudeConstants.WRIST_DEGREES_PER_PULSE;
 
-    Robot.debugNumberSmartDashboard("Wrist Encoder", wristEncoderPosition);
+    // Robot.debugNumberSmartDashboard("Wrist Encoder", wristEncoderPosition);
     Robot.debugNumberSmartDashboard("Wrist Degrees", wristPositionDegrees);
     // Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " +
     // wristPositionDegrees);

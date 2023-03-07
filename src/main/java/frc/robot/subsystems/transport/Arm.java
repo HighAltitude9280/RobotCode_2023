@@ -32,7 +32,7 @@ public class Arm extends SubsystemBase {
     boolean isOverLimitsAndSpeedIsPositive = (armPositionDegrees > HighAltitudeConstants.ARM_UPPER_LIMIT_DEGREES
         && speed > 0);
 
-    if (Robot.getRobotContainer().getShouldManualBeLimited()
+    if (Robot.getRobotContainer().getShouldManualHaveLimits()
         && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
       armMotors.setAll(0);
       Robot.debugPrint("YA TE PASASTE DEL LIMITE DEL BRAZO YA MAMÓ");
@@ -69,7 +69,7 @@ public class Arm extends SubsystemBase {
     currentArmEncoderPosition = armMotors.getEncoderPosition();
     armPositionDegrees = currentArmEncoderPosition * HighAltitudeConstants.ARM_DEGREES_PER_PULSE;
 
-    Robot.debugNumberSmartDashboard("Arm Encoder", currentArmEncoderPosition);
+    // Robot.debugNumberSmartDashboard("Arm Encoder", currentArmEncoderPosition);
     Robot.debugNumberSmartDashboard("Arm Degrees", armPositionDegrees);
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +
     // armPositionDegrees);

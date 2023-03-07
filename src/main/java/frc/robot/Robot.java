@@ -67,18 +67,29 @@ public class Robot extends TimedRobot {
     getRobotContainer().getNavx().run();
     getRobotContainer().putAutoChooser();
 
-    debugStringSmartDashboard("Current Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
-    debugStringSmartDashboard("Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
-    debugBooleanSmartDashboard("Should Manual Be Limited", getRobotContainer().getShouldManualBeLimited());
-    debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
-    debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
-    debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
-    debugNumberSmartDashboard("AngAccPitch", getRobotContainer().getNavx().getAngularAccelerationPitch());
-    debugNumberSmartDashboard("AngAccRoll", getRobotContainer().getNavx().getAngularAccelerationPitch());
+    debugStringSmartDashboard("Current Game Piece Mode",
+        getRobotContainer().getCurrentGamePieceMode().toString());
+    // debugStringSmartDashboard("Game Piece Mode",
+    // getRobotContainer().getCurrentGamePieceMode().toString());
+    // debugBooleanSmartDashboard("Should Manual Have Limits",
+    // getRobotContainer().getShouldManualHaveLimits());
+    // debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
+    // debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
+    // debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
+    // debugNumberSmartDashboard("AngAccRoll",
+    // getRobotContainer().getNavx().getAngularAccelerationPitch());
+    // debugNumberSmartDashboard("AngVelRoll",
+    // getRobotContainer().getNavx().getYVel());
+    // debugNumberSmartDashboard("AngAccPitch",
+    // getRobotContainer().getNavx().getAngularAccelerationPitch());
 
-    SmartDashboard.putData(getRobotContainer().getWrist());
-    SmartDashboard.putData(getRobotContainer().getArm());
-    SmartDashboard.putData(getRobotContainer().getExtensor());
+    // debugBooleanSmartDashboard("Extensor is slower",
+    // getRobotContainer().getShouldExtensorBeSlowerInManual());
+
+    // SmartDashboard.putData(getRobotContainer().getWrist());
+    // SmartDashboard.putData(getRobotContainer().getArm());
+    // SmartDashboard.putData(getRobotContainer().getExtensor());
+    // SmartDashboard.putData(getRobotContainer().getDriveTrain());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

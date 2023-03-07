@@ -681,10 +681,5 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
-        Robot.debugNumberSmartDashboard("Left encoder distance", leftEncoderDistance);
-        Robot.debugNumberSmartDashboard("Right encoder distance", rightEncoderDistance);
-        Robot.debugNumberSmartDashboard("Odometry x", odometry.getPoseMeters().getX());
-        Robot.debugNumberSmartDashboard("Odometry y", odometry.getPoseMeters().getY());
-        Robot.debugStringSmartDashboard("Current transmission mode", transmissionState.toString());
     }
 }

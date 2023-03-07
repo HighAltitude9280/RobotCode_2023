@@ -1,16 +1,22 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainToggleTransmissionMode;
 import frc.robot.commands.drivetrain.follower.FollowTargetJolt;
 import frc.robot.commands.pieceHandlers.compound.GlobalIntake;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
 import frc.robot.commands.pieceHandlers.intake.ToggleIntakePosition;
+import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.robotParameters.ToggleShouldExtensorBeLimitedManual;
-import frc.robot.commands.robotParameters.ToggleShouldManualBeLimited;
+import frc.robot.commands.robotParameters.ToggleShouldManualHaveLimits;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
+import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.commands.transport.compound.TransportGoTo;
+import frc.robot.commands.transport.compound.WristArmGoTo;
+import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
@@ -21,9 +27,20 @@ public class OI {
     public static OI instance;
 
     private HighAltitudeJoystick pilot;
+    private HighAltitudeJoystick copilot;
+
+    private Joystick pit;
+    private JoystickButton pit_7;
+    private JoystickButton pit_8;
+    private JoystickButton pit_12;
 
     public void ConfigureButtonBindings() {
         pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        pit = new Joystick(1);
+        copilot = new HighAltitudeJoystick(2, JoystickType.XBOX);
+        // pit_7 = new JoystickButton(pit, 7);
+        // pit_8 = new JoystickButton(pit, 8);
+        // pit_12 = new JoystickButton(pit, 12);
 
         pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
@@ -36,7 +53,7 @@ public class OI {
                 ButtonType.LB, ButtonType.RB);
 
         pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
-        pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualBeLimited());
+        pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
 
         pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt());
 
@@ -45,7 +62,15 @@ public class OI {
         pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
         pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
 
-        pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode());
+        pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); // MORA
+        // copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); // ITAI
+        // pit_12.onTrue(new DrivetrainToggleTransmissionMode());
+
+        // pilot.whileTrue(ButtonType.POV_E, new DriveWrist());
+        // pilot.whileTrue(ButtonType.POV_W, new DriveWrist());
+
+        // pit_7.onTrue(new ResetTransportEncoders());
+        // pit_8.onTrue(new ResetNavx());
     }
 
     /*
@@ -109,11 +134,13 @@ public class OI {
     }
 
     public double getDefaultDriveX() {
-        return pilot.getAxis(AxisType.LEFT_X) * 0.75;
+        return pilot.getAxis(AxisType.LEFT_X) * 0.75 * 0.75; // CAMBIAR DE VUELTA A MORA MAYBE
+        // return 0.75 * pit.getRawAxis(0) * ((-pilot.getRawAxis(3) + 1) / 2);
     }
 
     public double getDefaultDriveY() {
-        return -pilot.getAxis(AxisType.LEFT_Y);
+        return -pilot.getAxis(AxisType.LEFT_Y) * 0.75; // CAMBIAR DE VUELTA A MORA
+        // return (-pit.getAxisType(1)) * ((-pilot.getRawAxis(3) + 1) / 2);
     }
 
     public double getDefaultDriveTurn() {
@@ -125,7 +152,8 @@ public class OI {
     }
 
     public double getWristInput() {
-        return pilot.getPovXAxis() * 0.25;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? pilot.getPovXAxis() * 0.125
+                : pilot.getPovXAxis() * 0.25;
     }
 
     public double getArmInput() {
@@ -133,7 +161,8 @@ public class OI {
     }
 
     public double getExtensorInput() {
-        return pilot.getTriggers() * 0.75;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? pilot.getTriggers() * 0.25
+                : pilot.getTriggers() * 0.75;
     }
 
     public HighAltitudeJoystick getPilot() {

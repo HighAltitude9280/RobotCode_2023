@@ -30,6 +30,7 @@ public class ResetTransportEncoders extends CommandBase {
     wrist.resetEncoders();
     arm.resetEncoders();
     extensor.resetEncoders();
+    System.out.println("Transport encoders reset");
   }
 
   // Returns true when the command should end.

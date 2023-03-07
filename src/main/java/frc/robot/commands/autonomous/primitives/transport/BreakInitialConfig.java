@@ -23,6 +23,6 @@ public class BreakInitialConfig extends SequentialCommandGroup {
     addCommands(new DriveExtensorToPosition(0.2, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER),
         Commands.parallel(
             new DriveArmToPosition(20, HighAltitudeConstants.ARM_AUTO_MAX_POWER),
-            new DriveWristToPosition(40, HighAltitudeConstants.WRIST_AUTO_MAX_POWER)));
+            new DriveWristToPosition(80, HighAltitudeConstants.WRIST_AUTO_MAX_POWER)));
   }
 }

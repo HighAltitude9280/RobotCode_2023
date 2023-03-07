@@ -104,6 +104,14 @@ public class Navx {
         return ahrs.getWorldLinearAccelX();
     }
 
+    public float getXVel() {
+        return ahrs.getRawGyroX();
+    }
+
+    public float getYVel() {
+        return ahrs.getRawGyroY();
+    }
+
     public boolean getCollision() {
         boolean collisionDetected = false;
         curr_world_linear_accel_x = getWorldLinearAccelX();

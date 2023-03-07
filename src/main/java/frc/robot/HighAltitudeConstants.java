@@ -23,7 +23,7 @@ import frc.robot.subsystems.intake.Intake.IntakePosition;
 
 public final class HighAltitudeConstants {
 
-        public static final boolean DEBUG = true;
+        public static final boolean DEBUG = false;
 
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
@@ -51,7 +51,7 @@ public final class HighAltitudeConstants {
 
         //// DEFAULT INITIAL PARAMETERS
 
-        public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.speed;
+        public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.torque;
         public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Raised;
 
         // Default braking mode, true for brake, false for coast.
@@ -110,19 +110,23 @@ public final class HighAltitudeConstants {
 
         // If the absolute value of the angular acceleration is smaller than this value,
         // The robot will be consider as stable on the charging station
-        public static final double BALANCING_ACCELERATION_THRESHOLD = 180;
+        public static final double BALANCING_ACCELERATION_FWD_THRESHOLD = 200.0;
+
+        // If the absolute value of the angular acceleration is smaller than this value,
+        // The robot will be consider as stable on the charging station
+        public static final double BALANCING_SPEED_THRESHOLD = 18.0;
 
         // If the absolute value of the angle (pitch) is smaller than this value,
         // The robot will be consider as balanced on the charging station.
         // Be careful with small values (less than about 10°), because some bounciness
         // can occur.
-        public static final double BALANCING_ANGLE_THRESHOLD = 20;
+        public static final double BALANCING_ANGLE_THRESHOLD = 10.0;
 
         // When trying to balance, this is the default power at which the robot will
         // move to
         // Try to balance the charging station. It is recommended to set it low to
         // improve accuracy.
-        public static final double BALANCING_DEFAULT_POWER = 0.3;
+        public static final double BALANCING_DEFAULT_POWER = 0.1875;
 
         // To prevent the robot from falling off the charging station, it will not move
         // Unless it's properly aligned, that is to say, its angle is less than this
@@ -192,7 +196,7 @@ public final class HighAltitudeConstants {
         // NUMBERS. MOTOR REVS / ARM REVS
         public static final double EXTENSOR_RATIO = 42.0 / 1.0;
 
-        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.273 * 0.0254;
+        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.432 * 0.0254;
 
         public static final double EXTENSOR_METERS_PER_PULSE = (Math.PI * EXTENSOR_PITCH_DIAMETER_METERS)
                         / (EXTENSOR_PULSES_PER_REVOLUTION * EXTENSOR_RATIO);
@@ -209,7 +213,7 @@ public final class HighAltitudeConstants {
         public static final double EXTENSOR_ARRIVE_OFFSET = 0.025;
 
         public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.475;
-        public static final double EXTENSOR_LOWER_LIMIT_METERS = -0.05;
+        public static final double EXTENSOR_LOWER_LIMIT_METERS = -0.06;
 
         //////////////////////////////// ARM ///////////////////////////////////////////
 
@@ -272,8 +276,8 @@ public final class HighAltitudeConstants {
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = 163.75;
-        public static final double EXTENSOR_FEEDER_METERS_CONE = -0.05;
+        public static final double WRIST_FEEDER_DEGREES_CONE = 168.5;
+        public static final double EXTENSOR_FEEDER_METERS_CONE = -0.06;
         public static final double ARM_FEEDER_DEGREES_CONE = 82.54;
 
         ////////// GRAB FROM INTAKE

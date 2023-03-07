@@ -10,18 +10,13 @@ import frc.robot.Robot;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Wrist;
 
-/*
- * Funcionó pero no tanto, luego vale la pena explorarlo jaiksdjfawejifpaoie
- */
-public class SimultaneousArmWrist extends CommandBase {
+public class SimultaneousArmWristMovement2 extends CommandBase {
   Arm arm;
   Wrist wrist;
-
-  double initialWristAngle;
   double delta;
 
-  /** Creates a new SimultaneousArmWrist. */
-  public SimultaneousArmWrist() {
+  /** Creates a new SimultaneousArmWristMovement2. */
+  public SimultaneousArmWristMovement2() {
     arm = Robot.getRobotContainer().getArm();
     wrist = Robot.getRobotContainer().getWrist();
     addRequirements(arm, wrist);
@@ -31,22 +26,23 @@ public class SimultaneousArmWrist extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    initialWristAngle = wrist.getCurrentAngle();
     delta = arm.getCurrentAngle() - wrist.getCurrentAngle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // double speed = OI.getInstance().getCopilot().getAxis(AxisType.RIGHT_Y) *
-    // 0.25;
-    double speed = OI.getInstance().getArmInput();
-    delta = arm.getCurrentAngle() - wrist.getCurrentAngle();
+    double armSpeed = OI.getInstance().getArmInput();
+    double wristSpeed = OI.getInstance().getWristInput();
 
-    arm.driveArm(speed);
-    wrist.moveTo(initialWristAngle - delta, speed * 0.625);
-    System.out.println("Wrist a target: " + (initialWristAngle - delta) + "Con velocidad: " + speed * 0.625 + "Init: "
-        + initialWristAngle + "Delta: " + delta);
+    arm.driveArm(armSpeed);
+
+    if (wristSpeed != 0) {
+      delta = arm.getCurrentAngle() - wrist.getCurrentAngle();
+      wrist.driveWrist(wristSpeed);
+    } else {
+      wrist.moveTo(arm.getCurrentAngle() - delta, armSpeed * 0.5);
+    }
   }
 
   // Called once the command ends or is interrupted.

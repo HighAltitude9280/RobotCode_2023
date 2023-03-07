@@ -15,7 +15,7 @@ public class DriverCameras extends SubsystemBase {
   /** Creates a new DriverCameras. */
   public DriverCameras() {
     camera = CameraServer.startAutomaticCapture(0);
-    camera.setVideoMode(PixelFormat.kMJPEG, 640, 360, 30);
+    camera.setVideoMode(PixelFormat.kYUYV, 320, 180, 30);
   }
 
   @Override

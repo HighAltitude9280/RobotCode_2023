@@ -25,8 +25,8 @@ public class DrivetrainToggleTransmissionMode extends InstantCommand {
     public void initialize() {
         Robot.getRobotContainer().getDriveTrain().toggleTransmission();
         if (Robot.getRobotContainer().getDriveTrain().getCurrentTransmissionMode() == TransmissionMode.speed)
-            CommandScheduler.getInstance().schedule(new FlashColor(0, 255, 0, 0.15));
+            CommandScheduler.getInstance().schedule(new FlashColor(0, 255, 0, 0.125));
         else
-            CommandScheduler.getInstance().schedule(new FlashColor(255, 0, 0, 0.15));
+            CommandScheduler.getInstance().schedule(new FlashColor(255, 0, 0, 0.125));
     }
 }

@@ -4,7 +4,9 @@
 
 package frc.robot.commands.autonomous.sequences.fullAutonomous.standard;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.HighAltitudeConstants;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.autonomous.primitives.AutoBalance;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
@@ -12,7 +14,8 @@ import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
-import frc.robot.commands.transport.compound.TransportGoTo;
+import frc.robot.commands.transport.compound.WristArmGoTo;
+import frc.robot.commands.transport.wrist.DriveWristToPosition;
 
 public class PreloadedPieceThenCharging extends SequentialCommandGroup {
   GamePieceMode gamePieceMode;
@@ -30,10 +33,15 @@ public class PreloadedPieceThenCharging extends SequentialCommandGroup {
         new SetGamePieceMode(gamePieceMode),
         new BreakInitialConfig(),
         // Place pre-loaded cone.
-        new TransportGoTo(TransportTarget.TOP_ROW),
+        new WristArmGoTo(TransportTarget.TOP_ROW),
         new GlobalOuttake().withTimeout(0.75),
-        new MoveStraight(4, 0.7),
-        new MoveStraight(-1.8, 0.5),
-        new AutoBalance());
+        Commands.parallel(
+            Commands.sequence(
+                new DriveWristToPosition(290.0, HighAltitudeConstants.WRIST_AUTO_MAX_POWER),
+                new WristArmGoTo(TransportTarget.RESTING)),
+            new MoveStraight(0.4, 0.25))
+    // ,new ForwardUntilAngleChange(),
+    // new AutoBalance()
+    );
   }
 }
