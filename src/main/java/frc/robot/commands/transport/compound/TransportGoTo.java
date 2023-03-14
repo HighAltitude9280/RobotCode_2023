@@ -30,6 +30,7 @@ public class TransportGoTo extends SequentialCommandGroup {
     extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
 
     addCommands(
+        new ClearDangerousPositionBeforeTarget(target),
         Commands.parallel(
             new DriveArmToTarget(target, target.getArmMaxPower()),
             new DriveWristToTarget(target, target.getWristMaxPower())),

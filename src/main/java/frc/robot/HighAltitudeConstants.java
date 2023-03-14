@@ -23,7 +23,7 @@ import frc.robot.subsystems.intake.Intake.IntakePosition;
 
 public final class HighAltitudeConstants {
 
-        public static final boolean DEBUG = false;
+        public static final boolean DEBUG = true;
 
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
@@ -178,7 +178,7 @@ public final class HighAltitudeConstants {
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static final double WRIST_ARRIVE_OFFSET = 8;
+        public static final double WRIST_ARRIVE_OFFSET = 5.0;
 
         public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;

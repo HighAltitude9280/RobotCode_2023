@@ -4,6 +4,9 @@
 
 package frc.robot.commands.transport.compound;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
@@ -41,8 +44,12 @@ public class SimultaneousArmWristMovement2 extends CommandBase {
       delta = arm.getCurrentAngle() - wrist.getCurrentAngle();
       wrist.driveWrist(wristSpeed);
     } else {
-      wrist.moveTo(arm.getCurrentAngle() - delta, armSpeed * 0.5);
+      wrist.moveTo(arm.getCurrentAngle() - delta, Math.abs(armSpeed * 0.5));
     }
+    SmartDashboard.putNumber("Wrist Current Ang", wrist.getCurrentAngle());
+    SmartDashboard.putNumber("Wrist Target", (arm.getCurrentAngle() - delta));
+    SmartDashboard.putNumber("Arm Current Ang", arm.getCurrentAngle());
+    SmartDashboard.putNumber("Delta", delta);
   }
 
   // Called once the command ends or is interrupted.

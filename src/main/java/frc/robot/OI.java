@@ -35,10 +35,13 @@ public class OI {
     private JoystickButton pit_12;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
+        pilot.setAxisDeadzone(AxisType.LEFT_X, 0.075);
+        pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.075);
+        pilot.setAxisDeadzone(AxisType.LEFT_TRIGGER, 0.1);
         pit = new Joystick(1);
         copilot = new HighAltitudeJoystick(2, JoystickType.XBOX);
-        // pit_7 = new JoystickButton(pit, 7);
+        pit_7 = new JoystickButton(pit, 7);
         // pit_8 = new JoystickButton(pit, 8);
         // pit_12 = new JoystickButton(pit, 12);
 
@@ -69,7 +72,7 @@ public class OI {
         // pilot.whileTrue(ButtonType.POV_E, new DriveWrist());
         // pilot.whileTrue(ButtonType.POV_W, new DriveWrist());
 
-        // pit_7.onTrue(new ResetTransportEncoders());
+        pit_7.onTrue(new ResetTransportEncoders());
         // pit_8.onTrue(new ResetNavx());
     }
 

@@ -100,8 +100,8 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new DriveWrist());
-    arm.setDefaultCommand(new DriveArm());
+    wrist.setDefaultCommand(new SimultaneousArmWristMovement2());
+    arm.setDefaultCommand(new SimultaneousArmWristMovement2());
     extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();

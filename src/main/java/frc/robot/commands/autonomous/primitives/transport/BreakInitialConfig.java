@@ -19,7 +19,6 @@ public class BreakInitialConfig extends SequentialCommandGroup {
   public BreakInitialConfig() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    // TODO: check if this is appropiate
     addCommands(new DriveExtensorToPosition(0.2, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER),
         Commands.parallel(
             new DriveArmToPosition(20, HighAltitudeConstants.ARM_AUTO_MAX_POWER),

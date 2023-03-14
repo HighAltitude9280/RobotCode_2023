@@ -5,7 +5,9 @@
 package frc.robot.commands.transport.compound;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Robot;
+import frc.robot.resources.components.PWMLEDStrip.commands.compound.FlashColor;
 import frc.robot.subsystems.transport.Arm;
 import frc.robot.subsystems.transport.Wrist;
 import frc.robot.subsystems.transport.Extensor;
@@ -31,6 +33,7 @@ public class ResetTransportEncoders extends CommandBase {
     arm.resetEncoders();
     extensor.resetEncoders();
     System.out.println("Transport encoders reset");
+    CommandScheduler.getInstance().schedule(new FlashColor(0, 0, 255, 0.125));
   }
 
   // Returns true when the command should end.

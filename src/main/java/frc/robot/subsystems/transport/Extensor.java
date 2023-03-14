@@ -81,4 +81,8 @@ public class Extensor extends SubsystemBase {
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
   }
+
+  public double getCurrentDistance() {
+    return extensorPositionMeters;
+  }
 }
