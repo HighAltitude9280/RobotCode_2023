@@ -4,16 +4,13 @@
 
 package frc.robot.commands.autonomous.sequences.fullAutonomous.standard;
 
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
 import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainSetTransmission;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
-import frc.robot.commands.transport.compound.TransportGoTo;
 import frc.robot.commands.transport.compound.TransportGoToParallel;
 import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 

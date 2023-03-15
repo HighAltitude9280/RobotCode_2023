@@ -10,7 +10,6 @@ import frc.robot.HighAltitudeConstants;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.arm.DriveArmToTarget;
-import frc.robot.commands.transport.extensor.DriveExtensorToTarget;
 import frc.robot.commands.transport.wrist.DriveWristToTarget;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

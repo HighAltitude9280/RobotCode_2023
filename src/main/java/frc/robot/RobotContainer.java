@@ -9,20 +9,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
-import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Charging;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.ChargingSimple;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceOnly;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenMoveStraight;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenSimpleBalance;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.Forward;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.PreloadedPieceOnly;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.PreloadedPieceThenCharging;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.transport.arm.DriveArm;
-import frc.robot.commands.transport.compound.SimultaneousArmWrist;
 import frc.robot.commands.transport.compound.SimultaneousArmWristMovement2;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
@@ -100,8 +93,8 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new SimultaneousArmWristMovement2());
-    arm.setDefaultCommand(new SimultaneousArmWristMovement2());
+    wrist.setDefaultCommand(new DriveWrist());
+    arm.setDefaultCommand(new DriveArm());
     extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();

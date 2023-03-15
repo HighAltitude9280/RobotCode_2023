@@ -8,15 +8,12 @@ import frc.robot.commands.drivetrain.follower.FollowTargetJolt;
 import frc.robot.commands.pieceHandlers.compound.GlobalIntake;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
 import frc.robot.commands.pieceHandlers.intake.ToggleIntakePosition;
-import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.robotParameters.ToggleShouldExtensorBeLimitedManual;
 import frc.robot.commands.robotParameters.ToggleShouldManualHaveLimits;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.commands.transport.compound.TransportGoTo;
-import frc.robot.commands.transport.compound.WristArmGoTo;
-import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;
@@ -35,9 +32,7 @@ public class OI {
     private JoystickButton pit_12;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.PS4);
-        pilot.setAxisDeadzone(AxisType.LEFT_X, 0.075);
-        pilot.setAxisDeadzone(AxisType.LEFT_Y, 0.075);
+        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
         pilot.setAxisDeadzone(AxisType.LEFT_TRIGGER, 0.1);
         pit = new Joystick(1);
         copilot = new HighAltitudeJoystick(2, JoystickType.XBOX);
@@ -156,11 +151,12 @@ public class OI {
 
     public double getWristInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? pilot.getPovXAxis() * 0.125
-                : pilot.getPovXAxis() * 0.25;
+                : pilot.getPovXAxis() * 0.5;
     }
 
     public double getArmInput() {
-        return -pilot.getAxis(AxisType.RIGHT_Y) * 0.25;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? -pilot.getAxis(AxisType.RIGHT_Y) * 0.25
+                : -pilot.getAxis(AxisType.RIGHT_Y) * 1.0;
     }
 
     public double getExtensorInput() {

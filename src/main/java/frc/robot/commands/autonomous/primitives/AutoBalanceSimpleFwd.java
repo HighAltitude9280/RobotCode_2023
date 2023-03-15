@@ -5,10 +5,8 @@
 package frc.robot.commands.autonomous.primitives;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
-import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.subsystems.chassis.DriveTrain;
 
 public class AutoBalanceSimpleFwd extends CommandBase {

@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.autonomous.primitives.AutoBalance;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.transport.BreakInitialConfig;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
@@ -28,7 +27,6 @@ public class PreloadedPieceThenCharging extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     this.gamePieceMode = gamePieceMode;
-    // TODO: test autonomous. Remember to first test BreakInitialConfig()
     addCommands(
         new SetGamePieceMode(gamePieceMode),
         new BreakInitialConfig(),

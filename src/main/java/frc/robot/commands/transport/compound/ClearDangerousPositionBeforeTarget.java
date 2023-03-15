@@ -68,14 +68,14 @@ public class ClearDangerousPositionBeforeTarget extends CommandBase {
     currentExtensorDistance = extensor.getCurrentDistance();
     double armWristDelta = currentArmAngle - currentWristAngle;
 
-    wristArmDangerous = (armWristDelta < -190 || armWristDelta > -10)
+    wristArmDangerous = (armWristDelta < -139 || armWristDelta > 47)
         && Math.abs(currentWristAngle - wristTarget) > 8.0;
 
     double maxArmAngle = Math.max(currentArmAngle, armTarget);
     double minArmAngle = Math.min(currentArmAngle, armTarget);
 
-    boolean goesVertical = (maxArmAngle > 120 && minArmAngle < 120) ||
-        (maxArmAngle > 100 && minArmAngle < 100);
+    boolean goesVertical = (maxArmAngle > 110 && minArmAngle < 110) ||
+        (maxArmAngle > 80 && minArmAngle < 80);
 
     robotHeightDanger = (currentExtensorDistance > 0.1) && goesVertical;
 
