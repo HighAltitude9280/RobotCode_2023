@@ -651,17 +651,17 @@ public class DriveTrain extends SubsystemBase {
      * Updates odometry and encoder positions.
      */
     public void updateOdometry() {
-        double deltaLeft = lastLeftEncoderPosition - leftMotors.getEncoderPosition();
-        double deltaRight = lastRightEncoderPosition - rightMotors.getEncoderPosition();
+        double deltaLeft = leftMotors.getEncoderPosition() - lastLeftEncoderPosition;
+        double deltaRight = rightMotors.getEncoderPosition() - lastRightEncoderPosition;
 
         if (transmissionState == TransmissionMode.torque) {
 
-            leftEncoderDistance -= deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
+            leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
             rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
 
         } else {
 
-            leftEncoderDistance -= deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
+            leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
             rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
 
         }
@@ -670,7 +670,7 @@ public class DriveTrain extends SubsystemBase {
         lastRightEncoderPosition = rightMotors.getEncoderPosition();
 
         if (odometry != null) {
-            odometry.update(new Rotation2d(Math.toRadians(Robot.getRobotContainer().getNavx().getYaw())),
+            odometry.update(new Rotation2d(Math.toRadians(-Robot.getRobotContainer().getNavx().getYaw())),
                     leftEncoderDistance, rightEncoderDistance);
 
         } else {
