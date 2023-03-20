@@ -90,7 +90,9 @@ public class ClearDangerousPositionBeforeTarget extends CommandBase {
       }
     }
     if (robotHeightDanger) {
-      if (extensor.moveTo(0.1, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER)) {
+      boolean isTargetAlreadyLower = extensorTarget < extensor.getCurrentDistance();
+      double targetIfHeightDanger = isTargetAlreadyLower ? extensorTarget : 0.1;
+      if (extensor.moveTo(targetIfHeightDanger, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER)) {
         robotHeightDanger = false;
       }
     }

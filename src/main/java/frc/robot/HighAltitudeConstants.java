@@ -25,6 +25,8 @@ public final class HighAltitudeConstants {
 
         public static final boolean DEBUG = true;
 
+        public static final boolean SINGLE_DRIVER = true;
+
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
         //// DRAGONFLY
@@ -235,7 +237,7 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double ARM_BRAKING_DEGREES = 18;
+        public static final double ARM_BRAKING_DEGREES = 27.5; // PREVIOUSLY 18
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.
@@ -249,9 +251,9 @@ public final class HighAltitudeConstants {
 
         ////////////////////// AUTONOMOUS MOVEMENT
 
-        public static final double WRIST_AUTO_MAX_POWER = 0.5;
-        public static final double EXTENSOR_AUTO_MAX_POWER = 1;
-        public static final double ARM_AUTO_MAX_POWER = 1.0;
+        public static final double WRIST_AUTO_MAX_POWER = 0.35;
+        public static final double EXTENSOR_AUTO_MAX_POWER = 0.9;
+        public static final double ARM_AUTO_MAX_POWER = 0.7;
 
         /////////////////// CONE MODE ///////////////////
 

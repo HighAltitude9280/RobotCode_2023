@@ -56,7 +56,6 @@ public class Arm extends SubsystemBase {
     power = Math.clamp(power, -1, 1) * maxPower;
 
     armMotors.setAll(power);
-    Robot.debugPrint("ARM MOVING TOOOOO: " + power);
     return false;
   }
 

@@ -16,7 +16,6 @@ import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPre
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenSimpleBalance;
 import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.transport.arm.DriveArm;
-import frc.robot.commands.transport.compound.SimultaneousArmWristMovement2;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;

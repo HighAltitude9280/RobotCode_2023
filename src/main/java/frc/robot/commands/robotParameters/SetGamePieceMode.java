@@ -28,14 +28,16 @@ public class SetGamePieceMode extends InstantCommand {
   @Override
   public void initialize() {
     robotContainer.setCurrentGamePieceMode(mode);
-    if (mode.equals(GamePieceMode.CONE) || mode.equals(GamePieceMode.CUBE)) {
+    try {
       robotContainer.getArm().getCurrentCommand().cancel();
       robotContainer.getWrist().getCurrentCommand().cancel();
+    } catch (NullPointerException e) {
+
+    }
+    if (mode.equals(GamePieceMode.CONE) || mode.equals(GamePieceMode.CUBE)) {
       robotContainer.getArm().setDefaultCommand(new SimultaneousArmWristMovement2());
       robotContainer.getWrist().setDefaultCommand(new SimultaneousArmWristMovement2());
     } else {
-      robotContainer.getArm().getCurrentCommand().cancel();
-      robotContainer.getWrist().getCurrentCommand().cancel();
       robotContainer.getArm().setDefaultCommand(new DriveArm());
       robotContainer.getWrist().setDefaultCommand(new DriveWrist());
     }
