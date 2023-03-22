@@ -25,7 +25,7 @@ public final class HighAltitudeConstants {
 
         public static final boolean DEBUG = true;
 
-        public static final boolean SINGLE_DRIVER = true;
+        public static final boolean SINGLE_DRIVER = false;
 
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
@@ -237,7 +237,7 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double ARM_BRAKING_DEGREES = 27.5; // PREVIOUSLY 18
+        public static final double ARM_BRAKING_DEGREES = 35.0; // PREVIOUSLY 18
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.

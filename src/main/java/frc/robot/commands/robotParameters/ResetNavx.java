@@ -4,8 +4,10 @@
 
 package frc.robot.commands.robotParameters;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
+import frc.robot.resources.components.PWMLEDStrip.commands.compound.FlashColor;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,5 +21,6 @@ public class ResetNavx extends InstantCommand {
   @Override
   public void initialize() {
     Robot.getRobotContainer().getNavx().reset();
+    CommandScheduler.getInstance().schedule(new FlashColor(0, 0, 255, 0.125));
   }
 }

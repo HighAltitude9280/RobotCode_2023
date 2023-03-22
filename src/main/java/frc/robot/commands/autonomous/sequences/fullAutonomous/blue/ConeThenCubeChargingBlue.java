@@ -9,28 +9,29 @@ import frc.robot.commands.autonomous.Paths;
 import frc.robot.commands.autonomous.primitives.AutoBalance;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
-import frc.robot.commands.drivetrain.drivingSensors.resetOdometry;
+import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
 
 public class ConeThenCubeChargingBlue extends SequentialCommandGroup {
 
-  /** 
-   * Leaves a cone at position A, intakes cube number 1 and places it at position B,
+  /**
+   * Leaves a cone at position A, intakes cube number 1 and places it at position
+   * B,
    * then goes to the charging station and auto balances.
    */
   public ConeThenCubeChargingBlue() {
     addCommands(
 
-      new resetOdometry(1.89, 4.96),
-      //Leave preloaded cone at position A
-      //Intake in
-      new MoveStraight(4.9, 1,3.9),
-      //Intake off
-      new SplineMove(Paths.piece1ToPositionBBlue, 
-        1, true, false, true, true),
-      //Place cube
-      new SplineMove(Paths.positionBToChargingBlue, 1,
-       true, false, false, false),
-      new AutoBalance()
+        new ResetOdometry(1.89, 4.96),
+        // Leave preloaded cone at position A
+        // Intake in
+        new MoveStraight(4.9, 1, 3.9),
+        // Intake off
+        new SplineMove(Paths.piece1ToPositionBBlue,
+            1, true, false, true, true),
+        // Place cube
+        new SplineMove(Paths.positionBToChargingBlue, 1,
+            true, false, false, false),
+        new AutoBalance()
 
     );
   }

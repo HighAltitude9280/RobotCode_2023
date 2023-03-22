@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     // debugBooleanSmartDashboard("Should Manual Have Limits",
     // getRobotContainer().getShouldManualHaveLimits());
     // debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
-    // debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
+    debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
     // debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
     // debugNumberSmartDashboard("AngAccRoll",
     // getRobotContainer().getNavx().getAngularAccelerationPitch());

@@ -8,24 +8,25 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autonomous.Paths;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
-import frc.robot.commands.drivetrain.drivingSensors.resetOdometry;
+import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
 
 public class ConeThenCubeCableRed extends SequentialCommandGroup {
 
-  /** 
-   * Leaves a cone at position I, intakes cube number 4 and places it at position H.
+  /**
+   * Leaves a cone at position I, intakes cube number 4 and places it at position
+   * H.
    */
   public ConeThenCubeCableRed() {
     addCommands(
 
-      new resetOdometry(1.91, 7.52),
-      //Leave preloaded cone at position A
-      //Intake in
-      new MoveStraight(4.68, 1,4.77),
-      //Intake off
-      new SplineMove(Paths.piece4ToPositionHRed, 
-        1, true, false, true, true)
-      //Place cube
+        new ResetOdometry(1.91, 7.52),
+        // Leave preloaded cone at position A
+        // Intake in
+        new MoveStraight(4.68, 1, 4.77),
+        // Intake off
+        new SplineMove(Paths.piece4ToPositionHRed,
+            1, true, false, true, true)
+    // Place cube
 
     );
   }

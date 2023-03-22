@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainToggleTransmissionMode;
+import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
 import frc.robot.commands.drivetrain.follower.FollowTargetJolt;
 import frc.robot.commands.pieceHandlers.compound.GlobalIntake;
 import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
@@ -56,10 +57,11 @@ public class OI {
         if (HighAltitudeConstants.SINGLE_DRIVER)
             pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); // SINGLE DRIVER
         else
-            copilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); // COPILOT
+            copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); // COPILOT
 
         pit.getJoystickButtonObj(7).onTrue(new ResetTransportEncoders());
         pit.getJoystickButtonObj(8).onTrue(new ResetNavx());
+        pit.getJoystickButtonObj(9).onTrue(new ResetOdometry(0, 0));
     }
 
     public static OI getInstance() {
