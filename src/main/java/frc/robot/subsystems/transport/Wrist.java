@@ -69,7 +69,7 @@ public class Wrist extends SubsystemBase {
     wristPositionDegrees = wristEncoderPosition * HighAltitudeConstants.WRIST_DEGREES_PER_PULSE;
 
     // Robot.debugNumberSmartDashboard("Wrist Encoder", wristEncoderPosition);
-    Robot.debugNumberSmartDashboard("Wrist Degrees", wristPositionDegrees);
+    // Robot.debugNumberSmartDashboard("Wrist Degrees", wristPositionDegrees);
     // Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " +
     // wristPositionDegrees);
   }

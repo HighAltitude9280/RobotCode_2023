@@ -59,6 +59,7 @@ public class OI {
         else
             copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); // COPILOT
 
+        // pilot.onTrueCombo(new ResetOdometry(0, 0), ButtonType.RT, ButtonType.LT);
         pit.getJoystickButtonObj(7).onTrue(new ResetTransportEncoders());
         pit.getJoystickButtonObj(8).onTrue(new ResetNavx());
         pit.getJoystickButtonObj(9).onTrue(new ResetOdometry(0, 0));

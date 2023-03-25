@@ -77,7 +77,7 @@ public class Extensor extends SubsystemBase {
         HighAltitudeConstants.EXTENSOR_METERS_PER_PULSE;
 
     // Robot.debugNumberSmartDashboard("Extensor Encoder", extensorEncoderPosition);
-    Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
+    // Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
   }

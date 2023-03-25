@@ -28,7 +28,7 @@ public class RobotMap {
         // Right side
         public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 4, 5, 6 }; // 4 5
         public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {}; // -
-        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = true;
+        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_FX, TypeOfMotor.TALON_FX,
                         TypeOfMotor.TALON_FX };
 

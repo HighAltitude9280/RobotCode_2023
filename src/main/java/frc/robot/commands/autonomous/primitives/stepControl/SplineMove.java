@@ -1,6 +1,8 @@
 package frc.robot.commands.autonomous.primitives.stepControl;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -131,9 +133,14 @@ public class SplineMove extends CommandBase {
         }
 
         double deltaAngle = Math.deltaAngle(Robot.getRobotContainer().getNavx().getYaw(), targetAngle);
-        double turnCorrectionPower = deltaAngle * HighAltitudeConstants.DRIVETRAIN_SPLINE_ANGLE_CORRECTION;
+        double turnCorrectionPower = Math.clamp(deltaAngle * HighAltitudeConstants.DRIVETRAIN_SPLINE_ANGLE_CORRECTION,
+                -maxSpeed, maxSpeed);
 
         Robot.getRobotContainer().getDriveTrain().arcadeDrive(power, turnCorrectionPower);
+        System.out.println(turnCorrectionPower);
+
+        SmartDashboard.putNumber("Error in y", error);
+        SmartDashboard.putNumber("Target angle", targetAngle);
 
         return distanceToTarget < HighAltitudeConstants.DRIVETRAIN_SPLINE_ARRIVE_OFFSET;
     }

@@ -65,7 +65,6 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     getRobotContainer().getNavx().run();
-    getRobotContainer().putAutoChooser();
 
     debugStringSmartDashboard("Current Game Piece Mode",
         getRobotContainer().getCurrentGamePieceMode().toString());
@@ -99,6 +98,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
+    getRobotContainer().putAutoChooser();
   }
 
   /**

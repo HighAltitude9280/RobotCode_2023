@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.autonomous.Paths;
+import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.ChargingSimple;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceOnly;
@@ -100,12 +102,12 @@ public class RobotContainer {
   }
 
   public void generateAutos() {
-    // SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5,
-    // true, false, false, false);
+    SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.1,
+        true, false, false, false);
     // BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
     // PreloadedPieceThenCharging coneThenCharging = new
     // PreloadedPieceThenCharging(GamePieceMode.CONE);
-    // PreloadedPieceThenCharging cubeThenCharging = new
+    // PreloadedPieceThenCharging cubeThenCharging = new&
     // PreloadedPieceThenCharging(GamePieceMode.CUBE);
     // Charging charging = new Charging();
     // Forward forward = new Forward();
@@ -124,19 +126,18 @@ public class RobotContainer {
         GamePieceMode.CUBE);
     FasterPreloadedPieceThenSimpleBalance coneThenBalance = new FasterPreloadedPieceThenSimpleBalance(
         GamePieceMode.CONE);
-
-    ChargingSimple xd2 = new ChargingSimple();
     DoNothing nothing = new DoNothing();
-    m_chooser.setDefaultOption("Charging", xd2);
-    m_chooser.addOption("Do nothing", nothing);
-    m_chooser.addOption("Cone Move", coneThenMove);
-    m_chooser.addOption("Cube Move", cubeThenMove);
-    m_chooser.addOption("Cone Balance", coneThenBalance);
-    m_chooser.addOption("Cube Balance", cubeThenBalance);
-    m_chooser.addOption("Cone Only", coneThenStayStill);
-    m_chooser.addOption("Cube Only", cubeThenStayStill);
+    ChargingSimple xd2 = new ChargingSimple();
 
-    // m_chooser.setDefaultOption("Example path", followExamplePath);
+    m_chooser.setDefaultOption("Example path", followExamplePath);
+    // m_chooser.addOption("Charging", xd2);
+    // m_chooser.addOption("Do nothing", nothing);
+    // m_chooser.addOption("Cone Move", coneThenMove);
+    // m_chooser.addOption("Cube Move", cubeThenMove);
+    // m_chooser.addOption("Cone Balance", coneThenBalance);
+    // m_chooser.addOption("Cube Balance", cubeThenBalance);
+    // m_chooser.addOption("Cone Only", coneThenStayStill);
+    // m_chooser.addOption("Cube Only", cubeThenStayStill);
 
   }
 
@@ -150,9 +151,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    FasterPreloadedPieceOnly xd = new FasterPreloadedPieceOnly(GamePieceMode.CUBE);
-    ChargingSimple xd2 = new ChargingSimple();
-    return xd.andThen(xd2);
+    // MONTERREY
+    // FasterPreloadedPieceOnly xd = new
+    // FasterPreloadedPieceOnly(GamePieceMode.CUBE);
+    // ChargingSimple xd2 = new ChargingSimple();
+    // return xd.andThen(xd2);
+    return m_chooser.getSelected();
   }
 
   public Navx getNavx() {

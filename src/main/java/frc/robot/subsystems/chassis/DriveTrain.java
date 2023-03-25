@@ -658,12 +658,12 @@ public class DriveTrain extends SubsystemBase {
         if (transmissionState == TransmissionMode.torque) {
 
             leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
-            rightEncoderDistance -= deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
+            rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
 
         } else {
 
             leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
-            rightEncoderDistance -= deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
+            rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
 
         }
 

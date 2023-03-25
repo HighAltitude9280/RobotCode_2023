@@ -67,11 +67,11 @@ public final class HighAltitudeConstants {
         // angle and the current angle (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // turning speed.
-        public static double DRIVETRAIN_AUTO_TURNING_BRAKING_DISTANCE = 100;
+        public static double DRIVETRAIN_AUTO_TURNING_BRAKING_DISTANCE = 100; // 100
         // When turning in autonomous, if the difference between the target angle and
         // the current angle (in degrees) is less than this constant, it will be
         // considered on target.
-        public static double DRIVETRAIN_AUTO_TURNING_ARRIVE_OFFSET = 3;
+        public static double DRIVETRAIN_AUTO_TURNING_ARRIVE_OFFSET = 3; // 3
 
         /// Straight motion
 
@@ -92,16 +92,16 @@ public final class HighAltitudeConstants {
         /// Splines
 
         // When following a spline, this constant will help correct the error in y.
-        public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70;
+        public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70; // 70
         // When following a spline, if the difference between the target
         // and the current position (in meters) is less than this constant, it be
         // consider on target.
-        public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0;
+        public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0.05; // 0
         // When following a spline, this constant will determine
         // how sharp the angle correction is. The higher the values, the sharper the
         // angle correction.
-        public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
-        public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
+        public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0.0085; // 0
+        public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0.25; // 0
 
         /// Alignment
         public static final double DRIVETRAIN_ALIGN_MAX_SPEED = 0.1875;
@@ -151,7 +151,7 @@ public final class HighAltitudeConstants {
 
         // Use these constants to convert from encoder position to meters
         // (position*these constants = meters)
-        public static final double DRIVETRAIN_METERS_PER_PULSE_TORQUE = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
+        public static final double DRIVETRAIN_METERS_PER_PULSE_TORQUE = 2.1428 * Math.PI * DRIVETRAIN_WHEEL_DIAMETER
                         / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_TORQUE);
         public static final double DRIVETRAIN_METERS_PER_PULSE_SPEED = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
                         / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_SPEED);
