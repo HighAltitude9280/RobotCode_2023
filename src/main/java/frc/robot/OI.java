@@ -47,17 +47,20 @@ public class OI {
         pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
         pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
 
-        pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt());
-
         pilot.whileTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
         pilot.whileTrue(ButtonType.B, new TransportGoTo(TransportTarget.FEEDER));
         pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
         pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
 
-        if (HighAltitudeConstants.SINGLE_DRIVER)
+        if (HighAltitudeConstants.SINGLE_DRIVER) {
             pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); // SINGLE DRIVER
-        else
+            pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt()); // SINGLE DRIVER
+        }
+
+        else {
             copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); // COPILOT
+            copilot.whileTrue(ButtonType.RT, new FollowTargetJolt()); // COPILOT
+        }
 
         // pilot.onTrueCombo(new ResetOdometry(0, 0), ButtonType.RT, ButtonType.LT);
         pit.getJoystickButtonObj(7).onTrue(new ResetTransportEncoders());

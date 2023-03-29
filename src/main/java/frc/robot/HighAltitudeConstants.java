@@ -25,7 +25,7 @@ public final class HighAltitudeConstants {
 
         public static final boolean DEBUG = true;
 
-        public static final boolean SINGLE_DRIVER = false;
+        public static final boolean SINGLE_DRIVER = true;
 
         //////////////////////// DRIVETRAIN///////////////////////////////////
 

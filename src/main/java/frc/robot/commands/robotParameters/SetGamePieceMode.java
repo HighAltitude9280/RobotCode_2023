@@ -42,5 +42,10 @@ public class SetGamePieceMode extends InstantCommand {
       robotContainer.getWrist().setDefaultCommand(new DriveWrist());
     }
 
+    if (mode.equals(GamePieceMode.CONE)) {
+      robotContainer.getLimeLightVision().setPipeline(1);
+    } else if (mode.equals(GamePieceMode.CUBE)) {
+      robotContainer.getLimeLightVision().setPipeline(0);
+    }
   }
 }

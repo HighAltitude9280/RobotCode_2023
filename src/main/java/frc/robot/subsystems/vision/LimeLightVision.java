@@ -37,4 +37,12 @@ public class LimeLightVision extends SubsystemBase {
   public double getTa() {
     return table.getEntry("ta").getDouble(0);
   }
+
+  public double getPipeline() {
+    return table.getEntry("pipeline").getDouble(0);
+  }
+
+  public void setPipeline(int pipeline) {
+    table.getEntry("pipeline").setNumber(pipeline);
+  }
 }
