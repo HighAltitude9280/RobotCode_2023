@@ -4,8 +4,8 @@ import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainToggleTransmissionMode;
 import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
 import frc.robot.commands.drivetrain.follower.FollowTargetJolt;
-import frc.robot.commands.pieceHandlers.compound.GlobalIntake;
-import frc.robot.commands.pieceHandlers.compound.GlobalOuttake;
+import frc.robot.commands.pieceHandlers.gripper.GripperIn;
+import frc.robot.commands.pieceHandlers.gripper.GripperOut;
 import frc.robot.commands.pieceHandlers.intake.ToggleIntakePosition;
 import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
@@ -39,12 +39,12 @@ public class OI {
         pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL),
                 ButtonType.START, ButtonType.BACK);
 
-        pilot.whileTrue(ButtonType.LB, new GlobalIntake());
-        pilot.whileTrue(ButtonType.RB, new GlobalOuttake());
+        pilot.whileTrue(ButtonType.LB, new GripperIn());
+        pilot.whileTrue(ButtonType.RB, new GripperOut());
         pilot.onTrueCombo(new ToggleShouldExtensorBeLimitedManual(),
                 ButtonType.LB, ButtonType.RB);
 
-        pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
+        // pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
         pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
 
         pilot.whileTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
@@ -53,13 +53,17 @@ public class OI {
         pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
 
         if (HighAltitudeConstants.SINGLE_DRIVER) {
-            pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); // SINGLE DRIVER
-            pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt()); // SINGLE DRIVER
+            // pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); //
+            // SINGLE DRIVER
+            // pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt()); // SINGLE
+            // DRIVER
         }
 
         else {
-            copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); // COPILOT
-            copilot.whileTrue(ButtonType.RT, new FollowTargetJolt()); // COPILOT
+            copilot.onTrue(ButtonType.START, new ResetNavx());
+            // copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); //
+            // COPILOT
+            // copilot.whileTrue(ButtonType.RT, new FollowTargetJolt()); // COPILOT
         }
 
         // pilot.onTrueCombo(new ResetOdometry(0, 0), ButtonType.RT, ButtonType.LT);
@@ -73,6 +77,40 @@ public class OI {
             instance = new OI();
         }
         return instance;
+    }
+
+    public double getDefaultSwerveDriveSpeed() {
+        if (HighAltitudeConstants.SINGLE_DRIVER)
+            return -pilot.getAxis(AxisType.LEFT_Y);
+        else {
+            return -copilot.getAxis(AxisType.LEFT_Y);
+        }
+    }
+
+    public double getDefaultSwerveDriveStrafe() {
+        if (HighAltitudeConstants.SINGLE_DRIVER)
+            return pilot.getAxis(AxisType.LEFT_X);
+        else
+            return copilot.getAxis(AxisType.LEFT_X);
+    }
+
+    public double getDefaultSwerveDriveTurn() {
+        if (HighAltitudeConstants.SINGLE_DRIVER)
+            return pilot.getAxis(AxisType.RIGHT_X);
+        else
+            return copilot.getAxis(AxisType.RIGHT_X);
+    }
+
+    public double getSwerveDriveAsTankTurn() {
+        if (HighAltitudeConstants.SINGLE_DRIVER)
+            return pilot.getAxis(AxisType.LEFT_X);
+        else
+            return copilot.getAxis(AxisType.LEFT_X);
+
+    }
+
+    public boolean getSwerveDriveFieldOriented() {
+        return true;
     }
 
     public double getDefaultDriveX() {

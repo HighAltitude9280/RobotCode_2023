@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static RobotContainer robotContainer;
-  VictorSPX motor1, motor2;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -37,7 +36,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    getRobotContainer().getDriveTrain().resetOdometry();
+    // getRobotContainer().getDriveTrain().resetOdometry();
     getRobotContainer().configureButtonBindings();
 
     getRobotContainer().generateAutos();

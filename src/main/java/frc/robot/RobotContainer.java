@@ -17,6 +17,9 @@ import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPre
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenMoveStraight;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenSimpleBalance;
 import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
+import frc.robot.commands.drivetrain.swerve.SwerveDriveAsTank;
+import frc.robot.commands.drivetrain.swerve.TestSwerve;
 import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
@@ -24,6 +27,7 @@ import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
 import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
 import frc.robot.subsystems.chassis.DriveTrain;
+import frc.robot.subsystems.chassis.swerve.SwerveDriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transport.Arm;
@@ -55,6 +59,7 @@ public class RobotContainer {
   private GamePieceMode currentGamePieceMode = GamePieceMode.MANUAL;
   private Navx navx;
   private DriveTrain driveTrain;
+  private SwerveDriveTrain swerveDriveTrain;
   private Wrist wrist;
   private Arm arm;
   private Extensor extensor;
@@ -72,15 +77,16 @@ public class RobotContainer {
    */
   public RobotContainer() {
     navx = new Navx();
-    driveTrain = new DriveTrain();
+    // driveTrain = new DriveTrain();
+    swerveDriveTrain = new SwerveDriveTrain();
     wrist = new Wrist();
     arm = new Arm();
     extensor = new Extensor();
     gripper = new Gripper();
-    intake = new Intake();
+    // intake = new Intake();
 
     limeLightVision = new LimeLightVision();
-    driverCameras = new DriverCameras();
+    // driverCameras = new DriverCameras();
     leds = new LEDs();
   }
 
@@ -93,17 +99,19 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    driveTrain.setDefaultCommand(new DefaultDrive());
+    // driveTrain.setDefaultCommand(new DefaultDrive());
     wrist.setDefaultCommand(new DriveWrist());
     arm.setDefaultCommand(new DriveArm());
     extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceMode());
     OI.getInstance().ConfigureButtonBindings();
+
+    swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
   }
 
   public void generateAutos() {
-    SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.1,
-        true, false, false, false);
+    // SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.1,
+    // true, false, false, false);
     // BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
     // PreloadedPieceThenCharging coneThenCharging = new
     // PreloadedPieceThenCharging(GamePieceMode.CONE);
@@ -116,20 +124,24 @@ public class RobotContainer {
     // PreloadedPieceOnly preloadedCubeOnly = new
     // PreloadedPieceOnly(GamePieceMode.CUBE);
 
-    FasterPreloadedPieceThenMoveStraight coneThenMove = new FasterPreloadedPieceThenMoveStraight(GamePieceMode.CONE);
-    FasterPreloadedPieceThenMoveStraight cubeThenMove = new FasterPreloadedPieceThenMoveStraight(GamePieceMode.CUBE);
-    FasterPreloadedPieceOnly coneThenStayStill = new FasterPreloadedPieceOnly(
-        GamePieceMode.CONE);
-    FasterPreloadedPieceOnly cubeThenStayStill = new FasterPreloadedPieceOnly(
-        GamePieceMode.CUBE);
-    FasterPreloadedPieceThenSimpleBalance cubeThenBalance = new FasterPreloadedPieceThenSimpleBalance(
-        GamePieceMode.CUBE);
-    FasterPreloadedPieceThenSimpleBalance coneThenBalance = new FasterPreloadedPieceThenSimpleBalance(
-        GamePieceMode.CONE);
-    DoNothing nothing = new DoNothing();
-    ChargingSimple xd2 = new ChargingSimple();
-
-    m_chooser.setDefaultOption("Example path", followExamplePath);
+    // FasterPreloadedPieceThenMoveStraight coneThenMove = new
+    // FasterPreloadedPieceThenMoveStraight(GamePieceMode.CONE);
+    // FasterPreloadedPieceThenMoveStraight cubeThenMove = new
+    // FasterPreloadedPieceThenMoveStraight(GamePieceMode.CUBE);
+    // FasterPreloadedPieceOnly coneThenStayStill = new FasterPreloadedPieceOnly(
+    // GamePieceMode.CONE);
+    // FasterPreloadedPieceOnly cubeThenStayStill = new FasterPreloadedPieceOnly(
+    // GamePieceMode.CUBE);
+    // FasterPreloadedPieceThenSimpleBalance cubeThenBalance = new
+    // FasterPreloadedPieceThenSimpleBalance(
+    // GamePieceMode.CUBE);
+    // FasterPreloadedPieceThenSimpleBalance coneThenBalance = new
+    // FasterPreloadedPieceThenSimpleBalance(
+    // GamePieceMode.CONE);
+    // DoNothing nothing = new DoNothing();
+    // ChargingSimple xd2 = new ChargingSimple();
+    //
+    // m_chooser.setDefaultOption("Example path", followExamplePath);
     // m_chooser.addOption("Charging", xd2);
     // m_chooser.addOption("Do nothing", nothing);
     // m_chooser.addOption("Cone Move", coneThenMove);
@@ -161,6 +173,10 @@ public class RobotContainer {
 
   public Navx getNavx() {
     return navx;
+  }
+
+  public SwerveDriveTrain getSwerveDriveTrain() {
+    return swerveDriveTrain;
   }
 
   public DriveTrain getDriveTrain() {

@@ -163,6 +163,21 @@ public class HighAltitudeMotorController {
 
     }
 
+    public double getEncVelocity() {
+        switch (motorToUse) {
+            case TALON_SRX:
+                return phoenixMotor.getSelectedSensorVelocity(0);
+            case TALON_FX:
+                return phoenixMotor.getSelectedSensorVelocity(0);
+            case CAN_SPARK_BRUSHLESS:
+                return ((CANSparkMax) frcMotor).getEncoder().getVelocity();
+
+            default:
+                DriverStation.reportWarning("Encoder for " + motorToUse + " not found, returning 0!", true);
+                return 0;
+        }
+    }
+
     public void stopMotor() {
 
         if (frcMotor != null)
