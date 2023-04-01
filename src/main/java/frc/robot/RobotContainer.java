@@ -9,16 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.autonomous.Paths;
-import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.ChargingSimple;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceOnly;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenMoveStraight;
-import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.FasterPreloadedPieceThenSimpleBalance;
-import frc.robot.commands.drivetrain.DefaultDrive;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
-import frc.robot.commands.drivetrain.swerve.SwerveDriveAsTank;
 import frc.robot.commands.drivetrain.swerve.TestSwerve;
 import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
@@ -52,7 +43,6 @@ public class RobotContainer {
     CUBE, CONE, MANUAL
   }
 
-  // TODO: add m_autoCommand back if deemed necessary
   // private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 

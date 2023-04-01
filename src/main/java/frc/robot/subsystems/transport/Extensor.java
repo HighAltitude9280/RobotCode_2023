@@ -62,7 +62,7 @@ public class Extensor extends SubsystemBase {
     double power = delta / HighAltitudeConstants.EXTENSOR_BRAKING_METERS;
     power = Math.clamp(power, -1, 1) * maxPower;
 
-    extensorMotors.setAll(power);
+    driveExtensor(power);
     return false;
   }
 
@@ -76,8 +76,8 @@ public class Extensor extends SubsystemBase {
     extensorPositionMeters = extensorEncoderPosition *
         HighAltitudeConstants.EXTENSOR_METERS_PER_PULSE;
 
-    // Robot.debugNumberSmartDashboard("Extensor Encoder", extensorEncoderPosition);
-    // Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
+    Robot.debugNumberSmartDashboard("Extensor Encoder", extensorEncoderPosition);
+    Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
   }

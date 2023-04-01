@@ -4,8 +4,10 @@
 
 package frc.robot.commands.drivetrain.swerve.swerveParameters;
 
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
+import frc.robot.resources.components.PWMLEDStrip.commands.compound.FlashColor;
 import frc.robot.subsystems.chassis.swerve.SwerveDriveTrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -24,5 +26,9 @@ public class ToggleIsFieldOriented extends InstantCommand {
   @Override
   public void initialize() {
     swerveDriveTrain.toggleFieldOriented();
+    if (swerveDriveTrain.getIsFieldOriented() == true)
+      CommandScheduler.getInstance().schedule(new FlashColor(0, 255, 0, 0.125));
+    else
+      CommandScheduler.getInstance().schedule(new FlashColor(255, 0, 0, 0.125));
   }
 }

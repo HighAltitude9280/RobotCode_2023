@@ -27,7 +27,7 @@ public class FasterPreloadedPieceOnly extends SequentialCommandGroup {
         new SetGamePieceMode(g),
         new DrivetrainSetTransmission(TransmissionMode.torque),
         new BreakInitialConfig(),
-        new TransportGoToParallel(TransportTarget.TOP_ROW),
+        new TransportGoToParallel(TransportTarget.TOP_ROW_BACK),
         new GlobalOuttake().withTimeout(0.5));
     // new TransportGoTo(TransportTarget.RESTING)); ESTE SI JALA
   }

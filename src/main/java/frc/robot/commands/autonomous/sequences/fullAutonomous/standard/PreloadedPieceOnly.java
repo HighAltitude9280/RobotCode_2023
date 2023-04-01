@@ -26,7 +26,7 @@ public class PreloadedPieceOnly extends SequentialCommandGroup {
     addCommands(
         new SetGamePieceMode(gamePieceMode),
         new BreakInitialConfig(),
-        new TransportGoTo(TransportTarget.TOP_ROW),
+        new TransportGoTo(TransportTarget.TOP_ROW_BACK),
         new GlobalOuttake().withTimeout(0.75));
   }
 }

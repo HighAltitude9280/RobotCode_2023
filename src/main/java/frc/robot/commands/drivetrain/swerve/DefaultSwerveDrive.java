@@ -53,7 +53,7 @@ public class DefaultSwerveDrive extends CommandBase {
 
     // 4. Construct the chassis speeds
     ChassisSpeeds chassisSpeeds;
-    if (OI.getInstance().getSwerveDriveFieldOriented()) {
+    if (swerveDriveTrain.getIsFieldOriented()) {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(speed, strafe, turn,
           swerveDriveTrain.getRotation2d());
     } else {
@@ -68,14 +68,22 @@ public class DefaultSwerveDrive extends CommandBase {
     SmartDashboard.putNumber("processed speed", speed);
     SmartDashboard.putNumber("processed strafe", strafe);
     SmartDashboard.putNumber("processed turn", turn);
-    SmartDashboard.putNumber("FrontLeftSpeed", moduleStates[0].speedMetersPerSecond);
-    SmartDashboard.putNumber("FrontLeftAngle", moduleStates[0].angle.getDegrees());
-    SmartDashboard.putNumber("FrontRightSpeed", moduleStates[1].speedMetersPerSecond);
-    SmartDashboard.putNumber("FrontRightAngle", moduleStates[1].angle.getDegrees());
-    SmartDashboard.putNumber("BackLeftSpeed", moduleStates[2].speedMetersPerSecond);
-    SmartDashboard.putNumber("BackLeftAngle", moduleStates[2].angle.getDegrees());
-    SmartDashboard.putNumber("BackRightSpeed", moduleStates[3].speedMetersPerSecond);
-    SmartDashboard.putNumber("BackRightAngle", moduleStates[3].angle.getDegrees());
+    SmartDashboard.putNumber("FrontLeftSpeed",
+        moduleStates[0].speedMetersPerSecond);
+    SmartDashboard.putNumber("FrontLeftAngle",
+        moduleStates[0].angle.getDegrees());
+    SmartDashboard.putNumber("FrontRightSpeed",
+        moduleStates[1].speedMetersPerSecond);
+    SmartDashboard.putNumber("FrontRightAngle",
+        moduleStates[1].angle.getDegrees());
+    SmartDashboard.putNumber("BackLeftSpeed",
+        moduleStates[2].speedMetersPerSecond);
+    SmartDashboard.putNumber("BackLeftAngle",
+        moduleStates[2].angle.getDegrees());
+    SmartDashboard.putNumber("BackRightSpeed",
+        moduleStates[3].speedMetersPerSecond);
+    SmartDashboard.putNumber("BackRightAngle",
+        moduleStates[3].angle.getDegrees());
   }
 
   // Called once the command ends or is interrupted.

@@ -4,6 +4,7 @@
 
 package frc.robot.commands.transport.compound;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -21,12 +22,14 @@ public class ClearDangerousPositionBeforeTarget extends CommandBase {
 
   TransportTarget target;
 
-  boolean wristArmDangerous, robotHeightDanger;
+  boolean wristArmDangerous, robotHeightDanger, armIntoFloorDanger;
 
   double currentWristAngle, currentArmAngle, currentExtensorDistance;
   double wristTarget, armTarget, extensorTarget;
 
   GamePieceMode initialGamePieceMode;
+
+  boolean hasReachedArmWristTarget = false;
 
   /** Creates a new ClearDangerousPosition. */
   public ClearDangerousPositionBeforeTarget(TransportTarget target) {
@@ -68,35 +71,73 @@ public class ClearDangerousPositionBeforeTarget extends CommandBase {
     currentExtensorDistance = extensor.getCurrentDistance();
     double armWristDelta = currentArmAngle - currentWristAngle;
 
-    wristArmDangerous = (armWristDelta < -139 || armWristDelta > 47)
-        && Math.abs(currentWristAngle - wristTarget) > 8.0;
+    wristArmDangerous = (armWristDelta < -66 || armWristDelta > 113)
+        && Math.abs(currentWristAngle - wristTarget) > 18.0;
 
     double maxArmAngle = Math.max(currentArmAngle, armTarget);
     double minArmAngle = Math.min(currentArmAngle, armTarget);
 
-    boolean goesVertical = (maxArmAngle > 110 && minArmAngle < 110) ||
-        (maxArmAngle > 80 && minArmAngle < 80);
+    boolean goesVertical = (maxArmAngle > 5 && minArmAngle < 5) ||
+        (maxArmAngle > -35 && minArmAngle < -35);
 
-    robotHeightDanger = (currentExtensorDistance > 0.1) && goesVertical;
+    robotHeightDanger = (currentExtensorDistance > 0.05) && goesVertical;
 
+    armIntoFloorDanger = (robotHeightDanger || currentExtensorDistance < 0.25)
+        && (currentArmAngle < -120.0 || armTarget < -120.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (wristArmDangerous) {
-      if (wrist.moveTo(currentArmAngle + 70, HighAltitudeConstants.WRIST_AUTO_MAX_POWER)) {
+    if (armIntoFloorDanger) {
+      boolean armSafe = arm.moveTo(-110, HighAltitudeConstants.ARM_AUTO_MAX_POWER);
+      boolean wristSafe = wrist.moveTo(-170, HighAltitudeConstants.WRIST_AUTO_MAX_POWER);
+      boolean extensorTargetStillNeedsToGoUp = extensorTarget > extensor.getCurrentDistance();
+      if (armSafe && wristSafe) {
+        if (extensorTargetStillNeedsToGoUp) {
+          if (extensor.moveTo(extensorTarget, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER)) {
+            armIntoFloorDanger = false;
+            wristArmDangerous = false;
+          }
+        } else {
+          armIntoFloorDanger = false;
+          wristArmDangerous = false;
+        }
+      }
+
+    } else if (wristArmDangerous) {
+      if (wrist.moveTo(currentArmAngle - 50, HighAltitudeConstants.WRIST_AUTO_MAX_POWER)) {
         wristArmDangerous = false;
       }
     }
     if (robotHeightDanger) {
       boolean isTargetAlreadyLower = extensorTarget < extensor.getCurrentDistance();
-      double targetIfHeightDanger = isTargetAlreadyLower ? extensorTarget : 0.1;
+      double targetIfHeightDanger = isTargetAlreadyLower ? extensorTarget : 0.0;
       if (extensor.moveTo(targetIfHeightDanger, HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER)) {
         robotHeightDanger = false;
       }
     }
+    if (!robotHeightDanger && !wristArmDangerous && !armIntoFloorDanger) {
+      boolean hasReachedArmTarget = arm.moveTo(armTarget, target.getArmMaxPower());
+      boolean hasReachedWristTarget = wrist.moveTo(wristTarget, target.getWristMaxPower());
+      hasReachedArmWristTarget = hasReachedArmTarget && hasReachedWristTarget;
+    }
 
+    double maxArmAngle = Math.max(arm.getCurrentAngle(), armTarget);
+    double minArmAngle = Math.min(arm.getCurrentAngle(), armTarget);
+
+    boolean goesVertical = (maxArmAngle > 5 && minArmAngle < 5) ||
+        (maxArmAngle > -35 && minArmAngle < -35);
+
+    if (!goesVertical && !robotHeightDanger && !hasReachedArmWristTarget && !armIntoFloorDanger) {
+      extensor.moveTo(extensorTarget, target.getExtensorMaxPower());
+    }
+
+    SmartDashboard.putBoolean("GoesVertical", goesVertical);
+    SmartDashboard.putBoolean("robotHeightDanger", robotHeightDanger);
+    SmartDashboard.putBoolean("hasReachedArmWristTarget", hasReachedArmWristTarget);
+    SmartDashboard.putBoolean("wristarmdangerous", wristArmDangerous);
+    SmartDashboard.putBoolean("armIntoFloorDanger", armIntoFloorDanger);
   }
 
   // Called once the command ends or is interrupted.
@@ -107,6 +148,11 @@ public class ClearDangerousPositionBeforeTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return wristArmDangerous == false && robotHeightDanger == false;
+    if (Robot.getRobotContainer().getCurrentGamePieceMode().equals(GamePieceMode.MANUAL))
+      return true;
+    // System.out.println("HasFinished. reachedarwrist: " +
+    // hasReachedArmWristTarget);
+    return wristArmDangerous == false && robotHeightDanger == false && hasReachedArmWristTarget == true
+        && armIntoFloorDanger == false;
   }
 }

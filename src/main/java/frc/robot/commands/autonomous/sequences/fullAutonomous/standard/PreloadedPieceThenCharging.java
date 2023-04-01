@@ -31,7 +31,7 @@ public class PreloadedPieceThenCharging extends SequentialCommandGroup {
         new SetGamePieceMode(gamePieceMode),
         new BreakInitialConfig(),
         // Place pre-loaded cone.
-        new WristArmGoTo(TransportTarget.TOP_ROW),
+        new WristArmGoTo(TransportTarget.TOP_ROW_BACK),
         new GlobalOuttake().withTimeout(0.75),
         Commands.parallel(
             Commands.sequence(

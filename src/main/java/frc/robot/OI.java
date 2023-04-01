@@ -1,12 +1,10 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.drivetrain.drivingParameters.transmission.DrivetrainToggleTransmissionMode;
 import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
-import frc.robot.commands.drivetrain.follower.FollowTargetJolt;
+import frc.robot.commands.drivetrain.swerve.swerveParameters.ToggleIsFieldOriented;
 import frc.robot.commands.pieceHandlers.gripper.GripperIn;
 import frc.robot.commands.pieceHandlers.gripper.GripperOut;
-import frc.robot.commands.pieceHandlers.intake.ToggleIntakePosition;
 import frc.robot.commands.robotParameters.ResetNavx;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.robotParameters.ToggleShouldExtensorBeLimitedManual;
@@ -23,36 +21,49 @@ public class OI {
 
     public static OI instance;
 
-    private HighAltitudeJoystick pilot; // SUBSYSTEMS
-    private HighAltitudeJoystick copilot; // CHASSIS, IF HIGHALTITUDECONSTANTS.SINGLE_DRIVER IS FALSE
+    private HighAltitudeJoystick subsystems; // SUBSYSTEMS
+    private HighAltitudeJoystick chassis; // CHASSIS, IF HIGHALTITUDECONSTANTS.SINGLE_DRIVER IS FALSE
 
     private HighAltitudeJoystick pit;
 
     public void ConfigureButtonBindings() {
-        pilot = new HighAltitudeJoystick(0, JoystickType.XBOX);
-        copilot = new HighAltitudeJoystick(1, JoystickType.XBOX);
+        subsystems = new HighAltitudeJoystick(0, JoystickType.XBOX);
+        chassis = new HighAltitudeJoystick(1, JoystickType.XBOX);
 
         pit = new HighAltitudeJoystick(2, 12, 4); // Logitech Extreme 3D Pro
 
-        pilot.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
-        pilot.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
-        pilot.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL),
+        subsystems.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
+        subsystems.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
+        subsystems.onTrueCombo(new SetGamePieceMode(GamePieceMode.MANUAL),
                 ButtonType.START, ButtonType.BACK);
 
-        pilot.whileTrue(ButtonType.LB, new GripperIn());
-        pilot.whileTrue(ButtonType.RB, new GripperOut());
-        pilot.onTrueCombo(new ToggleShouldExtensorBeLimitedManual(),
+        subsystems.whileTrue(ButtonType.LB, new GripperIn());
+        subsystems.whileTrue(ButtonType.RB, new GripperOut());
+        subsystems.onTrueCombo(new ToggleShouldExtensorBeLimitedManual(),
                 ButtonType.LB, ButtonType.RB);
+        /*
+         * subsystems.whileTrue(ButtonType.Y, new
+         * TransportGoTo(TransportTarget.TOP_ROW_BACK));
+         * subsystems.whileTrue(ButtonType.B, new
+         * TransportGoTo(TransportTarget.FEEDER));
+         * subsystems.whileTrue(ButtonType.A, new
+         * TransportGoTo(TransportTarget.RESTING));
+         * subsystems.whileTrue(ButtonType.X, new
+         * TransportGoTo(TransportTarget.MIDDLE_ROW_BACK));
+         * // pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
+         */
 
-        // pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
-        pilot.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
-
-        pilot.whileTrue(ButtonType.Y, new TransportGoTo(TransportTarget.TOP_ROW));
-        pilot.whileTrue(ButtonType.B, new TransportGoTo(TransportTarget.FEEDER));
-        pilot.whileTrue(ButtonType.A, new TransportGoTo(TransportTarget.RESTING));
-        pilot.whileTrue(ButtonType.X, new TransportGoTo(TransportTarget.MIDDLE_ROW));
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.TOP_ROW_BACK), ButtonType.Y, ButtonType.POV_S);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.TOP_ROW_FRONT), ButtonType.Y, ButtonType.POV_N);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.FEEDER), ButtonType.B, ButtonType.POV_N);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.INTAKE), ButtonType.B, ButtonType.POV_S);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.RESTING), ButtonType.A);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.MIDDLE_ROW_BACK), ButtonType.X, ButtonType.POV_S);
+        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.MIDDLE_ROW_FRONT), ButtonType.X, ButtonType.POV_N);
 
         if (HighAltitudeConstants.SINGLE_DRIVER) {
+            chassis.onTrue(ButtonType.POV_N, new ResetTransportEncoders());
+            chassis.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
             // pilot.onTrue(ButtonType.RS, new DrivetrainToggleTransmissionMode()); //
             // SINGLE DRIVER
             // pilot.whileTrue(ButtonType.JOYSTICK_R_X, new FollowTargetJolt()); // SINGLE
@@ -60,7 +71,9 @@ public class OI {
         }
 
         else {
-            copilot.onTrue(ButtonType.START, new ResetNavx());
+            chassis.onTrue(ButtonType.START, new ResetNavx());
+            chassis.onTrue(ButtonType.LB, new ToggleIsFieldOriented());
+
             // copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); //
             // COPILOT
             // copilot.whileTrue(ButtonType.RT, new FollowTargetJolt()); // COPILOT
@@ -81,31 +94,31 @@ public class OI {
 
     public double getDefaultSwerveDriveSpeed() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return -pilot.getAxis(AxisType.LEFT_Y);
+            return -subsystems.getAxis(AxisType.LEFT_Y);
         else {
-            return -copilot.getAxis(AxisType.LEFT_Y);
+            return -chassis.getAxis(AxisType.LEFT_Y);
         }
     }
 
     public double getDefaultSwerveDriveStrafe() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return pilot.getAxis(AxisType.LEFT_X);
+            return subsystems.getAxis(AxisType.LEFT_X);
         else
-            return copilot.getAxis(AxisType.LEFT_X);
+            return chassis.getAxis(AxisType.LEFT_X);
     }
 
     public double getDefaultSwerveDriveTurn() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return pilot.getAxis(AxisType.RIGHT_X);
+            return subsystems.getAxis(AxisType.RIGHT_X);
         else
-            return copilot.getAxis(AxisType.RIGHT_X);
+            return chassis.getAxis(AxisType.RIGHT_X);
     }
 
     public double getSwerveDriveAsTankTurn() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return pilot.getAxis(AxisType.LEFT_X);
+            return subsystems.getAxis(AxisType.LEFT_X);
         else
-            return copilot.getAxis(AxisType.LEFT_X);
+            return chassis.getAxis(AxisType.LEFT_X);
 
     }
 
@@ -115,43 +128,44 @@ public class OI {
 
     public double getDefaultDriveX() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return pilot.getAxis(AxisType.LEFT_X) * 0.75 * 0.75;
+            return subsystems.getAxis(AxisType.LEFT_X) * 0.75 * 0.75;
         else
-            return copilot.getAxis(AxisType.LEFT_X) * 0.75 * 0.75;
+            return chassis.getAxis(AxisType.LEFT_X) * 0.75 * 0.75;
     }
 
     public double getDefaultDriveY() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
-            return -pilot.getAxis(AxisType.LEFT_Y) * 0.75;
+            return -subsystems.getAxis(AxisType.LEFT_Y) * 0.75;
         else
-            return -copilot.getAxis(AxisType.LEFT_Y) * 0.75;
+            return -chassis.getAxis(AxisType.LEFT_Y) * 0.75;
     }
 
     public double getDefaultDriveTurn() {
-        return pilot.getAxis(AxisType.RIGHT_X);
+        return subsystems.getAxis(AxisType.RIGHT_X);
     }
 
     public double getDefaultDriveDragonfly() {
-        return pilot.getAxis(AxisType.RIGHT_X);
+        return subsystems.getAxis(AxisType.RIGHT_X);
     }
 
     public double getWristInput() {
-        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? pilot.getPovXAxis() * 0.125
-                : pilot.getPovXAxis() * 0.5;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getPovXAxis() * 0.125
+                : subsystems.getPovXAxis() * 0.5;
     }
 
     public double getArmInput() {
-        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? -pilot.getAxis(AxisType.RIGHT_Y) * 0.25
-                : -pilot.getAxis(AxisType.RIGHT_Y) * 1.0;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual()
+                ? -subsystems.getAxis(AxisType.RIGHT_Y) * 0.25
+                : -subsystems.getAxis(AxisType.RIGHT_Y) * 1.0;
     }
 
     public double getExtensorInput() {
-        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? pilot.getTriggers() * 0.25
-                : pilot.getTriggers() * 0.75;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getTriggers() * 0.25
+                : subsystems.getTriggers() * 0.75;
     }
 
-    public HighAltitudeJoystick getPilot() {
-        return pilot;
+    public HighAltitudeJoystick getSubsystems() {
+        return subsystems;
     }
 
 }

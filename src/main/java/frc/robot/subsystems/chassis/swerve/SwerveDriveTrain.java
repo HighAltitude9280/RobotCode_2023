@@ -12,6 +12,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -200,6 +201,10 @@ public class SwerveDriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     updateOdometry();
+    frontLeft.putProcessedValues("FL");
+    frontRight.putProcessedValues("FR");
+    SmartDashboard.putNumber("odometry X", swerveDrivePoseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("odometry Y", swerveDrivePoseEstimator.getEstimatedPosition().getY());
   }
 
 }
