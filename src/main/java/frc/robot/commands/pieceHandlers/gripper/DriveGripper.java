@@ -5,6 +5,7 @@
 package frc.robot.commands.pieceHandlers.gripper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.subsystems.gripper.Gripper;
 
@@ -26,7 +27,7 @@ public class DriveGripper extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // gripper.driveGripper(OI.getInstance().getPilot().getTriggers());
+    gripper.driveGripper(OI.getInstance().getChassis().getTriggers());
   }
 
   // Called once the command ends or is interrupted.

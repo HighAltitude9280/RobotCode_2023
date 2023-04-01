@@ -91,6 +91,8 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
+    getRobotContainer().getSwerveDriveTrain().recalculateModuleDirections();
   }
 
   @Override
@@ -110,6 +112,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -126,6 +130,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
   }
 
   /** This function is called periodically during operator control. */
@@ -137,6 +142,8 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
+
   }
 
   /** This function is called periodically during test mode. */

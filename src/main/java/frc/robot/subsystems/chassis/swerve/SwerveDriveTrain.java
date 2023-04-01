@@ -78,7 +78,7 @@ public class SwerveDriveTrain extends SubsystemBase {
         RobotMap.SWERVE_BACK_RIGHT_DIRECTION_ENCODER_INVERTED,
         RobotMap.SWERVE_BACK_RIGHT_ENCODED_TALON_PORT,
         RobotMap.SWERVE_BACK_RIGHT_DIRECTION_ENCODER_OFFSET_PULSES,
-        RobotMap.SWERVE_BACK_LEFT_ENCODED_TALON_INVERTED);
+        RobotMap.SWERVE_BACK_RIGHT_ENCODED_TALON_INVERTED);
 
     modules = new ArrayList<HighAltitudeSwerveModule>();
     modules.add(frontLeft);
@@ -141,6 +141,13 @@ public class SwerveDriveTrain extends SubsystemBase {
     frontRight.stop();
     backLeft.stop();
     backRight.stop();
+  }
+
+  public void recalculateModuleDirections() {
+    frontLeft.recalculateWheelDirection();
+    frontRight.recalculateWheelDirection();
+    backLeft.recalculateWheelDirection();
+    backRight.recalculateWheelDirection();
   }
 
   // Odometry
@@ -214,19 +221,33 @@ public class SwerveDriveTrain extends SubsystemBase {
     isFieldOriented = shouldBeFieldOriented;
   }
 
+  public void setModulesBrakeMode(boolean doBrake) {
+    for (HighAltitudeSwerveModule module : modules) {
+      module.getDriveMotor().setBrakeMode(doBrake);
+      module.getDirectionMotor().setBrakeMode(doBrake);
+      System.out.println("BrakeMode: " + doBrake);
+    }
+  }
+
   @Override
   public void periodic() {
     updateOdometry();
     SmartDashboard.putNumber("OdoX", swerveDriveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("OdoY", swerveDriveOdometry.getPoseMeters().getY());
-    frontLeft.putProcessedValues("FL");
-    frontRight.putProcessedValues("FR");
-    backLeft.putProcessedValues("BL");
-    backRight.putProcessedValues("BR");
-    frontLeft.putRawEncoderValues("FL");
-    frontRight.putRawEncoderValues("FR");
-    backLeft.putRawEncoderValues("BL");
-    backRight.putRawEncoderValues("BR");
+
+    frontLeft.putAbsEncPos("FL");
+    frontRight.putAbsEncPos("FR");
+    backLeft.putAbsEncPos("BL");
+    backRight.putAbsEncPos("BR");
+
+    // backLeft.putProcessedValues("FR");
+    // backLeft.putRawEncoderValues("FR");
+    // frontRight.putProcessedValues("FR");
+    // backLeft.putProcessedValues("BL");
+    // backRight.putProcessedValues("BR");
+    // frontRight.putRawEncoderValues("FR");
+    // backLeft.putRawEncoderValues("BL");
+    // backRight.putRawEncoderValues("BR");
   }
 
 }

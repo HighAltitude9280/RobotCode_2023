@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
+import frc.robot.commands.drivetrain.swerve.swerveParameters.RecalculateWheelDirection;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.ToggleIsFieldOriented;
 import frc.robot.commands.pieceHandlers.gripper.GripperIn;
 import frc.robot.commands.pieceHandlers.gripper.GripperOut;
@@ -72,6 +73,7 @@ public class OI {
 
         else {
             chassis.onTrue(ButtonType.START, new ResetNavx());
+            chassis.onTrue(ButtonType.BACK, new RecalculateWheelDirection());
             chassis.onTrue(ButtonType.LB, new ToggleIsFieldOriented());
 
             // copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); //
@@ -166,6 +168,10 @@ public class OI {
 
     public HighAltitudeJoystick getSubsystems() {
         return subsystems;
+    }
+
+    public HighAltitudeJoystick getChassis() {
+        return chassis;
     }
 
 }

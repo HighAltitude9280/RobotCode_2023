@@ -124,9 +124,9 @@ public final class HighAltitudeConstants {
         public static final double SWERVE_DIRECTION_TELEOP_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
 
         //// PID
-        public static final double SWERVE_DIRECTION_BRAKING_RADIANS = Math.PI;
-        public static final double SWERVE_DIRECTION_KP = 1 / SWERVE_DIRECTION_BRAKING_RADIANS;
-
+        public static final double SWERVE_DIRECTION_BRAKING_RADIANS = (Math.PI * 2) / 4; // 2pi/3
+        public static final double SWERVE_DIRECTION_KP = 0.8;
+        public static final double SWERVE_DIRECTION_KD = 0.4;
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
         //// DRAGONFLY

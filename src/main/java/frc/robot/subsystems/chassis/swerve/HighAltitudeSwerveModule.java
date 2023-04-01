@@ -39,12 +39,12 @@ public class HighAltitudeSwerveModule {
 
         driveMotor = new HighAltitudeMotorController(driveMotorPort, driveTypeOfMotor);
         driveMotor.setInverted(isDriveMotorReversed);
-        driveMotor.setBrakeMode(true);
+        driveMotor.setBrakeMode(false);
         this.isDriveEncoderReversed = isDriveEncoderReversed;
 
         directionMotor = new HighAltitudeMotorController(directionMotorPort, directionTypeOfMotor);
         directionMotor.setInverted(isDirectionMotorReversed);
-        directionMotor.setBrakeMode(true);
+        directionMotor.setBrakeMode(false);
         this.isDirectionEncoderReversed = isDirectionEncoderReversed;
 
         directionPIDController = new PIDController(HighAltitudeConstants.SWERVE_DIRECTION_KP, 0, 0);
@@ -61,34 +61,23 @@ public class HighAltitudeSwerveModule {
     }
 
     public double getAbsoluteEncoderRad() {
-        /*
-         * double offsetAngleRadians = (encoderOffsetPulses
-         * - (HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_PULSES_PER_REVOLUTION / 2))
-         * HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_RADIANS_PER_PULSE
-         * (isTalonEncoderReversed ? -1.0 : 1.0);
-         * 
-         * double angleRadians = ((absoluteEncoderController.getSelectedSensorPosition()
-         * - (HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_PULSES_PER_REVOLUTION / 2))
-         * % HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_PULSES_PER_REVOLUTION)
-         * HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_RADIANS_PER_PULSE
-         * (isTalonEncoderReversed ? -1.0 : 1.0);
-         * 
-         * double angle = angleRadians - offsetAngleRadians;
-         * 
-         * return angle;
-         */
-
         double angleRadians = absoluteEncoderController.getSelectedSensorPosition()
                 * HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_RADIANS_PER_PULSE;
+        // System.out.print("b4: " + angleRadians);
         angleRadians -= encoderOffsetPulses * HighAltitudeConstants.SWERVE_ABSOLUTE_ENCODER_RADIANS_PER_PULSE;
         return angleRadians * (isTalonEncoderReversed ? -1.0 : 1.0);
     }
 
     public void resetEncoders() {
         driveMotor.setEncoderPosition(0);
+        recalculateWheelDirection();
+    }
+
+    public void recalculateWheelDirection() {
         directionMotor
-                .setEncoderPosition(
-                        (int) (getAbsoluteEncoderRad() / HighAltitudeConstants.SWERVE_DIRECTION_RADIANS_PER_PULSE));
+                .setEncoderPosition((int) ((isDirectionEncoderReversed ? -1.0 : 1.0) * (getAbsoluteEncoderRad()
+                        / (HighAltitudeConstants.SWERVE_DIRECTION_RADIANS_PER_PULSE))));
+
     }
 
     // Getters for encoder values and velocities
@@ -98,7 +87,7 @@ public class HighAltitudeSwerveModule {
     }
 
     public double getDriveDistance() {
-        return driveMotor.getEncPosition() * HighAltitudeConstants.SWERVE_DRIVE_METERS_PER_PULSE * 2
+        return driveMotor.getEncPosition() * HighAltitudeConstants.SWERVE_DRIVE_METERS_PER_PULSE
                 * (isDriveEncoderReversed ? -1.0 : 1.0);
     }
 
