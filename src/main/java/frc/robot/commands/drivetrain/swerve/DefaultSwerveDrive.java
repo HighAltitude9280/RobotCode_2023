@@ -55,7 +55,7 @@ public class DefaultSwerveDrive extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     if (swerveDriveTrain.getIsFieldOriented()) {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(speed, strafe, turn,
-          swerveDriveTrain.getRotation2d());
+          swerveDriveTrain.getRotation2dCCWPositive());
     } else {
       chassisSpeeds = new ChassisSpeeds(speed, strafe, turn);
     }

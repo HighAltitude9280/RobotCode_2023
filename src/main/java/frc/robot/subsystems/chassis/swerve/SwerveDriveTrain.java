@@ -10,6 +10,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,7 @@ public class SwerveDriveTrain extends SubsystemBase {
   ArrayList<HighAltitudeSwerveModule> modules;
 
   private SwerveDrivePoseEstimator swerveDrivePoseEstimator;
+  private SwerveDriveOdometry swerveDriveOdometry;
 
   private boolean isSlower = false;
   private boolean isFieldOriented = false;
@@ -91,6 +93,13 @@ public class SwerveDriveTrain extends SubsystemBase {
             backLeft.getPosition(),
             backRight.getPosition()
         }, new Pose2d(0.0, 0.0, new Rotation2d(0)));
+    swerveDriveOdometry = new SwerveDriveOdometry(HighAltitudeConstants.SWERVE_KINEMATICS, new Rotation2d(0),
+        new SwerveModulePosition[] {
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            backLeft.getPosition(),
+            backRight.getPosition()
+        }, new Pose2d(0.0, 0.0, new Rotation2d(0)));
   }
 
   // By default, the Navx reports its angle as increasing when turning to its
@@ -138,6 +147,13 @@ public class SwerveDriveTrain extends SubsystemBase {
 
   public void updateOdometry() {
     swerveDrivePoseEstimator.update(
+        getRotation2dCCWPositive(),
+        new SwerveModulePosition[] {
+            frontLeft.getPosition(),
+            frontRight.getPosition(),
+            backLeft.getPosition(),
+            backRight.getPosition() });
+    swerveDriveOdometry.update(
         getRotation2dCCWPositive(),
         new SwerveModulePosition[] {
             frontLeft.getPosition(),
@@ -201,10 +217,16 @@ public class SwerveDriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     updateOdometry();
+    SmartDashboard.putNumber("OdoX", swerveDriveOdometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("OdoY", swerveDriveOdometry.getPoseMeters().getY());
     frontLeft.putProcessedValues("FL");
     frontRight.putProcessedValues("FR");
-    SmartDashboard.putNumber("odometry X", swerveDrivePoseEstimator.getEstimatedPosition().getX());
-    SmartDashboard.putNumber("odometry Y", swerveDrivePoseEstimator.getEstimatedPosition().getY());
+    backLeft.putProcessedValues("BL");
+    backRight.putProcessedValues("BR");
+    frontLeft.putRawEncoderValues("FL");
+    frontRight.putRawEncoderValues("FR");
+    backLeft.putRawEncoderValues("BL");
+    backRight.putRawEncoderValues("BR");
   }
 
 }

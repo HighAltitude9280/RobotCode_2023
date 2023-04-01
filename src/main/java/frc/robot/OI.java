@@ -104,14 +104,14 @@ public class OI {
         if (HighAltitudeConstants.SINGLE_DRIVER)
             return subsystems.getAxis(AxisType.LEFT_X);
         else
-            return chassis.getAxis(AxisType.LEFT_X);
+            return -chassis.getAxis(AxisType.LEFT_X);
     }
 
     public double getDefaultSwerveDriveTurn() {
         if (HighAltitudeConstants.SINGLE_DRIVER)
             return subsystems.getAxis(AxisType.RIGHT_X);
         else
-            return chassis.getAxis(AxisType.RIGHT_X);
+            return -chassis.getAxis(AxisType.RIGHT_X);
     }
 
     public double getSwerveDriveAsTankTurn() {

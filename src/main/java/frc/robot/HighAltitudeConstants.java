@@ -36,7 +36,7 @@ public final class HighAltitudeConstants {
         // Distance left - right
         public static final double SWERVE_TRACK_WIDTH = 0.0254 * (24.0 - 2.0 * 2.625);
         // Distance front - back
-        public static final double SWERVE_WHEEL_BASE = 0.0254 * (24.0 - 2.0 * 2.625);
+        public static final double SWERVE_WHEEL_BASE = 0.0254 * (32.0 - 2.0 * 2.625);
 
         // FL, FR, BL, BR. Remember these cartesian coordinates consider the x axis to
         // be headed where the robot is pointing to. The y-axis direction could be a
@@ -49,10 +49,10 @@ public final class HighAltitudeConstants {
         // For some reason, that did not work. The kinematics seem to work correctly
         // when "left" is negative
         public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
-                        new Translation2d(SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2),
                         new Translation2d(SWERVE_WHEEL_BASE / 2, SWERVE_TRACK_WIDTH / 2),
-                        new Translation2d(-SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2),
-                        new Translation2d(-SWERVE_WHEEL_BASE / 2, SWERVE_TRACK_WIDTH / 2));
+                        new Translation2d(SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2),
+                        new Translation2d(-SWERVE_WHEEL_BASE / 2, SWERVE_TRACK_WIDTH / 2),
+                        new Translation2d(-SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2));
 
         // Arbitrary. Higher numbers will cause the swerve to react more violently to
         // joysitck inputs and may not be ideal. Lower numbers will cause the swerve to
@@ -124,7 +124,7 @@ public final class HighAltitudeConstants {
         public static final double SWERVE_DIRECTION_TELEOP_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
 
         //// PID
-        public static final double SWERVE_DIRECTION_BRAKING_RADIANS = (Math.PI * 2) / 3;
+        public static final double SWERVE_DIRECTION_BRAKING_RADIANS = Math.PI;
         public static final double SWERVE_DIRECTION_KP = 1 / SWERVE_DIRECTION_BRAKING_RADIANS;
 
         //////////////////////// DRIVETRAIN///////////////////////////////////

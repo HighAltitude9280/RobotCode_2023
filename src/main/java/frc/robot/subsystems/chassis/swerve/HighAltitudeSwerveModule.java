@@ -98,7 +98,7 @@ public class HighAltitudeSwerveModule {
     }
 
     public double getDriveDistance() {
-        return driveMotor.getEncPosition() * HighAltitudeConstants.SWERVE_DRIVE_METERS_PER_PULSE
+        return driveMotor.getEncPosition() * HighAltitudeConstants.SWERVE_DRIVE_METERS_PER_PULSE * 2
                 * (isDriveEncoderReversed ? -1.0 : 1.0);
     }
 
@@ -164,17 +164,24 @@ public class HighAltitudeSwerveModule {
 
     public void putRawEncoderValues(String identifier) {
         SmartDashboard.putNumber(identifier + "DriveEncPos", driveMotor.getEncPosition());
-        SmartDashboard.putNumber(identifier + "DriveEncVel", driveMotor.getEncVelocity());
+        // SmartDashboard.putNumber(identifier + "DriveEncVel",
+        // driveMotor.getEncVelocity());
         SmartDashboard.putNumber(identifier + "DirEncPos", directionMotor.getEncPosition());
-        SmartDashboard.putNumber(identifier + "DirEncVel", directionMotor.getEncVelocity());
+        // SmartDashboard.putNumber(identifier + "DirEncVel",
+        // directionMotor.getEncVelocity());
         SmartDashboard.putNumber(identifier + "AbsEncPos", absoluteEncoderController.getSelectedSensorPosition());
+    }
+
+    public void putAbsEncPos(String identifier) {
+        SmartDashboard.putNumber(identifier + "AbsEncPos", absoluteEncoderController.getSelectedSensorPosition());
+
     }
 
     public void putProcessedValues(String identifier) {
         SmartDashboard.putNumber(identifier + "DrivePos", getDriveDistance());
-        SmartDashboard.putNumber(identifier + "DriveVel", getDriveVelocity());
+        // SmartDashboard.putNumber(identifier + "DriveVel", getDriveVelocity());
         SmartDashboard.putNumber(identifier + "DirPos", getDirection());
-        SmartDashboard.putNumber(identifier + "DirVel", getDirectionVelocity());
+        // SmartDashboard.putNumber(identifier + "DirVel", getDirectionVelocity());
         SmartDashboard.putNumber(identifier + "AbsPos", getAbsoluteEncoderRad());
     }
 
