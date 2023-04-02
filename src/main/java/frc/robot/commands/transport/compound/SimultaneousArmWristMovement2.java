@@ -42,7 +42,7 @@ public class SimultaneousArmWristMovement2 extends CommandBase {
       delta = arm.getCurrentAngle() - wrist.getCurrentAngle();
       wrist.driveWrist(wristSpeed);
     } else {
-      wrist.moveTo(arm.getCurrentAngle() - delta, Math.abs(armSpeed * 0.5));
+      wrist.moveTo(arm.getCurrentAngle() - delta, Math.abs(armSpeed * 0.575));
     }
     SmartDashboard.putNumber("Wrist Current Ang", wrist.getCurrentAngle());
     SmartDashboard.putNumber("Wrist Target", (arm.getCurrentAngle() - delta));

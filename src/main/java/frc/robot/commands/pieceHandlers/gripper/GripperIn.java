@@ -5,6 +5,8 @@
 package frc.robot.commands.pieceHandlers.gripper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
@@ -47,7 +49,18 @@ public class GripperIn extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    gripper.stopGripper();
+    GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
+    switch (currentMode) {
+      case CONE:
+        CommandScheduler.getInstance().schedule(new GripperHold());
+        break;
+      case CUBE:
+        CommandScheduler.getInstance().schedule(new GripperHold());
+        break;
+      case MANUAL:
+      default:
+        gripper.stopGripper();
+    }
   }
 
   // Returns true when the command should end.

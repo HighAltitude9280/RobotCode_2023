@@ -170,7 +170,15 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   public Pose2d getPose() {
-    return swerveDrivePoseEstimator.getEstimatedPosition();
+    return swerveDriveOdometry.getPoseMeters();
+  }
+
+  public void resetPose(Pose2d pose) {
+    swerveDriveOdometry.resetPosition(getRotation2dCCWPositive(), new SwerveModulePosition[] {
+        frontLeft.getPosition(),
+        frontRight.getPosition(),
+        backLeft.getPosition(),
+        backRight.getPosition() }, pose);
   }
 
   // Getters for the modules
@@ -235,10 +243,10 @@ public class SwerveDriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("OdoX", swerveDriveOdometry.getPoseMeters().getX());
     SmartDashboard.putNumber("OdoY", swerveDriveOdometry.getPoseMeters().getY());
 
-    frontLeft.putAbsEncPos("FL");
-    frontRight.putAbsEncPos("FR");
-    backLeft.putAbsEncPos("BL");
-    backRight.putAbsEncPos("BR");
+    // frontLeft.putAbsEncPos("FL");
+    // frontRight.putAbsEncPos("FR");
+    // backLeft.putAbsEncPos("BL");
+    // backRight.putAbsEncPos("BR");
 
     // backLeft.putProcessedValues("FR");
     // backLeft.putRawEncoderValues("FR");

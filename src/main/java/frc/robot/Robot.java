@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -106,13 +107,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
     m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
-    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
 
   }
 

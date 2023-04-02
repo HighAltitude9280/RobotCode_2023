@@ -97,7 +97,7 @@ public final class HighAltitudeConstants {
         public static final double SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND = 18 * 12 * 0.0254;
         // Arbitrary to make controlling the swerve easier in teleop
         public static final double SWERVE_DRIVE_TELEOP_MAX_SPEED_METERS_PER_SECOND = SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND
-                        / 4;
+                        / 2;
 
         /////////// DIRECTION MOTOR
 
@@ -275,15 +275,15 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double WRIST_BRAKING_DEGREES = 15;
+        public static final double WRIST_BRAKING_DEGREES = 12.5; // 15
 
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static final double WRIST_ARRIVE_OFFSET = 5.0;
+        public static final double WRIST_ARRIVE_OFFSET = 3.0;
 
-        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
-        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;
+        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999; // -43.34
+        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
 
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
@@ -314,8 +314,8 @@ public final class HighAltitudeConstants {
 
         public static final double EXTENSOR_ARRIVE_OFFSET = 0.025;
 
-        public static final double EXTENSOR_UPPER_LIMIT_METERS = 20.0; // 0.475
-        public static final double EXTENSOR_LOWER_LIMIT_METERS = -20.0; // -0.06
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.566; // 0.475
+        public static final double EXTENSOR_LOWER_LIMIT_METERS = 0.02; // -0.06
 
         //////////////////////////////// ARM ///////////////////////////////////////////
 
@@ -471,8 +471,10 @@ public final class HighAltitudeConstants {
 
         public static final double GRIPPER_CUBE_IN_SPEED = 0.3;
         public static final double GRIPPER_CUBE_OUT_SPEED = -1;
+        public static final double GRIPPER_CUBE_HOLD_SPEED = 0.09;
         public static final double GRIPPER_CONE_IN_SPEED = -0.3;
         public static final double GRIPPER_CONE_OUT_SPEED = 1;
+        public static final double GRIPPER_CONE_HOLD_SPEED = -0.063;
 
         public static final double GRIPPER_DEFAULT_IN_SPEED = -0.5;
         public static final double GRIPPER_DEFAULT_OUT_SPEED = 0.5;

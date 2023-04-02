@@ -31,7 +31,7 @@ public class OI {
         subsystems = new HighAltitudeJoystick(0, JoystickType.XBOX);
         chassis = new HighAltitudeJoystick(1, JoystickType.XBOX);
 
-        pit = new HighAltitudeJoystick(2, 12, 4); // Logitech Extreme 3D Pro
+        // pit = new HighAltitudeJoystick(2, 12, 4); // Logitech Extreme 3D Pro
 
         subsystems.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));
         subsystems.onTrue(ButtonType.BACK, new SetGamePieceMode(GamePieceMode.CUBE));
@@ -72,6 +72,7 @@ public class OI {
         }
 
         else {
+            chassis.onTrue(ButtonType.POV_N, new ResetTransportEncoders());
             chassis.onTrue(ButtonType.START, new ResetNavx());
             chassis.onTrue(ButtonType.BACK, new RecalculateWheelDirection());
             chassis.onTrue(ButtonType.LB, new ToggleIsFieldOriented());
@@ -82,9 +83,9 @@ public class OI {
         }
 
         // pilot.onTrueCombo(new ResetOdometry(0, 0), ButtonType.RT, ButtonType.LT);
-        pit.getJoystickButtonObj(7).onTrue(new ResetTransportEncoders());
-        pit.getJoystickButtonObj(8).onTrue(new ResetNavx());
-        pit.getJoystickButtonObj(9).onTrue(new ResetOdometry(0, 0));
+        // pit.getJoystickButtonObj(7).onTrue(new ResetTransportEncoders());
+        // pit.getJoystickButtonObj(8).onTrue(new ResetNavx());
+        // pit.getJoystickButtonObj(9).onTrue(new ResetOdometry(0, 0));
     }
 
     public static OI getInstance() {

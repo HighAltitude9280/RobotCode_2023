@@ -4,13 +4,24 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.autonomous.SwerveAutos;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.SetModulesBrakeMode;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
@@ -153,6 +164,7 @@ public class RobotContainer {
     // m_chooser.addOption("Cone Only", coneThenStayStill);
     // m_chooser.addOption("Cube Only", cubeThenStayStill);
 
+    SwerveAutos.generateAutos();
   }
 
   public void putAutoChooser() {
@@ -170,7 +182,7 @@ public class RobotContainer {
     // FasterPreloadedPieceOnly(GamePieceMode.CUBE);
     // ChargingSimple xd2 = new ChargingSimple();
     // return xd.andThen(xd2);
-    return m_chooser.getSelected();
+    return SwerveAutos.exampleAuto;
   }
 
   public Navx getNavx() {

@@ -136,7 +136,7 @@ public class RobotMap {
         //////////////////////// GRIPPER ////////////////////////
 
         public static final int[] GRIPPER_MOTOR_PORTS = { 30 };
-        public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = {};
+        public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = { 30 };
         public static final boolean GRIPPER_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.TALON_FX };
 
