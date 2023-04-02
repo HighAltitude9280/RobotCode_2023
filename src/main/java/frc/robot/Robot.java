@@ -66,33 +66,12 @@ public class Robot extends TimedRobot {
 
     debugStringSmartDashboard("Current Game Piece Mode",
         getRobotContainer().getCurrentGamePieceMode().toString());
-    // debugStringSmartDashboard("Game Piece Mode",
-    // getRobotContainer().getCurrentGamePieceMode().toString());
-    // debugBooleanSmartDashboard("Should Manual Have Limits",
-    // getRobotContainer().getShouldManualHaveLimits());
-    // debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
     debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
-    // debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
-    // debugNumberSmartDashboard("AngAccRoll",
-    // getRobotContainer().getNavx().getAngularAccelerationPitch());
-    // debugNumberSmartDashboard("AngVelRoll",
-    // getRobotContainer().getNavx().getYVel());
-    // debugNumberSmartDashboard("AngAccPitch",
-    // getRobotContainer().getNavx().getAngularAccelerationPitch());
-
-    // debugBooleanSmartDashboard("Extensor is slower",
-    // getRobotContainer().getShouldExtensorBeSlowerInManual());
-
-    // SmartDashboard.putData(getRobotContainer().getWrist());
-    // SmartDashboard.putData(getRobotContainer().getArm());
-    // SmartDashboard.putData(getRobotContainer().getExtensor());
-    // SmartDashboard.putData(getRobotContainer().getDriveTrain());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
     getRobotContainer().getSwerveDriveTrain().recalculateModuleDirections();
   }
 
@@ -140,10 +119,15 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void teleopExit() {
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
+    // Only time the modules will be in brake is when exiting teleop
+  }
+
+  @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
 
   }
 

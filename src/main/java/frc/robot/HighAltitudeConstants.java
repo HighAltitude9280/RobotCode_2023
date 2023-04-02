@@ -285,6 +285,9 @@ public final class HighAltitudeConstants {
         public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999; // -43.34
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
 
+        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 111.36;
+        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -43.34;
+
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
         // Default braking mode, true for brake, false for coast.
@@ -363,35 +366,35 @@ public final class HighAltitudeConstants {
 
         ////////////////////// AUTONOMOUS MOVEMENT
 
-        public static final double WRIST_AUTO_MAX_POWER = 0.1875;
+        public static final double WRIST_AUTO_MAX_POWER = 0.0625;
         public static final double EXTENSOR_AUTO_MAX_POWER = 0.425;
-        public static final double ARM_AUTO_MAX_POWER = 0.375;
+        public static final double ARM_AUTO_MAX_POWER = 0.125;
 
         /////////////////// CONE MODE ///////////////////
 
         ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 122.5;
-        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.524;
-        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 49.29;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 5.37;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.567;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 29.5;
 
         ////////// MIDDLE ROW - BACK
 
-        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CONE = 139.575;
-        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CONE = 0.07696;
-        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CONE = 49.0;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CONE = 31.74;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CONE = 0.31;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CONE = 29.58;
 
         ////////// TOP ROW - FRONT
 
-        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CONE = -52.47;
-        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CONE = 0.115;
-        public static final double ARM_TOP_ROW_FRONT_DEGREES_CONE = -86.651;
+        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CONE = 0.0;
+        public static final double ARM_TOP_ROW_FRONT_DEGREES_CONE = 0.0;
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -126.588;
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.273;
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -98.33;
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -185.5;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.018;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -71.14;
 
         ////////// BOTTOM ROW
         /*
@@ -402,44 +405,44 @@ public final class HighAltitudeConstants {
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = -136.49;
-        public static final double EXTENSOR_FEEDER_METERS_CONE = -0.03;
-        public static final double ARM_FEEDER_DEGREES_CONE = -52.45;
+        public static final double WRIST_FEEDER_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.0;
+        public static final double ARM_FEEDER_DEGREES_CONE = 0.0;
 
         ////////// GRAB FROM INTAKE
-        public static final double WRIST_INTAKE_DEGREES_CONE = -136.49;
-        public static final double EXTENSOR_INTAKE_METERS_CONE = -0.03;
-        public static final double ARM_INTAKE_DEGREES_CONE = -52.45;
+        public static final double WRIST_INTAKE_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_INTAKE_METERS_CONE = 0.0;
+        public static final double ARM_INTAKE_DEGREES_CONE = 0.0;
 
         ///////// RESTING
-        public static final double WRIST_REST_DEGREES_CONE = 0.0;
-        public static final double EXTENSOR_REST_METERS_CONE = 0.0;
-        public static final double ARM_REST_DEGREES_CONE = 0.0;
+        public static final double WRIST_REST_DEGREES_CONE = -274.65;
+        public static final double EXTENSOR_REST_METERS_CONE = 0.43;
+        public static final double ARM_REST_DEGREES_CONE = -140.35;
 
         /////////////////// CUBE MODE ///////////////////
 
         ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_BACK_DEGREES_CUBE = -32.2;
-        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CUBE = -0.033;
-        public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 49.0;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CUBE = 0.0;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 0.0;
 
         ////////// MIDDLE ROW - BACK
-        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 27.19;
-        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = -0.0363;
-        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 49.0;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.0;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 0.0;
 
         ////////// TOP ROW - FRONT
 
-        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CUBE = -121.4;
-        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CUBE = 0.383;
-        public static final double ARM_TOP_ROW_FRONT_DEGREES_CUBE = -99.15;
+        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CUBE = 0.0;
+        public static final double ARM_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = -107.48624;
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.44;
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = -138.0;
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.0;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
 
         ////////// BOTTOM ROW
         /*
@@ -449,20 +452,20 @@ public final class HighAltitudeConstants {
          */
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CUBE = -195.95;
-        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.142;
-        public static final double ARM_FEEDER_DEGREES_CUBE = -77.0;
+        public static final double WRIST_FEEDER_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.0;
+        public static final double ARM_FEEDER_DEGREES_CUBE = 0.0;
 
         ////////// GRAB FROM INTAKE
 
-        public static final double WRIST_INTAKE_DEGREES_CUBE = -203.698;
-        public static final double EXTENSOR_INTAKE_METERS_CUBE = 0.383;
-        public static final double ARM_INTAKE_DEGREES_CUBE = -153.81;
+        public static final double WRIST_INTAKE_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_INTAKE_METERS_CUBE = 0.0;
+        public static final double ARM_INTAKE_DEGREES_CUBE = 0.0;
 
         ///////// RESTING
-        public static final double WRIST_REST_DEGREES_CUBE = 0.0;
-        public static final double EXTENSOR_REST_METERS_CUBE = 0.0;
-        public static final double ARM_REST_DEGREES_CUBE = 0.0;
+        public static final double WRIST_REST_DEGREES_CUBE = -214.2;
+        public static final double EXTENSOR_REST_METERS_CUBE = 0.43;
+        public static final double ARM_REST_DEGREES_CUBE = -155.22;
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
 

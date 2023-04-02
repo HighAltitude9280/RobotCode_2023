@@ -116,10 +116,6 @@ public class RobotContainer {
 
     Trigger teleoperated = new Trigger(RobotState::isTeleop);
     Trigger auton = new Trigger(RobotState::isAutonomous);
-
-    auton.onTrue(new SetModulesBrakeMode(true));
-    teleoperated.onTrue(new SetModulesBrakeMode(true));
-    teleoperated.onFalse(new SetModulesBrakeMode(false));
   }
 
   public void generateAutos() {
