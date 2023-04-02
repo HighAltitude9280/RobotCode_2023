@@ -4,26 +4,13 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-import java.util.List;
-
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
-
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.autonomous.SwerveAutos;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
-import frc.robot.commands.drivetrain.swerve.swerveParameters.SetModulesBrakeMode;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
 import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
@@ -113,9 +100,6 @@ public class RobotContainer {
     gripper.setDefaultCommand(new DriveGripper());
 
     swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
-
-    Trigger teleoperated = new Trigger(RobotState::isTeleop);
-    Trigger auton = new Trigger(RobotState::isAutonomous);
   }
 
   public void generateAutos() {

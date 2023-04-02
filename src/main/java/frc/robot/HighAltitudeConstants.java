@@ -30,6 +30,8 @@ public final class HighAltitudeConstants {
 
         public static final boolean SINGLE_DRIVER = false;
 
+        public static final boolean USING_VISION_FOR_POSE = true;
+
         ////////////////////////// SWERVE //////////////////////////
 
         /////////// KINEMATICS

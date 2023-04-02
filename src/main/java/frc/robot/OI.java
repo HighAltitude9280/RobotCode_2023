@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
-import frc.robot.commands.drivetrain.drivingSensors.ResetOdometry;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.RecalculateWheelDirection;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.ToggleIsFieldOriented;
 import frc.robot.commands.pieceHandlers.gripper.GripperIn;
@@ -25,7 +24,7 @@ public class OI {
     private HighAltitudeJoystick subsystems; // SUBSYSTEMS
     private HighAltitudeJoystick chassis; // CHASSIS, IF HIGHALTITUDECONSTANTS.SINGLE_DRIVER IS FALSE
 
-    private HighAltitudeJoystick pit;
+    // private HighAltitudeJoystick pit;
 
     public void ConfigureButtonBindings() {
         subsystems = new HighAltitudeJoystick(0, JoystickType.XBOX);

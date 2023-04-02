@@ -10,7 +10,6 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +23,6 @@ public class SwerveDriveTrain extends SubsystemBase {
   ArrayList<HighAltitudeSwerveModule> modules;
 
   private SwerveDrivePoseEstimator swerveDrivePoseEstimator;
-  private SwerveDriveOdometry swerveDriveOdometry;
 
   private boolean isSlower = false;
   private boolean isFieldOriented = false;
@@ -93,13 +91,6 @@ public class SwerveDriveTrain extends SubsystemBase {
             backLeft.getPosition(),
             backRight.getPosition()
         }, new Pose2d(0.0, 0.0, new Rotation2d(0)));
-    swerveDriveOdometry = new SwerveDriveOdometry(HighAltitudeConstants.SWERVE_KINEMATICS, new Rotation2d(0),
-        new SwerveModulePosition[] {
-            frontLeft.getPosition(),
-            frontRight.getPosition(),
-            backLeft.getPosition(),
-            backRight.getPosition()
-        }, new Pose2d(0.0, 0.0, new Rotation2d(0)));
   }
 
   // By default, the Navx reports its angle as increasing when turning to its
@@ -160,21 +151,18 @@ public class SwerveDriveTrain extends SubsystemBase {
             frontRight.getPosition(),
             backLeft.getPosition(),
             backRight.getPosition() });
-    swerveDriveOdometry.update(
-        getRotation2dCCWPositive(),
-        new SwerveModulePosition[] {
-            frontLeft.getPosition(),
-            frontRight.getPosition(),
-            backLeft.getPosition(),
-            backRight.getPosition() });
+  }
+
+  public void addVisionMeasurement(Pose2d visionMeasurement, double timeStampSeconds) {
+    swerveDrivePoseEstimator.addVisionMeasurement(visionMeasurement, timeStampSeconds);
   }
 
   public Pose2d getPose() {
-    return swerveDriveOdometry.getPoseMeters();
+    return swerveDrivePoseEstimator.getEstimatedPosition();
   }
 
   public void resetPose(Pose2d pose) {
-    swerveDriveOdometry.resetPosition(getRotation2dCCWPositive(), new SwerveModulePosition[] {
+    swerveDrivePoseEstimator.resetPosition(getRotation2dCCWPositive(), new SwerveModulePosition[] {
         frontLeft.getPosition(),
         frontRight.getPosition(),
         backLeft.getPosition(),
@@ -240,8 +228,8 @@ public class SwerveDriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     updateOdometry();
-    SmartDashboard.putNumber("OdoX", swerveDriveOdometry.getPoseMeters().getX());
-    SmartDashboard.putNumber("OdoY", swerveDriveOdometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("OdoX", swerveDrivePoseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("OdoY", swerveDrivePoseEstimator.getEstimatedPosition().getY());
 
     // frontLeft.putAbsEncPos("FL");
     // frontRight.putAbsEncPos("FR");

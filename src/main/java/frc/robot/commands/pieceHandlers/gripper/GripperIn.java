@@ -6,7 +6,6 @@ package frc.robot.commands.pieceHandlers.gripper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
