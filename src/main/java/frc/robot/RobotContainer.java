@@ -46,7 +46,7 @@ public class RobotContainer {
   private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private GamePieceMode currentGamePieceMode;
+  private GamePieceMode   currentGamePieceMode;
   private Navx navx;
   private DriveTrain driveTrain;
   private Wrist wrist;
