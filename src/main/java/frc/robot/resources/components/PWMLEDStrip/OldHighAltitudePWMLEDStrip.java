@@ -181,7 +181,7 @@ public class OldHighAltitudePWMLEDStrip {
      * @param inverted Should the animation be upside down? (i.e. is the LED strip
      *                 oriented upside down?).
      */
-    public void setFireWithVariableIntensity(int hue, double input, double min, int max, int length, int offset,
+    public void setFireWithVariableIntensity(int hue, double input, double min, double max, int length, int offset,
             boolean inverted) {
         // Step 0. Check for 8th layer mistakes and ensures parameters are alright
         hue = (int) Math.clamp(hue, 0, 180);

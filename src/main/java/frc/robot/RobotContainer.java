@@ -17,7 +17,7 @@ import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
-import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
+import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceModeVariableIntensity;
 import frc.robot.subsystems.chassis.DriveTrain;
 import frc.robot.subsystems.chassis.swerve.SwerveDriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
@@ -94,7 +94,7 @@ public class RobotContainer {
     wrist.setDefaultCommand(new DriveWrist());
     arm.setDefaultCommand(new DriveArm());
     extensor.setDefaultCommand(new DriveExtensor());
-    leds.setDefaultCommand(new DisplayGamePieceMode());
+    leds.setDefaultCommand(new DisplayGamePieceModeVariableIntensity());
     OI.getInstance().ConfigureButtonBindings();
 
     gripper.setDefaultCommand(new DriveGripper());

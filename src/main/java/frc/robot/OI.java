@@ -12,7 +12,6 @@ import frc.robot.commands.robotParameters.ToggleShouldManualHaveLimits;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.NewTransportGoTo;
 import frc.robot.commands.transport.compound.ResetTransportEncoders;
-import frc.robot.commands.transport.compound.TransportGoTo;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.AxisType;
 import frc.robot.resources.joysticks.HighAltitudeJoystick.ButtonType;

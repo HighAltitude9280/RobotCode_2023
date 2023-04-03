@@ -31,9 +31,9 @@ public class LEDs extends SubsystemBase {
     leds.setBasicFire(hue, saturation, cooling, sparking);
   }
 
-  public void setAdvanceFireAnimation(int hue) {
-    leds.setFireWithVariableIntensity(hue, 1, 0, 1, 30, 0, false);
-    leds.setFireWithVariableIntensity(hue, 1, 0, 1, 30, 30, true);
+  public void setCoolerFireAnimationWithInput(int hue, double in, double mn, double mx) {
+    leds.setFireWithVariableIntensity(hue, in, mn, mx, 30, 0, false);
+    leds.setFireWithVariableIntensity(hue, in, mn, mx, 30, 30, true);
   }
 
   @Override
