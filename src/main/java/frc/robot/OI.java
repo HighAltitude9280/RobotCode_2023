@@ -10,6 +10,7 @@ import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.robotParameters.ToggleShouldExtensorBeLimitedManual;
 import frc.robot.commands.robotParameters.ToggleShouldManualHaveLimits;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
+import frc.robot.commands.transport.compound.NewTransportGoTo;
 import frc.robot.commands.transport.compound.ResetTransportEncoders;
 import frc.robot.commands.transport.compound.TransportGoTo;
 import frc.robot.resources.joysticks.HighAltitudeJoystick;
@@ -53,13 +54,15 @@ public class OI {
          * // pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
          */
 
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.TOP_ROW_BACK), ButtonType.Y, ButtonType.POV_S);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.TOP_ROW_FRONT), ButtonType.Y, ButtonType.POV_N);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.FEEDER), ButtonType.B, ButtonType.POV_N);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.INTAKE), ButtonType.B, ButtonType.POV_S);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.RESTING), ButtonType.A);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.MIDDLE_ROW_BACK), ButtonType.X, ButtonType.POV_S);
-        subsystems.whileTrueCombo(new TransportGoTo(TransportTarget.MIDDLE_ROW_FRONT), ButtonType.X, ButtonType.POV_N);
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.TOP_ROW_BACK), ButtonType.Y); // not configured
+                                                                                                     // for cube
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.FEEDER), ButtonType.B, ButtonType.POV_N);
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.INTAKE), ButtonType.B, ButtonType.POV_S);
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.RESTING), ButtonType.A);
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.MIDDLE_ROW_BACK), ButtonType.X,
+                ButtonType.POV_S);
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.MIDDLE_ROW_FRONT), ButtonType.X,
+                ButtonType.POV_N);
 
         if (HighAltitudeConstants.SINGLE_DRIVER) {
             chassis.onTrue(ButtonType.POV_N, new ResetTransportEncoders());

@@ -35,6 +35,7 @@ public class NewTransportGoTo extends CommandBase {
 
   final double ARM_WRIST_DELTA_LOWER_LIMIT = HighAltitudeConstants.WRIST_ARM_DELTA_LOWER_LIMIT;
   final double ARM_WRIST_DELTA_UPPER_LIMIT = HighAltitudeConstants.WRIST_ARM_DELTA_UPPER_LIMIT;
+  final double ARM_WRIST_DELTA_SAFE_ZONE = 59.0;
   final double EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE = 0.43; // maybe
   final double ARM_BACKPLATE_SAFE_POSITION = 29.0; // maybe
   final double WRIST_BACKPLATE_SAFE_POSITION = -2.5; // maybe
@@ -79,6 +80,11 @@ public class NewTransportGoTo extends CommandBase {
   public void initialize() {
     currentGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
+    if ((target == TransportTarget.TOP_ROW_BACK && currentGamePieceMode == GamePieceMode.CUBE)
+        || (target == TransportTarget.MIDDLE_ROW_BACK && currentGamePieceMode == GamePieceMode.CUBE)
+        || (target == TransportTarget.TOP_ROW_FRONT)) {
+      currentGamePieceMode = GamePieceMode.MANUAL;
+    }
     switch (currentGamePieceMode) {
       case CONE:
         wristFinalTarget = target.getWristTargetCone();
@@ -146,10 +152,10 @@ public class NewTransportGoTo extends CommandBase {
     extensorCurrentTarget = extensorFinalTarget;
 
     // If there's a danger that the arm might crash into the floor while moving up,
-    // do not move the arm until the extensor elevates it to a safe position.
+    // DO NOT move the arm until the extensor elevates it to a safe position.
     if (armIntoFloorDangerGoingUp) {
       armCurrentTarget = armCurrentAngle;
-      if (extensorCurrentDistance > 0.1) {
+      if (extensorCurrentDistance > EXTENSOR_DOWN_AND_ARM_MIGHT_CRASH_WITH_FLOOR) {
         armIntoFloorDangerGoingUp = false;
         armCurrentTarget = armFinalTarget;
       }
@@ -160,7 +166,7 @@ public class NewTransportGoTo extends CommandBase {
     // a safe position.
     if (wristArmDangerous) {
       armCurrentTarget = armCurrentAngle;
-      wristCurrentTarget = armCurrentAngle + 0.0;
+      wristCurrentTarget = armCurrentAngle - ARM_WRIST_DELTA_SAFE_ZONE;
       if (isInAcceptedRange(wristCurrentAngle, wristCurrentTarget,
           HighAltitudeConstants.WRIST_ARRIVE_OFFSET)) {
         wristArmDangerous = false;
@@ -174,15 +180,16 @@ public class NewTransportGoTo extends CommandBase {
     // crash into the backplate while going up, DO NOT move the wrist-arm past the
     // safe position until extensor elevates them to a safe position.
     if (armIntoBackPlateDangerGoingUp && !wristArmDangerous) {
-      armCurrentTarget = 0.0;
-      wristCurrentTarget = 0.0;
+      armCurrentTarget = ARM_BACKPLATE_SAFE_POSITION;
+      wristCurrentTarget = WRIST_BACKPLATE_SAFE_POSITION;
 
       boolean armHasReachedSafeZone = isInAcceptedRange(armCurrentAngle, armCurrentTarget,
           HighAltitudeConstants.ARM_ARRIVE_OFFSET);
       boolean wristHasReachedSafeZone = isInAcceptedRange(wristCurrentAngle, wristCurrentTarget,
           HighAltitudeConstants.WRIST_ARRIVE_OFFSET);
 
-      if (extensorCurrentDistance > 0.5 && armHasReachedSafeZone && wristHasReachedSafeZone) {
+      if (extensorCurrentDistance > EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE && armHasReachedSafeZone
+          && wristHasReachedSafeZone) {
         armIntoBackPlateDangerGoingUp = false;
         armCurrentTarget = armFinalTarget;
         wristCurrentAngle = wristFinalTarget;
@@ -196,10 +203,9 @@ public class NewTransportGoTo extends CommandBase {
     if (armIntoBackPlateDangerGoingDown && !wristArmDangerous) {
       extensorCurrentTarget = extensorCurrentDistance;
 
-      boolean armHasReachedSafeZone = armCurrentAngle < 0.0;
-      boolean wristHasReachedSafeZone = wristCurrentAngle < 0.0;
+      boolean armHasReachedSafeZone = armCurrentAngle < ARM_BACKPLATE_SAFE_POSITION;
 
-      if (armHasReachedSafeZone && wristHasReachedSafeZone) {
+      if (armHasReachedSafeZone) {
         armIntoBackPlateDangerGoingDown = false;
         extensorCurrentTarget = extensorFinalTarget;
       }
@@ -234,7 +240,7 @@ public class NewTransportGoTo extends CommandBase {
     boolean extensorInTarget = isInAcceptedRange(extensor.getCurrentDistance(), extensorFinalTarget,
         HighAltitudeConstants.EXTENSOR_ARRIVE_OFFSET);
 
-    return wristInTarget == true && armInTarget == true && extensorInTarget == true;
+    return wristInTarget == true && armInTarget == true && extensorInTarget == true && wristArmDangerous == false;
   }
 
   void setPIDOutputs(double wristTarget, double armTarget, double extensorTarget) {
