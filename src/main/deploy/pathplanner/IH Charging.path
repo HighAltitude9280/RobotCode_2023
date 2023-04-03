@@ -1,0 +1,113 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8143165481953665,
+        "y": 0.5533571206383486
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.8143165481953654,
+        "y": 0.5533571206383486
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "ConeMid",
+          "GripperOut",
+          "CubeIntake",
+          "GripperIn"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.486799446063177,
+        "y": 0.9266740531999504
+      },
+      "prevControl": {
+        "x": 6.183612169638947,
+        "y": 0.9266740531999504
+      },
+      "nextControl": {
+        "x": 6.183612169638947,
+        "y": 0.9266740531999504
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "GripperOff"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "before",
+        "waitTime": 1.0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.8203377890431338,
+        "y": 1.0832263152419161
+      },
+      "prevControl": {
+        "x": 2.1495125463037263,
+        "y": 1.0918888088540364
+      },
+      "nextControl": {
+        "x": 1.491163031782541,
+        "y": 1.074563821629796
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "CubeMid",
+          "GripperOut",
+          "Starting",
+          "GripperOff"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 3.75968512620786,
+        "y": 3.083175397120025
+      },
+      "prevControl": {
+        "x": 2.1610015869604386,
+        "y": 2.8890495387828383
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "Charging"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": []
+}

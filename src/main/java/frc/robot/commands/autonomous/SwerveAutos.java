@@ -23,13 +23,54 @@ import frc.robot.Robot;
 public class SwerveAutos {
     public static Command exampleAuto;
 
+    public static Command abcAuto;
+    public static Command abAuto;
+    public static Command abChargingAuto;
+    public static Command ihgAuto;
+    public static Command ihAuto;
+    public static Command ihChargingAuto;
+
     public static void generateAutos() {
         /////// Example auto
         List<PathPlannerTrajectory> examplePath = PathPlanner.loadPathGroup("ExamplePath",
                 new PathConstraints(1.5, 1.0));
 
+        ////// PATHS
+
+        List<PathPlannerTrajectory> abcPath = PathPlanner.loadPathGroup("ABC",
+                new PathConstraints(1.5, 1.0));
+        
+        List<PathPlannerTrajectory> abPath = PathPlanner.loadPathGroup("AB",
+                new PathConstraints(1.5, 1.0));
+
+        List<PathPlannerTrajectory> abChargingPath = PathPlanner.loadPathGroup("AB Charging",
+                new PathConstraints(1.5, 1.0));
+
+
+        List<PathPlannerTrajectory> ihgPath = PathPlanner.loadPathGroup("IHG",
+                new PathConstraints(1.5, 1.0));
+
+        List<PathPlannerTrajectory> ihPath = PathPlanner.loadPathGroup("IH",
+                new PathConstraints(1.5, 1.0));
+
+        List<PathPlannerTrajectory> ihChargingPath = PathPlanner.loadPathGroup("IH Charging",
+                new PathConstraints(1.5, 1.0));
+
         HashMap<String, Command> eventMap = new HashMap<>();
         eventMap.put("arrive", new PrintCommand("Ahyes placing game pieces"));
+
+        //Cone
+        eventMap.put("ConeMid", new PrintCommand("Cone Mid"));
+        eventMap.put("ConeIntake", new PrintCommand("Cone Intake"));
+        //Cube
+        eventMap.put("CubeMid", new PrintCommand("Cube Mid"));
+        eventMap.put("CubeIntake", new PrintCommand("Cube Intake"));
+        //Gripper
+        eventMap.put("GripperIn", new PrintCommand("Gripper In"));
+        eventMap.put("GripperOut", new PrintCommand("Gripper Out"));
+        eventMap.put("GripperOff", new PrintCommand("Gripper Off"));
+        //Charging
+        eventMap.put("Charging", new PrintCommand("Balancing"));
 
         SwerveAutoBuilder autoBuilder = autoBuilder(
                 eventMap,
@@ -38,6 +79,14 @@ public class SwerveAutos {
                 true);
 
         exampleAuto = autoBuilder.fullAuto(examplePath);
+
+        abcAuto = autoBuilder.fullAuto(abcPath);
+        abAuto = autoBuilder.fullAuto(abPath);
+        abChargingAuto = autoBuilder.fullAuto(abChargingPath);
+
+        ihgAuto = autoBuilder.fullAuto(ihgPath);
+        ihAuto = autoBuilder.fullAuto(ihPath);
+        ihChargingAuto = autoBuilder.fullAuto(ihChargingPath);
     }
 
     /**
