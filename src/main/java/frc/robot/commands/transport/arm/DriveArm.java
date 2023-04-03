@@ -28,9 +28,9 @@ public class DriveArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (Robot.getRobotContainer().getCurrentGamePieceMode() ==
-    // GamePieceMode.MANUAL)
-    arm.driveArm(OI.getInstance().getArmInput() * 0.25);
+    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.MANUAL
+        || Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.CONE)
+      arm.driveArm(OI.getInstance().getArmInput());
   }
 
   // Called once the command ends or is interrupted.

@@ -2,38 +2,31 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.resources.components.PWMLEDStrip.commands.primitives;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
-import frc.robot.subsystems.intake.Intake;
 
-public class IntakeIn extends CommandBase {
-  Intake intake;
+public class SetRGBThenTurnOff extends CommandBase {
+  int r, g, b;
 
-  /** Creates a new IntakeIn. */
-  public IntakeIn() {
-    intake = Robot.getRobotContainer().getIntake();
-    addRequirements(intake);
-    // Use addRequirements() here to declare subsystem dependencies.
+  public SetRGBThenTurnOff(int r, int g, int b) {
+    addRequirements(Robot.getRobotContainer().getLeds());
+    this.r = r;
+    this.g = g;
+    this.b = b;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  }
-
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    intake.driveIntake(HighAltitudeConstants.INTAKE_IN_SPEED);
+    Robot.getRobotContainer().getLeds().setRGB(r, g, b);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopIntake();
+    Robot.getRobotContainer().getLeds().allLedsOff();
   }
 
   // Returns true when the command should end.

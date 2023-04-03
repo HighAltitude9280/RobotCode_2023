@@ -47,7 +47,9 @@ public class HighAltitudeGuitarHeroJoystick {
 
     public enum AxisType {
         PICKUP_SWITCH,
-        VOLUME_RAMP
+        VOLUME_RAMP,
+        POV_X,
+        POV_Y
     }
 
     private HashMap<Integer, JoystickButton> availableJoystickButtons;
@@ -123,19 +125,77 @@ public class HighAltitudeGuitarHeroJoystick {
         }
     }
 
+    /**
+     * Will return the RAW value of the given {@link AxisType}. The mapping that
+     * relates {@link AxisType} with the corresponding port is
+     * {@link axisConfiguration}. PS4 triggers will return a value from -1 to 1
+     * instead of returning from 0-1.
+     * 
+     * @param axisType The desired axis
+     * @return Raw axis value
+     */
     public double getRawAxis(AxisType axisType) {
-        return joystick.getRawAxis(axisConfiguration.get(axisType));
+        if (axisType.equals(AxisType.POV_X))
+            return getPovXAxis();
+        if (axisType.equals(AxisType.POV_Y))
+            return getPovYAxis();
+        try {
+            return joystick.getRawAxis(axisConfiguration.get(axisType));
+        } catch (NullPointerException e) {
+            DriverStation.reportError("Axis " + axisType + " not found. Returning 0.", true);
+        }
+        return 0;
     }
 
+    /**
+     * Will return the RAW value of the given axis port. PS4 triggers will return a
+     * value from -1 to 1 instead of returning from 0-1.
+     * 
+     * @param axisType The port of the desired axis
+     * @return Raw axis value
+     */
     public double getRawAxis(int axisPort) {
         return joystick.getRawAxis(axisPort);
     }
 
+    /**
+     * Will return the PROCESSED value of the chosen axis, applying both the set
+     * <b>deadzone</b> and <b>multiplier</b>. PS4 Triggers are given in standard 0
+     * to 1 instead of -1 to 1. Use {@link #setAxisDeadzone(AxisType, double)} and
+     * {@link #setAxisMultiplier(AxisType, double)} to modify these values.
+     * 
+     * @param axis The desired axis
+     * @return Processed axis value
+     */
     public double getAxis(AxisType axis) {
         double input = getRawAxis(axis);
-        double clampedInput = Math.applyDeadzone(input, axisDeadzoneConfiguration.get(axis));
-        double multipliedInput = clampedInput * axisMultiplierConfiguration.get(axis);
+        double deadzonedInput = Math.applyDeadzone(input, axisDeadzoneConfiguration.get(axis));
+        double multipliedInput = deadzonedInput * axisMultiplierConfiguration.get(axis);
         return multipliedInput;
+    }
+
+    /**
+     * Treats the POV axis as if it were another axis.
+     * 
+     * @return the 'raw' x-value of the POV. Use {@link #getAxis()} to obtain a
+     *         value with deadzone/multiplier applied.
+     */
+
+    public double getPovXAxis() {
+        double x = Math.sin(Math.toRadians(joystick.getPOV()));
+        return joystick.getPOV() == -1 || Math.abs(x) < 0.1 ? 0 : x;
+    }
+
+    /**
+     * Treats the POV axis as if it were another axis.
+     * 
+     * @return the 'raw' y-value of the POV. Use {@link #getAxis()} to obtain a
+     *         value with deadzone/multiplier applied.
+     */
+
+    public double getPovYAxis() {
+        double y = Math.cos(Math.toRadians(joystick.getPOV()));
+        return joystick.getPOV() == -1 || Math.abs(y) < 0.1 ? 0 : y;
     }
 
     public boolean isAxisPressed(AxisType axisType) {
@@ -170,6 +230,10 @@ public class HighAltitudeGuitarHeroJoystick {
         return availableAxisButtons.get(axis);
     }
 
+    public Joystick getJoystick() {
+        return joystick;
+    }
+
     // METHODS FOR ASSOCIATING COMMANDS YES THEY'RE A LOT BUT WE'D RATHER HAVE IT
     // THIS WAY
 
@@ -182,11 +246,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void onTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.onTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -199,11 +264,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void whileTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.whileTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -215,11 +281,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void toggleOnTrue(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.toggleOnTrue(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -231,11 +298,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void onFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.onFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -248,11 +316,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void whileFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.whileFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -264,11 +333,12 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param command    command to be assigned to button
      */
     public void toggleOnFalse(ButtonType buttonType, CommandBase command) {
-        Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
-        if (chosenButton != null)
+        try {
+            Trigger chosenButton = joystickButtonConfiguration.get(buttonType);
             chosenButton.toggleOnFalse(command);
-        else
+        } catch (NullPointerException e) {
             reportButtonError(buttonType, command);
+        }
     }
 
     /**
@@ -279,17 +349,36 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void onTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.onTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.onTrue(command);
+
     }
 
     /**
@@ -301,17 +390,35 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void whileTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.whileTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.whileTrue(command);
     }
 
     /**
@@ -322,17 +429,35 @@ public class HighAltitudeGuitarHeroJoystick {
      * @param buttons these are the buttons which will trigger the command
      */
     public void toggleOnTrueCombo(CommandBase command, ButtonType... buttons) {
-        Trigger triggerList = joystickButtonConfiguration.get(buttons[0]);
-        for (int i = 1; i < buttons.length; i++) {
-            Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
-            if (chosenButton != null)
-                triggerList = triggerList.and(chosenButton);
-            else
-                reportButtonErrorCombo(buttons[i], command);
-        }
-        Trigger buttonList = new Trigger(triggerList);
+        int n = 0;
+        Trigger triggerList;
 
-        buttonList.toggleOnTrue(command);
+        // Cycle through the given buttons until one of them ISN'T null.
+        while (n < buttons.length) {
+            if (joystickButtonConfiguration.get(buttons[n]) != null) {
+                break;
+            } else
+                reportButtonErrorCombo(buttons[n], command);
+            n++;
+        }
+        // If we've reached end of list and all of them were null, exit the method.
+        if (n == buttons.length)
+            return;
+
+        // Otherwise, triggerlist will become the first button that isn't null
+        triggerList = joystickButtonConfiguration.get(buttons[n]);
+
+        // Add all additional buttons that aren't null.
+        for (int i = n; i < buttons.length; i++) {
+            try {
+                Trigger chosenButton = joystickButtonConfiguration.get(buttons[i]);
+                triggerList = triggerList.and(chosenButton);
+            } catch (NullPointerException e) {
+                reportButtonErrorCombo(buttons[i], command);
+            }
+        }
+        // Assign the command
+        triggerList.toggleOnTrue(command);
     }
 
     private void reportButtonError(ButtonType b, CommandBase c) {

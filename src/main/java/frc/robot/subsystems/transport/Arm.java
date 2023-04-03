@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.transport;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -15,6 +17,9 @@ public class Arm extends SubsystemBase {
 
   HighAltitudeMotorGroup armMotors;
   double currentArmEncoderPosition, armPositionDegrees;
+
+  // Arm odometry
+  Translation2d armEndPointPos;
 
   /** Creates a new Arm. */
   public Arm() {
@@ -32,7 +37,7 @@ public class Arm extends SubsystemBase {
     boolean isOverLimitsAndSpeedIsPositive = (armPositionDegrees > HighAltitudeConstants.ARM_UPPER_LIMIT_DEGREES
         && speed > 0);
 
-    if (Robot.getRobotContainer().getShouldManualBeLimited()
+    if (Robot.getRobotContainer().getShouldManualHaveLimits()
         && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
       armMotors.setAll(0);
       Robot.debugPrint("YA TE PASASTE DEL LIMITE DEL BRAZO YA MAMÓ");
@@ -50,13 +55,12 @@ public class Arm extends SubsystemBase {
       return true;
     }
 
-    // double power = delta / (HighAltitudeConstants.ARM_BRAKING_DEGREES * maxPower
-    // * maxPower);
-    double power = delta / HighAltitudeConstants.ARM_BRAKING_DEGREES;
+    double power = delta / (HighAltitudeConstants.ARM_BRAKING_DEGREES * maxPower
+        * maxPower);
+    // double power = delta / HighAltitudeConstants.ARM_BRAKING_DEGREES;
     power = Math.clamp(power, -1, 1) * maxPower;
 
     armMotors.setAll(power);
-    Robot.debugPrint("ARM MOVING TOOOOO: " + power);
     return false;
   }
 
@@ -69,9 +73,31 @@ public class Arm extends SubsystemBase {
     currentArmEncoderPosition = armMotors.getEncoderPosition();
     armPositionDegrees = currentArmEncoderPosition * HighAltitudeConstants.ARM_DEGREES_PER_PULSE;
 
+    updateArmOdometry();
     Robot.debugNumberSmartDashboard("Arm Encoder", currentArmEncoderPosition);
     Robot.debugNumberSmartDashboard("Arm Degrees", armPositionDegrees);
+    Robot.debugNumberSmartDashboard("Arm Y", armEndPointPos.getY());
+    Robot.debugNumberSmartDashboard("Arm x", armEndPointPos.getX());
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +
     // armPositionDegrees);
+  }
+
+  public double getCurrentAngle() {
+    return armPositionDegrees;
+  }
+
+  private void updateArmOdometry() {
+    Translation2d carriageTraslation2d = new Translation2d(
+        Robot.getRobotContainer().getExtensor().getCurrentDistance(), 0)
+        .rotateBy(Rotation2d.fromDegrees(145));
+    carriageTraslation2d = carriageTraslation2d.plus(HighAltitudeConstants.ARM_CARRIAGE_ZERO_TRANSLATION2D_METERS);
+
+    Translation2d armPivotPoint = carriageTraslation2d
+        .plus(HighAltitudeConstants.ARM_CARRIAGE_BOTTOM_TO_PIVOT_TRANSLATION2D_METERS);
+
+    Rotation2d armAngleFromGround = Rotation2d.fromDegrees(getCurrentAngle() + HighAltitudeConstants.ARM_INTIAL_ANGLE);
+    Translation2d armRodRotated = HighAltitudeConstants.ARM_ROD_TRANSLATION2D_METERS.rotateBy(armAngleFromGround);
+
+    armEndPointPos = armPivotPoint.plus(armRodRotated);
   }
 }

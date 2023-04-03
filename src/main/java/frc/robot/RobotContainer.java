@@ -9,16 +9,17 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.autonomous.Paths;
-import frc.robot.commands.autonomous.primitives.stepControl.SplineMove;
-import frc.robot.commands.drivetrain.DefaultDrive;
+import frc.robot.commands.autonomous.SwerveAutos;
+import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
+import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
 import frc.robot.commands.transport.arm.DriveArm;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
 import frc.robot.resources.components.PWMLEDStrip.LEDs;
-import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceMode;
+import frc.robot.resources.components.PWMLEDStrip.commands.DisplayGamePieceModeVariableIntensity;
 import frc.robot.subsystems.chassis.DriveTrain;
+import frc.robot.subsystems.chassis.swerve.SwerveDriveTrain;
 import frc.robot.subsystems.gripper.Gripper;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.transport.Arm;
@@ -43,12 +44,13 @@ public class RobotContainer {
     CUBE, CONE, MANUAL
   }
 
-  private Command m_autoCommand;
+  // private Command m_autoCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private GamePieceMode   currentGamePieceMode;
+  private GamePieceMode currentGamePieceMode = GamePieceMode.MANUAL;
   private Navx navx;
   private DriveTrain driveTrain;
+  private SwerveDriveTrain swerveDriveTrain;
   private Wrist wrist;
   private Arm arm;
   private Extensor extensor;
@@ -58,24 +60,25 @@ public class RobotContainer {
   private DriverCameras driverCameras;
   private LEDs leds;
   // IMPORTANT: with this boolean in false, limits won't affect manual movement
-  private boolean shouldManualBeLimited = true;
+  private boolean shouldManualHaveLimits = true;
+  private boolean shouldExtensorBeSlowerInManual = false;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     navx = new Navx();
-    driveTrain = new DriveTrain();
+    // driveTrain = new DriveTrain();
+    swerveDriveTrain = new SwerveDriveTrain();
     wrist = new Wrist();
     arm = new Arm();
     extensor = new Extensor();
     gripper = new Gripper();
-    intake = new Intake();
+    // intake = new Intake();
 
     limeLightVision = new LimeLightVision();
     // driverCameras = new DriverCameras();
     leds = new LEDs();
-    currentGamePieceMode = GamePieceMode.MANUAL;
   }
 
   /**
@@ -87,22 +90,61 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   public void configureButtonBindings() {
-    // TODO: Habilitar comandos cuando sea posible
-    driveTrain.setDefaultCommand(new DefaultDrive());
+    // driveTrain.setDefaultCommand(new DefaultDrive());
     wrist.setDefaultCommand(new DriveWrist());
     arm.setDefaultCommand(new DriveArm());
     extensor.setDefaultCommand(new DriveExtensor());
-    leds.setDefaultCommand(new DisplayGamePieceMode());
+    leds.setDefaultCommand(new DisplayGamePieceModeVariableIntensity());
     OI.getInstance().ConfigureButtonBindings();
+
+    gripper.setDefaultCommand(new DriveGripper());
+
+    swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
   }
 
   public void generateAutos() {
-    SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.5,
-        true, false, false, false);
+    // SplineMove followExamplePath = new SplineMove(Paths.examplePath, 0.1,
+    // true, false, false, false);
+    // BreakInitialConfig breakInitialConfig = new BreakInitialConfig();
+    // PreloadedPieceThenCharging coneThenCharging = new
+    // PreloadedPieceThenCharging(GamePieceMode.CONE);
+    // PreloadedPieceThenCharging cubeThenCharging = new&
+    // PreloadedPieceThenCharging(GamePieceMode.CUBE);
+    // Charging charging = new Charging();
+    // Forward forward = new Forward();
+    // PreloadedPieceOnly preloadedConeOnly = new
+    // PreloadedPieceOnly(GamePieceMode.CONE);
+    // PreloadedPieceOnly preloadedCubeOnly = new
+    // PreloadedPieceOnly(GamePieceMode.CUBE);
 
-    m_chooser.setDefaultOption("Example path", followExamplePath);
+    // FasterPreloadedPieceThenMoveStraight coneThenMove = new
+    // FasterPreloadedPieceThenMoveStraight(GamePieceMode.CONE);
+    // FasterPreloadedPieceThenMoveStraight cubeThenMove = new
+    // FasterPreloadedPieceThenMoveStraight(GamePieceMode.CUBE);
+    // FasterPreloadedPieceOnly coneThenStayStill = new FasterPreloadedPieceOnly(
+    // GamePieceMode.CONE);
+    // FasterPreloadedPieceOnly cubeThenStayStill = new FasterPreloadedPieceOnly(
+    // GamePieceMode.CUBE);
+    // FasterPreloadedPieceThenSimpleBalance cubeThenBalance = new
+    // FasterPreloadedPieceThenSimpleBalance(
+    // GamePieceMode.CUBE);
+    // FasterPreloadedPieceThenSimpleBalance coneThenBalance = new
+    // FasterPreloadedPieceThenSimpleBalance(
+    // GamePieceMode.CONE);
+    // DoNothing nothing = new DoNothing();
+    // ChargingSimple xd2 = new ChargingSimple();
+    //
+    // m_chooser.setDefaultOption("Example path", followExamplePath);
+    // m_chooser.addOption("Charging", xd2);
+    // m_chooser.addOption("Do nothing", nothing);
+    // m_chooser.addOption("Cone Move", coneThenMove);
+    // m_chooser.addOption("Cube Move", cubeThenMove);
+    // m_chooser.addOption("Cone Balance", coneThenBalance);
+    // m_chooser.addOption("Cube Balance", cubeThenBalance);
+    // m_chooser.addOption("Cone Only", coneThenStayStill);
+    // m_chooser.addOption("Cube Only", cubeThenStayStill);
 
-    m_autoCommand = followExamplePath;
+    SwerveAutos.generateAutos();
   }
 
   public void putAutoChooser() {
@@ -115,12 +157,20 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    // MONTERREY
+    // FasterPreloadedPieceOnly xd = new
+    // FasterPreloadedPieceOnly(GamePieceMode.CUBE);
+    // ChargingSimple xd2 = new ChargingSimple();
+    // return xd.andThen(xd2);
+    return SwerveAutos.exampleAuto;
   }
 
   public Navx getNavx() {
     return navx;
+  }
+
+  public SwerveDriveTrain getSwerveDriveTrain() {
+    return swerveDriveTrain;
   }
 
   public DriveTrain getDriveTrain() {
@@ -167,11 +217,19 @@ public class RobotContainer {
     return currentGamePieceMode;
   }
 
-  public void setShouldManualBeLimited(boolean shouldBeLimited) {
-    shouldManualBeLimited = shouldBeLimited;
+  public void setShouldManualHaveLimits(boolean shouldHaveLimits) {
+    shouldManualHaveLimits = shouldHaveLimits;
   }
 
-  public boolean getShouldManualBeLimited() {
-    return shouldManualBeLimited;
+  public boolean getShouldManualHaveLimits() {
+    return shouldManualHaveLimits;
+  }
+
+  public void setShouldExtensorBeLimitedManual(boolean shouldBeSlower) {
+    shouldExtensorBeSlowerInManual = shouldBeSlower;
+  }
+
+  public boolean getShouldExtensorBeSlowerInManual() {
+    return shouldExtensorBeSlowerInManual;
   }
 }

@@ -7,13 +7,13 @@ package frc.robot.commands.autonomous.sequences.fullAutonomous.standard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 
-public class forward extends SequentialCommandGroup {
+public class Forward extends SequentialCommandGroup {
 
-  /** 
-   * Moves forward 2.5m 
+  /**
+   * Moves forward 2.5m
    * 
-   * */
-  public forward() {
+   */
+  public Forward() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new MoveStraight(2.5, 0.5));

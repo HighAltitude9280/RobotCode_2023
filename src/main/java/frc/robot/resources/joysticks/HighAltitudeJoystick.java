@@ -84,9 +84,16 @@ public class HighAltitudeJoystick {
      * Creates a new {@link HighAltitudeJoystick}, which can be either XBOX or PS4.
      * This Joystick has associated buttons.
      * 
+     * If the joystick type is UNKOWN, use
+     * {@link #HighAltitudeJoystick(int, int, int)} as constructor preferrably.
+     * Otherwise, the default button count will be 14 and the default axis count
+     * will be 6. If these values are not true, you risk nullPointerExceptions and
+     * DS warning overloads.
+     * 
      * Though there's some support for an
      * UNKNOWN {@link JoystickType}, the specific case will have to be handled
-     * manually by the programmer using {@link #getJoystickButtonObj(int)}.
+     * manually by the programmer using {@link #getJoystickButtonObj(int)} and
+     * {@link #getRawAxis(int)}.
      * 
      * 
      * @param port The port of the controller.
@@ -96,11 +103,8 @@ public class HighAltitudeJoystick {
     public HighAltitudeJoystick(int port, JoystickType type) {
         this.joystick = new Joystick(port);
         this.joystickType = type;
-        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
-        availablePOVButtons = new HashMap<Integer, POVButton>();
-        availableAxisButtons = new HashMap<Integer, Trigger>();
-        axisConfiguration = new HashMap<AxisType, Integer>();
-        joystickButtonConfiguration = new HashMap<ButtonType, Trigger>();
+
+        initializeHashMaps();
 
         switch (type) {
             case XBOX:
@@ -110,11 +114,48 @@ public class HighAltitudeJoystick {
                 configurePs4Joystick();
                 break;
             case UNKNOWN:
-                configureUnknownJoystick();
+            default:
+                configureUnknownJoystick(14, 6);
                 break;
         }
         configureDefaultDeadzoneAndMultiplier(0, 1);
         haptics = new Haptics(joystick);
+    }
+
+    /**
+     * 
+     * Creates a new UNKNOWN{@link HighAltitudeJoystick}.
+     * This Joystick has associated buttons and axes, which you specify in the
+     * constructor's second and third parameter respectively.
+     * Use {@link #getJoystickButtonObj(int)} and {@link #getRawAxis(int)} to access
+     * their data. Use accurate button and axes counts to prevent DS Warning
+     * overloads.
+     * 
+     * 
+     * @param port        The port of the controller.
+     * @param type        The {@link JoystickType} of the controller.
+     * @param buttonCount The amount of buttons 1...n that this joystick has.
+     * @param axisCount   The amount of axes 1...n that this joystick has.
+     */
+
+    public HighAltitudeJoystick(int port, int buttonCount, int axisCount) {
+        this.joystick = new Joystick(port);
+        this.joystickType = JoystickType.UNKNOWN;
+
+        initializeHashMaps();
+
+        configureUnknownJoystick(buttonCount, axisCount);
+
+        configureDefaultDeadzoneAndMultiplier(0, 1);
+        haptics = new Haptics(joystick);
+    }
+
+    private void initializeHashMaps() {
+        availableJoystickButtons = new HashMap<Integer, JoystickButton>();
+        availablePOVButtons = new HashMap<Integer, POVButton>();
+        availableAxisButtons = new HashMap<Integer, Trigger>();
+        axisConfiguration = new HashMap<AxisType, Integer>();
+        joystickButtonConfiguration = new HashMap<ButtonType, Trigger>();
     }
 
     private void configureXboxJoystick() {
@@ -246,8 +287,8 @@ public class HighAltitudeJoystick {
                 availableAxisButtons.get(axisConfiguration.get(AxisType.RIGHT_Y)));
     }
 
-    private void configureUnknownJoystick() {
-        for (int i = 1; i <= joystick.getButtonCount(); i++) {
+    private void configureUnknownJoystick(int buttonCount, int axisCount) {
+        for (int i = 1; i <= buttonCount; i++) {
             availableJoystickButtons.put(i, new JoystickButton(joystick, i));
         }
 
@@ -255,7 +296,7 @@ public class HighAltitudeJoystick {
             availablePOVButtons.put(i, new POVButton(joystick, i));
         }
 
-        for (int i = 0; i < joystick.getAxisCount(); i++) {
+        for (int i = 0; i < axisCount; i++) {
             int currentPort = i;
             BooleanSupplier booleanSupplier = () -> isAxisPressed(currentPort);
             availableAxisButtons.put(i, new Trigger(booleanSupplier));

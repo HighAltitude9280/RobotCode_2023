@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private static RobotContainer robotContainer;
-  VictorSPX motor1, motor2;
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -37,10 +36,11 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     robotContainer = new RobotContainer();
-    getRobotContainer().getDriveTrain().resetOdometry();
+    // getRobotContainer().getDriveTrain().resetOdometry();
     getRobotContainer().configureButtonBindings();
 
     getRobotContainer().generateAutos();
+    PathPlannerServer.startServer(5811);
   }
 
   /**
@@ -65,29 +65,21 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     getRobotContainer().getNavx().run();
-    getRobotContainer().putAutoChooser();
 
-    debugStringSmartDashboard("Current Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
-    debugStringSmartDashboard("Game Piece Mode", getRobotContainer().getCurrentGamePieceMode().toString());
-    debugBooleanSmartDashboard("Should Manual Be Limited", getRobotContainer().getShouldManualBeLimited());
-    debugNumberSmartDashboard("Pitch", getRobotContainer().getNavx().getPitch());
+    debugStringSmartDashboard("Current Game Piece Mode",
+        getRobotContainer().getCurrentGamePieceMode().toString());
     debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
-    debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
-    debugNumberSmartDashboard("AngAccPitch", getRobotContainer().getNavx().getAngularAccelerationPitch());
-    debugNumberSmartDashboard("AngAccRoll", getRobotContainer().getNavx().getAngularAccelerationPitch());
-
-    SmartDashboard.putData(getRobotContainer().getWrist());
-    SmartDashboard.putData(getRobotContainer().getArm());
-    SmartDashboard.putData(getRobotContainer().getExtensor());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    getRobotContainer().getSwerveDriveTrain().recalculateModuleDirections();
   }
 
   @Override
   public void disabledPeriodic() {
+    getRobotContainer().putAutoChooser();
   }
 
   /**
@@ -96,17 +88,20 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
     m_autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
   }
 
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
+    getRobotContainer().getLimeLightVision().addLimeLightPoseToOdometry();
   }
 
   @Override
@@ -118,6 +113,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
   }
 
   /** This function is called periodically during operator control. */
@@ -126,9 +122,16 @@ public class Robot extends TimedRobot {
   }
 
   @Override
+  public void teleopExit() {
+    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
+    // Only time the modules will be in brake is when exiting teleop
+  }
+
+  @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
   }
 
   /** This function is called periodically during test mode. */

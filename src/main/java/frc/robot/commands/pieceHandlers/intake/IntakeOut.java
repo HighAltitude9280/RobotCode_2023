@@ -2,22 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.drivetrain.follower;
+package frc.robot.commands.pieceHandlers.intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
-import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.chassis.DriveTrain;
+import frc.robot.subsystems.intake.Intake;
 
-public class ContinousTurnToTarget extends CommandBase {
-  DriveTrain driveTrain;
-  double maxPower;
+public class IntakeOut extends CommandBase {
+  Intake intake;
 
-  /** Creates a new FollowLimeLightTarget. */
-  public ContinousTurnToTarget() {
-    driveTrain = Robot.getRobotContainer().getDriveTrain();
-    addRequirements(driveTrain);
+  /** Creates a new IntakeIn. */
+  public IntakeOut() {
+    intake = Robot.getRobotContainer().getIntake();
+    addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,15 +27,13 @@ public class ContinousTurnToTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double maxPower = HighAltitudeConstants.DRIVETRAIN_ALIGN_MAX_SPEED;
-    double speed = OI.getInstance().getDefaultDriveY();
-    double xPower = (Robot.getRobotContainer().getLimeLightVision().getTx() / 28) * maxPower;
-    driveTrain.defaultDrive(xPower, speed, 0, 0);
+    intake.driveIntake(HighAltitudeConstants.INTAKE_OUT_SPEED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    intake.stopIntake();
   }
 
   // Returns true when the command should end.

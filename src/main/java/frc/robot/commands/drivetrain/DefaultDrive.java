@@ -28,8 +28,8 @@ public class DefaultDrive extends CommandBase {
         double x = OI.getInstance().getDefaultDriveX();
         double y = OI.getInstance().getDefaultDriveY();
 
-        double turn = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
-        double dragonfly = OI.getInstance().getPilot().getAxis(AxisType.RIGHT_X);
+        double turn = OI.getInstance().getSubsystems().getAxis(AxisType.RIGHT_X);
+        double dragonfly = OI.getInstance().getSubsystems().getAxis(AxisType.RIGHT_X);
 
         Robot.getRobotContainer().getDriveTrain().defaultDrive(x, y, turn, dragonfly);
     }

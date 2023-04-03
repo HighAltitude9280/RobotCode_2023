@@ -8,6 +8,72 @@ public class RobotMap {
 
         public static final int REVPH_MODULE_ID = 62;
 
+        ////////////////////////// SWERVE //////////////////////////
+
+        ///// FRONT LEFT
+        // DRIVE
+        public static final int SWERVE_FRONT_LEFT_DRIVE_MOTOR_PORT = 1;
+        public static final TypeOfMotor SWERVE_FRONT_LEFT_DRIVE_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_FRONT_LEFT_DRIVE_MOTOR_INVERTED = false;
+        public static final boolean SWERVE_FRONT_LEFT_DRIVE_ENCODER_INVERTED = false;
+        // DIRECTION
+        public static final int SWERVE_FRONT_LEFT_DIRECTION_MOTOR_PORT = 2;
+        public static final TypeOfMotor SWERVE_FRONT_LEFT_DIRECTION_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_FRONT_LEFT_DIRECTION_MOTOR_INVERTED = true; // false // false
+        public static final boolean SWERVE_FRONT_LEFT_DIRECTION_ENCODER_INVERTED = false; // false // true
+        // TALON ENCODER
+        public static final int SWERVE_FRONT_LEFT_ENCODED_TALON_PORT = 3;
+        public static final double SWERVE_FRONT_LEFT_DIRECTION_ENCODER_OFFSET_PULSES = 1657; // 1679
+        public static final boolean SWERVE_FRONT_LEFT_ENCODED_TALON_INVERTED = false; // true
+
+        ///// FRONT RIGHT
+        // DRIVE
+        public static final int SWERVE_FRONT_RIGHT_DRIVE_MOTOR_PORT = 4;
+        public static final TypeOfMotor SWERVE_FRONT_RIGHT_DRIVE_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_FRONT_RIGHT_DRIVE_MOTOR_INVERTED = true;
+        public static final boolean SWERVE_FRONT_RIGHT_DRIVE_ENCODER_INVERTED = false; // true
+        // DIRECTION
+        public static final int SWERVE_FRONT_RIGHT_DIRECTION_MOTOR_PORT = 5;
+        public static final TypeOfMotor SWERVE_FRONT_RIGHT_DIRECTION_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_FRONT_RIGHT_DIRECTION_MOTOR_INVERTED = true; // false // false
+        public static final boolean SWERVE_FRONT_RIGHT_DIRECTION_ENCODER_INVERTED = false; // false // true
+        // TALON ENCODER
+        public static final int SWERVE_FRONT_RIGHT_ENCODED_TALON_PORT = 6;
+        public static final double SWERVE_FRONT_RIGHT_DIRECTION_ENCODER_OFFSET_PULSES = 124;
+        public static final boolean SWERVE_FRONT_RIGHT_ENCODED_TALON_INVERTED = false; // true
+
+        ///// BACK LEFT
+        // DRIVE
+        public static final int SWERVE_BACK_LEFT_DRIVE_MOTOR_PORT = 7;
+        public static final TypeOfMotor SWERVE_BACK_LEFT_DRIVE_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_BACK_LEFT_DRIVE_MOTOR_INVERTED = false;
+        public static final boolean SWERVE_BACK_LEFT_DRIVE_ENCODER_INVERTED = false;
+        // DIRECTION
+        public static final int SWERVE_BACK_LEFT_DIRECTION_MOTOR_PORT = 8;
+        public static final TypeOfMotor SWERVE_BACK_LEFT_DIRECTION_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_BACK_LEFT_DIRECTION_MOTOR_INVERTED = true; // false //false
+        public static final boolean SWERVE_BACK_LEFT_DIRECTION_ENCODER_INVERTED = false; // false // true
+        // TALON ENCODER
+        public static final int SWERVE_BACK_LEFT_ENCODED_TALON_PORT = 9;
+        public static final double SWERVE_BACK_LEFT_DIRECTION_ENCODER_OFFSET_PULSES = 3933;
+        public static final boolean SWERVE_BACK_LEFT_ENCODED_TALON_INVERTED = false; // true
+
+        ///// BACK RIGHT
+        // DRIVE
+        public static final int SWERVE_BACK_RIGHT_DRIVE_MOTOR_PORT = 10;
+        public static final TypeOfMotor SWERVE_BACK_RIGHT_DRIVE_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_BACK_RIGHT_DRIVE_MOTOR_INVERTED = true;
+        public static final boolean SWERVE_BACK_RIGHT_DRIVE_ENCODER_INVERTED = false; // true
+        // DIRECTION
+        public static final int SWERVE_BACK_RIGHT_DIRECTION_MOTOR_PORT = 11;
+        public static final TypeOfMotor SWERVE_BACK_RIGHT_DIRECTION_MOTOR_TYPE = TypeOfMotor.TALON_FX;
+        public static final boolean SWERVE_BACK_RIGHT_DIRECTION_MOTOR_INVERTED = true; // false // false
+        public static final boolean SWERVE_BACK_RIGHT_DIRECTION_ENCODER_INVERTED = false; // false //true
+        // TALON ENCODER
+        public static final int SWERVE_BACK_RIGHT_ENCODED_TALON_PORT = 12;
+        public static final double SWERVE_BACK_RIGHT_DIRECTION_ENCODER_OFFSET_PULSES = 1572; // 1566
+        public static final boolean SWERVE_BACK_RIGHT_ENCODED_TALON_INVERTED = false; // true
+
         //////////////////////// DRIVE TRAIN////////////////////////
 
         // Transmission
@@ -28,7 +94,7 @@ public class RobotMap {
         // Right side
         public static final int[] DRIVETRAIN_RIGHT_MOTOR_PORTS = { 4, 5, 6 }; // 4 5
         public static final int[] DRIVETRAIN_RIGHT_INVERTED_MOTORS_PORTS = {}; // -
-        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = true;
+        public static final boolean DRIVETRAIN_RIGHT_ENCODER_IS_INVERTED = false;
         public static final TypeOfMotor[] DRIVETRAIN_RIGHT_MOTOR_TYPES = { TypeOfMotor.TALON_FX, TypeOfMotor.TALON_FX,
                         TypeOfMotor.TALON_FX };
 
@@ -70,9 +136,9 @@ public class RobotMap {
         //////////////////////// GRIPPER ////////////////////////
 
         public static final int[] GRIPPER_MOTOR_PORTS = { 30 };
-        public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = {};
+        public static final int[] GRIPPER_INVERTED_MOTORS_PORTS = { 30 };
         public static final boolean GRIPPER_ENCODER_IS_INVERTED = false;
-        public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.CAN_SPARK_BRUSHLESS };
+        public static final TypeOfMotor[] GRIPPER_MOTOR_TYPES = { TypeOfMotor.TALON_FX };
 
         // Limit switch
         public static final boolean GRIPPER_LIMIT_SWITCH_IS_AVAILABLE = false;

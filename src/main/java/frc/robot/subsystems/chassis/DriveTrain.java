@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -532,6 +533,10 @@ public class DriveTrain extends SubsystemBase {
             setTransmissionState(TransmissionMode.speed);
     }
 
+    public TransmissionMode getCurrentTransmissionMode() {
+        return transmissionState;
+    }
+
     // Reverse
 
     /**
@@ -647,17 +652,17 @@ public class DriveTrain extends SubsystemBase {
      * Updates odometry and encoder positions.
      */
     public void updateOdometry() {
-        double deltaLeft = lastLeftEncoderPosition - leftMotors.getEncoderPosition();
-        double deltaRight = lastRightEncoderPosition - rightMotors.getEncoderPosition();
+        double deltaLeft = leftMotors.getEncoderPosition() - lastLeftEncoderPosition;
+        double deltaRight = rightMotors.getEncoderPosition() - lastRightEncoderPosition;
 
         if (transmissionState == TransmissionMode.torque) {
 
-            leftEncoderDistance -= deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
+            leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
             rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_TORQUE;
 
         } else {
 
-            leftEncoderDistance -= deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
+            leftEncoderDistance += deltaLeft * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
             rightEncoderDistance += deltaRight * HighAltitudeConstants.DRIVETRAIN_METERS_PER_PULSE_SPEED;
 
         }
@@ -666,7 +671,7 @@ public class DriveTrain extends SubsystemBase {
         lastRightEncoderPosition = rightMotors.getEncoderPosition();
 
         if (odometry != null) {
-            odometry.update(new Rotation2d(Math.toRadians(Robot.getRobotContainer().getNavx().getYaw())),
+            odometry.update(new Rotation2d(-Math.toRadians(Robot.getRobotContainer().getNavx().getYaw())),
                     leftEncoderDistance, rightEncoderDistance);
 
         } else {
@@ -677,10 +682,9 @@ public class DriveTrain extends SubsystemBase {
     @Override
     public void periodic() {
         updateOdometry();
-        Robot.debugNumberSmartDashboard("Left encoder distance", leftEncoderDistance);
-        Robot.debugNumberSmartDashboard("Right encoder distance", rightEncoderDistance);
-        Robot.debugNumberSmartDashboard("Odometry x", odometry.getPoseMeters().getX());
-        Robot.debugNumberSmartDashboard("Odometry y", odometry.getPoseMeters().getY());
-        Robot.debugStringSmartDashboard("Current transmission mode", transmissionState.toString());
+        SmartDashboard.putNumber("Odometry X", odometry.getPoseMeters().getX());
+        SmartDashboard.putNumber("Odometry Y", odometry.getPoseMeters().getY());
+        SmartDashboard.putNumber("Left encoder", leftEncoderDistance);
+        SmartDashboard.putNumber("Right encoder", rightEncoderDistance);
     }
 }

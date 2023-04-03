@@ -11,29 +11,26 @@ import frc.robot.resources.components.Navx;
 import frc.robot.resources.math.Math;
 import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 
-public class AutoBalance extends CommandBase 
-{
+public class AutoBalance extends CommandBase {
 
   boolean stable, balanced;
 
   boolean holding;
-  double encoderTargetToHold; 
+  double encoderTargetToHold;
 
-  double lastAngularSpeed; 
+  double lastAngularSpeed;
   double lastTime;
 
   Navx navx;
 
   /** Creates a new AutoBalance. */
-  public AutoBalance() 
-  {
+  public AutoBalance() {
     addRequirements(Robot.getRobotContainer().getDriveTrain());
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
-  {
+  public void initialize() {
     checkAngles();
     navx = Robot.getRobotContainer().getNavx();
     Robot.getRobotContainer().getDriveTrain().setTransmissionState(TransmissionMode.torque);
@@ -41,8 +38,7 @@ public class AutoBalance extends CommandBase
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() 
-  {
+  public void execute() {
     checkAngles();
 
     double deltaTo0 = Math.abs(Math.deltaAngle(navx.getYaw(), 0));
@@ -50,30 +46,21 @@ public class AutoBalance extends CommandBase
 
     double angleTarget = (deltaTo0 < deltaTo180) ? 0 : 180;
 
-    if(stable && !balanced)
-    {
-      //Prevents the robot from falling off the charging station
-      if(Math.abs(Math.deltaAngle(navx.getYaw(), angleTarget)) > HighAltitudeConstants.BALANCING_ALIGNED_THRESHOLD )
-      {
+    if (stable && !balanced) {
+      // Prevents the robot from falling off the charging station
+      if (Math.abs(Math.deltaAngle(navx.getYaw(), angleTarget)) > HighAltitudeConstants.BALANCING_ALIGNED_THRESHOLD) {
         Robot.getRobotContainer().getDriveTrain().turn(angleTarget, 0.6);
-      }
-      else
-      {
+      } else {
         double direction = navx.getPitch() / Math.abs(navx.getPitch());
         double power = HighAltitudeConstants.BALANCING_DEFAULT_POWER * direction;
 
         Robot.getRobotContainer().getDriveTrain().arcadeDrive(power, 0);
       }
-    }
-    else
-    {
-      if(holding)
-      {
-        Robot.getRobotContainer().getDriveTrain().moveStraight
-          (encoderTargetToHold, HighAltitudeConstants.BALANCING_DEFAULT_POWER, angleTarget);
-      }
-      else
-      {
+    } else {
+      if (holding) {
+        Robot.getRobotContainer().getDriveTrain().moveStraight(encoderTargetToHold,
+            HighAltitudeConstants.BALANCING_DEFAULT_POWER, angleTarget);
+      } else {
         Robot.getRobotContainer().getDriveTrain().stop();
         encoderTargetToHold = Robot.getRobotContainer().getDriveTrain().getLeftEncoderDistance();
         holding = true;
@@ -83,23 +70,21 @@ public class AutoBalance extends CommandBase
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() 
-  {
+  public boolean isFinished() {
     return false;
   }
 
-  
-  void checkAngles()
-  {
-    balanced = (Math.abs(Robot.getRobotContainer().getNavx().getPitch()) < 
-      HighAltitudeConstants.BALANCING_ANGLE_THRESHOLD);
+  void checkAngles() {
+    balanced = (Math
+        .abs(Robot.getRobotContainer().getNavx().getPitch()) < HighAltitudeConstants.BALANCING_ANGLE_THRESHOLD);
 
-    stable = (Math.abs(Robot.getRobotContainer().getNavx().getAngularAccelerationPitch()) < 
-      HighAltitudeConstants.BALANCING_ACCELERATION_THRESHOLD);
+    stable = (Math.abs(Robot.getRobotContainer().getNavx()
+        .getAngularAccelerationPitch()) < HighAltitudeConstants.BALANCING_ACCELERATION_FWD_THRESHOLD);
   }
 
 }

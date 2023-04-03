@@ -2,21 +2,27 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.gripper;
+package frc.robot.commands.pieceHandlers.compound;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.subsystems.gripper.Gripper;
+import frc.robot.subsystems.intake.Intake;
 
-public class GripperIn extends CommandBase {
+public class GlobalOuttake extends CommandBase {
+  Intake intake;
   Gripper gripper;
+  GamePieceMode currentGamePieceMode;
+  double gripperSpeed;
 
-  /** Creates a new GripperGrab. */
-  public GripperIn() {
+  /** Creates a new GlobalOuttake. */
+  public GlobalOuttake() {
+    intake = Robot.getRobotContainer().getIntake();
     gripper = Robot.getRobotContainer().getGripper();
-    addRequirements(gripper);
+    addRequirements(intake, gripper);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,21 +33,20 @@ public class GripperIn extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    currentGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
-    GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
-    switch (currentMode) {
+    switch (currentGamePieceMode) {
       case CONE:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_IN_SPEED);
+        gripperSpeed = HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED;
         break;
       case CUBE:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_IN_SPEED);
+        gripperSpeed = HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED;
         break;
       case MANUAL:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
-        break;
       default:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_IN_SPEED);
+        gripperSpeed = HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED;
     }
+    gripper.driveGripper(gripperSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -53,8 +58,6 @@ public class GripperIn extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.CUBE)
-      return gripper.getCubeLimitSwitch();
     return false;
   }
 }

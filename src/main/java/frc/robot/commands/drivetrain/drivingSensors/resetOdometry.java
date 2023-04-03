@@ -3,7 +3,7 @@ package frc.robot.commands.drivetrain.drivingSensors;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.Robot;
 
-public class resetOdometry extends InstantCommand {
+public class ResetOdometry extends InstantCommand {
     double x, y;
 
     /**
@@ -13,7 +13,7 @@ public class resetOdometry extends InstantCommand {
      * @param x The new x coordinate for the robot pose.
      * @param y The new x coordinate for the robot pose.
      */
-    public resetOdometry(double x, double y) {
+    public ResetOdometry(double x, double y) {
         this.x = x;
         this.y = y;
     }

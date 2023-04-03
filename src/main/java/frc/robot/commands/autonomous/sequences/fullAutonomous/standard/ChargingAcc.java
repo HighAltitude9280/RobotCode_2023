@@ -5,20 +5,20 @@
 package frc.robot.commands.autonomous.sequences.fullAutonomous.standard;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.autonomous.primitives.AutoBalance;
 import frc.robot.commands.autonomous.primitives.stepControl.MoveStraight;
 
-public class preloadedThenForward extends SequentialCommandGroup {
-
-  /** 
-   * Places pre-loaded cone, then moves forward 2.5m 
-   * 
-   * */
-  public preloadedThenForward() {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class ChargingAcc extends SequentialCommandGroup {
+  /** Creates a new ChargingAcc. */
+  public ChargingAcc() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //Place pre-loaded cube.
-      new MoveStraight(2.5, 0.5)
-      );
+        new ForwardUntilAngleChange(),
+        new MoveStraight(0.25, 0.2),
+        new AutoBalance());
   }
 }

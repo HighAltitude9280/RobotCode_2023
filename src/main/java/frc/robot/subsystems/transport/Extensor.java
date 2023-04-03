@@ -39,7 +39,7 @@ public class Extensor extends SubsystemBase {
     boolean isOverLimitsAndSpeedIsPositive = (extensorPositionMeters > HighAltitudeConstants.EXTENSOR_UPPER_LIMIT_METERS
         && speed > 0);
 
-    if (Robot.getRobotContainer().getShouldManualBeLimited()
+    if (Robot.getRobotContainer().getShouldManualHaveLimits()
         && (isBelowLimitsAndSpeedIsNegative || isOverLimitsAndSpeedIsPositive)) {
       extensorMotors.setAll(0);
       Robot.debugPrint("YA TE PASASTE DEL LIMITE DEL LIFT YA MAMÓ");
@@ -62,7 +62,7 @@ public class Extensor extends SubsystemBase {
     double power = delta / HighAltitudeConstants.EXTENSOR_BRAKING_METERS;
     power = Math.clamp(power, -1, 1) * maxPower;
 
-    extensorMotors.setAll(power);
+    driveExtensor(power);
     return false;
   }
 
@@ -80,5 +80,9 @@ public class Extensor extends SubsystemBase {
     Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
+  }
+
+  public double getCurrentDistance() {
+    return extensorPositionMeters;
   }
 }

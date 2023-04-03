@@ -7,7 +7,6 @@ package frc.robot.commands.transport.extensor;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.subsystems.transport.Extensor;
 
 public class DriveExtensor extends CommandBase {
@@ -30,7 +29,7 @@ public class DriveExtensor extends CommandBase {
   public void execute() {
     // if (Robot.getRobotContainer().getCurrentGamePieceMode() ==
     // GamePieceMode.MANUAL)
-    extensor.driveExtensor(OI.getInstance().getExtensorInput() * 0.25);
+    extensor.driveExtensor(OI.getInstance().getExtensorInput());
   }
 
   // Called once the command ends or is interrupted.

@@ -2,21 +2,24 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.gripper;
+package frc.robot.commands.pieceHandlers.gripper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
-import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.subsystems.gripper.Gripper;
+import frc.robot.RobotContainer.GamePieceMode;
 
-public class GripperOut extends CommandBase {
+public class GripperHold extends CommandBase {
   Gripper gripper;
+  GamePieceMode currentMode;
 
-  /** Creates a new GripperGrab. */
-  public GripperOut() {
+  /** Creates a new GripperHold. */
+  public GripperHold() {
     gripper = Robot.getRobotContainer().getGripper();
     addRequirements(gripper);
+    currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,20 +30,16 @@ public class GripperOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    GamePieceMode currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
     switch (currentMode) {
       case CONE:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_OUT_SPEED);
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_HOLD_SPEED);
         break;
       case CUBE:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_OUT_SPEED);
+        gripper.driveGripper(HighAltitudeConstants.GRIPPER_CUBE_HOLD_SPEED);
         break;
       case MANUAL:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
-        break;
       default:
-        gripper.driveGripper(HighAltitudeConstants.GRIPPER_DEFAULT_OUT_SPEED);
+        gripper.stopGripper();
     }
   }
 
@@ -53,6 +52,6 @@ public class GripperOut extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return currentMode.equals(GamePieceMode.MANUAL);
   }
 }

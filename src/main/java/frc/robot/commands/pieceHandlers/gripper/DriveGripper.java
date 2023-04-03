@@ -2,20 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.commands.pieceHandlers.gripper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.HighAltitudeConstants;
+import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.gripper.Gripper;
 
-public class IntakeOut extends CommandBase {
-  Intake intake;
+public class DriveGripper extends CommandBase {
+  Gripper gripper;
 
-  /** Creates a new IntakeIn. */
-  public IntakeOut() {
-    intake = Robot.getRobotContainer().getIntake();
-    addRequirements(intake);
+  /** Creates a new DriveGripper. */
+  public DriveGripper() {
+    gripper = Robot.getRobotContainer().getGripper();
+    addRequirements(gripper);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,13 +27,12 @@ public class IntakeOut extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.driveIntake(HighAltitudeConstants.INTAKE_OUT_SPEED);
+    gripper.driveGripper(OI.getInstance().getChassis().getTriggers());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.stopIntake();
   }
 
   // Returns true when the command should end.

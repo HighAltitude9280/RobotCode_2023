@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 import frc.robot.subsystems.chassis.DriveTrain.WheelState;
 import frc.robot.subsystems.intake.Intake.IntakePosition;
@@ -25,6 +28,107 @@ public final class HighAltitudeConstants {
 
         public static final boolean DEBUG = true;
 
+        public static final boolean SINGLE_DRIVER = false;
+
+        public static final boolean USING_VISION_FOR_POSE = true;
+
+        ////////////////////////// SWERVE //////////////////////////
+
+        /////////// KINEMATICS
+        // Distance left - right
+        public static final double SWERVE_TRACK_WIDTH = 0.0254 * (24.0 - 2.0 * 2.625);
+        // Distance front - back
+        public static final double SWERVE_WHEEL_BASE = 0.0254 * (32.0 - 2.0 * 2.625);
+
+        // FL, FR, BL, BR. Remember these cartesian coordinates consider the x axis to
+        // be headed where the robot is pointing to. The y-axis direction could be a
+        // source of problems...
+        // WPILib says "Positive x values represent moving toward the front of the robot
+        // whereas positive y values represent moving toward the left of the robot."
+        // The example I saw uses the raw yaw reported by the navx and switches the
+        // position of the left and right wheels in the kinematics.
+        // I will use CCW and the allegedly correct x y coordinates.
+        // For some reason, that did not work. The kinematics seem to work correctly
+        // when "left" is negative
+        public static final SwerveDriveKinematics SWERVE_KINEMATICS = new SwerveDriveKinematics(
+                        new Translation2d(SWERVE_WHEEL_BASE / 2, SWERVE_TRACK_WIDTH / 2),
+                        new Translation2d(SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2),
+                        new Translation2d(-SWERVE_WHEEL_BASE / 2, SWERVE_TRACK_WIDTH / 2),
+                        new Translation2d(-SWERVE_WHEEL_BASE / 2, -SWERVE_TRACK_WIDTH / 2));
+
+        // Arbitrary. Higher numbers will cause the swerve to react more violently to
+        // joysitck inputs and may not be ideal. Lower numbers will cause the swerve to
+        // have a very slow reaction to joystick inputs, and may not be ideal.
+        public static final double SWERVE_MAX_ACCELERATION_UNITS_PER_SECOND = 5.0;
+        public static final double SWERVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 5.0;
+
+        // Other
+
+        public static final double SWERVE_ABSOLUTE_ENCODER_PULSES_PER_REVOLUTION = 4096.0;
+        // encoder * this value = radians
+        public static final double SWERVE_ABSOLUTE_ENCODER_RADIANS_PER_PULSE = (2.0 * Math.PI)
+                        / SWERVE_ABSOLUTE_ENCODER_PULSES_PER_REVOLUTION;
+
+        /////////// DRIVING MOTOR
+
+        // The reported encoder position after one revolution, check encoder
+        // specifications.
+        public static final double SWERVE_DRIVE_PULSES_PER_REVOLUTION = 2048.0;
+        public static final double SWERVE_DRIVE_VELOCITY_SAMPLE_RATE_MS = 100.0;
+
+        // In meters
+        public static final double SWERVE_WHEEL_DIAMETER = 4 * 0.0254;
+
+        // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
+        // NUMBERS. (Driven / Driver)
+        // Constant for L3 Configuration
+        public static final double SWERVE_DRIVE_GEAR_RATIO = (50.0 * 16.0 * 45.0) / (14.0 * 28.0 * 15.0);
+
+        // Use this constants to convert from encoder position to meters
+        // encoder position * this constant = meters
+        public static final double SWERVE_DRIVE_METERS_PER_PULSE = Math.PI * SWERVE_WHEEL_DIAMETER
+                        / (SWERVE_DRIVE_PULSES_PER_REVOLUTION * SWERVE_DRIVE_GEAR_RATIO);
+
+        // Use this constant to convert from motor velocity to meters per second
+        // encoder velocity * this constant = meters/second
+        public static final double SWERVE_DRIVE_METERS_PER_SEC_PER_VELOCITY_UNITS = (1000
+                        * SWERVE_DRIVE_METERS_PER_PULSE)
+                        / SWERVE_DRIVE_VELOCITY_SAMPLE_RATE_MS;
+
+        // Constant for L3 Configuration
+        public static final double SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND = 18 * 12 * 0.0254;
+        // Arbitrary to make controlling the swerve easier in teleop
+        public static final double SWERVE_DRIVE_TELEOP_MAX_SPEED_METERS_PER_SECOND = SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND
+                        / 2;
+
+        /////////// DIRECTION MOTOR
+
+        // The reported encoder position after one revolution, check encoder
+        // specifications.
+        public static final double SWERVE_DIRECTION_PULSES_PER_REVOLUTION = 2048.0;
+        public static final double SWERVE_DIRECTION_VELOCITY_SAMPLE_RATE_MS = 100.0;
+
+        // NEVER, ABSOLUTELY NEVER APPROXIMATE THIS, USE ONLY FRACTIONS WITH WHOLE
+        // NUMBERS. (Driven / Driver)
+        public static final double SWERVE_DIRECTION_GEAR_RATIO = 150.0 / 7.0;
+
+        // Use this constants to convert from encoder position to meters
+        // encoder position * this constant = radians
+        public static final double SWERVE_DIRECTION_RADIANS_PER_PULSE = Math.PI * 2
+                        / (SWERVE_DIRECTION_PULSES_PER_REVOLUTION * SWERVE_DIRECTION_GEAR_RATIO);
+
+        // Use this constant to convert from motor velocity to meters per second
+        // encoder velocity * this constant = radians/second
+        public static final double SWERVE_DIRECTION_RADIANS_PER_SEC_PER_VELOCITY_UNITS = (1000
+                        * SWERVE_DIRECTION_RADIANS_PER_PULSE)
+                        / SWERVE_DIRECTION_VELOCITY_SAMPLE_RATE_MS;
+
+        public static final double SWERVE_DIRECTION_TELEOP_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
+
+        //// PID
+        public static final double SWERVE_DIRECTION_BRAKING_RADIANS = (Math.PI * 2) / 4; // 2pi/3
+        public static final double SWERVE_DIRECTION_KP = 0.8;
+        public static final double SWERVE_DIRECTION_KD = 0.4;
         //////////////////////// DRIVETRAIN///////////////////////////////////
 
         //// DRAGONFLY
@@ -51,7 +155,7 @@ public final class HighAltitudeConstants {
 
         //// DEFAULT INITIAL PARAMETERS
 
-        public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.speed;
+        public static TransmissionMode DRIVETRAIN_INITIAL_TRANSMISSION_MODE = TransmissionMode.torque;
         public static WheelState DRIVETRAIN_INITIAL_DRAGONFLY_STATE = WheelState.Raised;
 
         // Default braking mode, true for brake, false for coast.
@@ -65,11 +169,11 @@ public final class HighAltitudeConstants {
         // angle and the current angle (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // turning speed.
-        public static double DRIVETRAIN_AUTO_TURNING_BRAKING_DISTANCE = 100;
+        public static double DRIVETRAIN_AUTO_TURNING_BRAKING_DISTANCE = 100; // 100
         // When turning in autonomous, if the difference between the target angle and
         // the current angle (in degrees) is less than this constant, it will be
         // considered on target.
-        public static double DRIVETRAIN_AUTO_TURNING_ARRIVE_OFFSET = 3;
+        public static double DRIVETRAIN_AUTO_TURNING_ARRIVE_OFFSET = 3; // 3
 
         /// Straight motion
 
@@ -90,19 +194,19 @@ public final class HighAltitudeConstants {
         /// Splines
 
         // When following a spline, this constant will help correct the error in y.
-        public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70;
+        public static final double SPLINE_DRIVE_ERROR_CORRECTION = 70; // 70
         // When following a spline, if the difference between the target
         // and the current position (in meters) is less than this constant, it be
         // consider on target.
-        public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0;
+        public static final double DRIVETRAIN_SPLINE_ARRIVE_OFFSET = 0.05; // 0
         // When following a spline, this constant will determine
         // how sharp the angle correction is. The higher the values, the sharper the
         // angle correction.
-        public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0;
-        public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0;
+        public static final double DRIVETRAIN_SPLINE_ANGLE_CORRECTION = 0.0085; // 0
+        public static final double SPLINE_SPEED_REDUCTION_BRAKING_DISTANCE = 0.25; // 0
 
         /// Alignment
-        public static final double DRIVETRAIN_ALIGN_MAX_SPEED = 0.5;
+        public static final double DRIVETRAIN_ALIGN_MAX_SPEED = 0.1875;
 
         /// Auto balancing
 
@@ -110,19 +214,23 @@ public final class HighAltitudeConstants {
 
         // If the absolute value of the angular acceleration is smaller than this value,
         // The robot will be consider as stable on the charging station
-        public static final double BALANCING_ACCELERATION_THRESHOLD = 180;
+        public static final double BALANCING_ACCELERATION_FWD_THRESHOLD = 200.0;
+
+        // If the absolute value of the angular acceleration is smaller than this value,
+        // The robot will be consider as stable on the charging station
+        public static final double BALANCING_SPEED_THRESHOLD = 18.0;
 
         // If the absolute value of the angle (pitch) is smaller than this value,
         // The robot will be consider as balanced on the charging station.
         // Be careful with small values (less than about 10°), because some bounciness
         // can occur.
-        public static final double BALANCING_ANGLE_THRESHOLD = 20;
+        public static final double BALANCING_ANGLE_THRESHOLD = 10.0;
 
         // When trying to balance, this is the default power at which the robot will
         // move to
         // Try to balance the charging station. It is recommended to set it low to
         // improve accuracy.
-        public static final double BALANCING_DEFAULT_POWER = 0.3;
+        public static final double BALANCING_DEFAULT_POWER = 0.1875;
 
         // To prevent the robot from falling off the charging station, it will not move
         // Unless it's properly aligned, that is to say, its angle is less than this
@@ -145,7 +253,7 @@ public final class HighAltitudeConstants {
 
         // Use these constants to convert from encoder position to meters
         // (position*these constants = meters)
-        public static final double DRIVETRAIN_METERS_PER_PULSE_TORQUE = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
+        public static final double DRIVETRAIN_METERS_PER_PULSE_TORQUE = 2.1428 * Math.PI * DRIVETRAIN_WHEEL_DIAMETER
                         / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_TORQUE);
         public static final double DRIVETRAIN_METERS_PER_PULSE_SPEED = Math.PI * DRIVETRAIN_WHEEL_DIAMETER
                         / (DRIVETRAIN_PULSES_PER_REVOLUTION * DRIVETRAIN_GEAR_RATIO_SPEED);
@@ -169,15 +277,18 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double WRIST_BRAKING_DEGREES = 20;
+        public static final double WRIST_BRAKING_DEGREES = 12.5; // 15
 
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static final double WRIST_ARRIVE_OFFSET = 5;
+        public static final double WRIST_ARRIVE_OFFSET = 3.0;
 
-        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999;
-        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999;
+        public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999; // -43.34
+        public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
+
+        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 111.36;
+        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -43.34;
 
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
@@ -192,7 +303,7 @@ public final class HighAltitudeConstants {
         // NUMBERS. MOTOR REVS / ARM REVS
         public static final double EXTENSOR_RATIO = 42.0 / 1.0;
 
-        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.273 * 0.0254;
+        public static final double EXTENSOR_PITCH_DIAMETER_METERS = 1.432 * 0.0254;
 
         public static final double EXTENSOR_METERS_PER_PULSE = (Math.PI * EXTENSOR_PITCH_DIAMETER_METERS)
                         / (EXTENSOR_PULSES_PER_REVOLUTION * EXTENSOR_RATIO);
@@ -208,8 +319,8 @@ public final class HighAltitudeConstants {
 
         public static final double EXTENSOR_ARRIVE_OFFSET = 0.025;
 
-        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.475;
-        public static final double EXTENSOR_LOWER_LIMIT_METERS = -999999999;
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.566; // 0.475
+        public static final double EXTENSOR_LOWER_LIMIT_METERS = 0.02; // -0.06
 
         //////////////////////////////// ARM ///////////////////////////////////////////
 
@@ -231,87 +342,132 @@ public final class HighAltitudeConstants {
         // and the current position (in degrees) is less than this constant, it will
         // start braking. Note that this constant is proportional to the square of the
         // speed (from -1 to 1).
-        public static final double ARM_BRAKING_DEGREES = 18;
+        public static final double ARM_BRAKING_DEGREES = 180.0; // PREVIOUSLY 18
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.
 
-        public static final double ARM_ARRIVE_OFFSET = 5;
+        public static final double ARM_ARRIVE_OFFSET = 5.0;
 
         public static final double ARM_UPPER_LIMIT_DEGREES = 999999999;
         public static final double ARM_LOWER_LIMIT_DEGREES = -999999999;
+
+        // ARM ODOMETRY
+
+        // Imagine a cartesian plane with the x-axis being located on the floor,
+        // increasing towards the front of the robot and the y-axis increasing towards
+        // the ceiling. The origin is located at the edge of frame perimeter at the
+        // front of the robot.
+        public static final Translation2d ARM_CARRIAGE_ZERO_TRANSLATION2D_METERS = new Translation2d(-0.11, 0.31);
+        public static final Translation2d ARM_CARRIAGE_BOTTOM_TO_PIVOT_TRANSLATION2D_METERS = new Translation2d(-0.39,
+                        0.13).rotateBy(Rotation2d.fromDegrees(-35));
+        public static final Translation2d ARM_ROD_TRANSLATION2D_METERS = new Translation2d(0.981, 0);
+        public static final Double ARM_INTIAL_ANGLE = 110.0;
 
         //////////////////////// TRANSPORT CONSTANTS ///////////////////////////////////
 
         ////////////////////// AUTONOMOUS MOVEMENT
 
-        public static final double WRIST_AUTO_MAX_POWER = 0.4125;
-        public static final double EXTENSOR_AUTO_MAX_POWER = 0.875;
-        public static final double ARM_AUTO_MAX_POWER = 0.875;
+        public static final double WRIST_AUTO_MAX_POWER = 0.0625;
+        public static final double EXTENSOR_AUTO_MAX_POWER = 0.425;
+        public static final double ARM_AUTO_MAX_POWER = 0.125;
 
         /////////////////// CONE MODE ///////////////////
 
-        ////////// TOP ROW
+        ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_DEGREES_CONE = -1.0;
-        public static final double EXTENSOR_TOP_ROW_METERS_CONE = -1.0;
-        public static final double ARM_TOP_ROW_DEGREES_CONE = -1.0;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 5.37;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.567;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 29.5;
 
-        ////////// MIDDLE ROW
+        ////////// MIDDLE ROW - BACK
 
-        public static final double WRIST_MIDDLE_ROW_DEGREES_CONE = 407.0;
-        public static final double EXTENSOR_MIDDLE_ROW_METERS_CONE = 0.2;
-        public static final double ARM_MIDDLE_ROW_DEGREES_CONE = 198.0;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CONE = 31.74;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CONE = 0.31;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CONE = 29.58;
+
+        ////////// TOP ROW - FRONT
+
+        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CONE = 0.0;
+        public static final double ARM_TOP_ROW_FRONT_DEGREES_CONE = 0.0;
+
+        ////////// MIDDLE ROW - FRONT
+
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -185.5;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.018;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -71.14;
 
         ////////// BOTTOM ROW
-
-        public static final double WRIST_BOTTOM_ROW_DEGREES_CONE = -1.0;
-        public static final double EXTENSOR_BOTTOM_ROW_METERS_CONE = -1.0;
-        public static final double ARM_BOTTOM_ROW_DEGREES_CONE = -1.0;
+        /*
+         * public static final double WRIST_BOTTOM_ROW_DEGREES_CONE = -1.0;
+         * public static final double EXTENSOR_BOTTOM_ROW_METERS_CONE = -1.0;
+         * public static final double ARM_BOTTOM_ROW_DEGREES_CONE = -1.0;
+         */
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = -1.0;
-        public static final double EXTENSOR_FEEDER_METERS_CONE = -1.0;
-        public static final double ARM_FEEDER_DEGREES_CONE = -1.0;
+        public static final double WRIST_FEEDER_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.0;
+        public static final double ARM_FEEDER_DEGREES_CONE = 0.0;
 
         ////////// GRAB FROM INTAKE
+        public static final double WRIST_INTAKE_DEGREES_CONE = 0.0;
+        public static final double EXTENSOR_INTAKE_METERS_CONE = 0.0;
+        public static final double ARM_INTAKE_DEGREES_CONE = 0.0;
 
-        public static final double WRIST_INTAKE_DEGREES_CONE = -1.0;
-        public static final double EXTENSOR_INTAKE_METERS_CONE = -1.0;
-        public static final double ARM_INTAKE_DEGREES_CONE = -1.0;
+        ///////// RESTING
+        public static final double WRIST_REST_DEGREES_CONE = -274.65;
+        public static final double EXTENSOR_REST_METERS_CONE = 0.43;
+        public static final double ARM_REST_DEGREES_CONE = -140.35;
 
         /////////////////// CUBE MODE ///////////////////
 
-        ////////// TOP ROW
+        ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_DEGREES_CUBE = -1.0;
-        public static final double EXTENSOR_TOP_ROW_METERS_CUBE = -1.0;
-        public static final double ARM_TOP_ROW_DEGREES_CUBE = -1.0;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CUBE = 0.0;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 0.0;
 
-        ////////// MIDDLE ROW
+        ////////// MIDDLE ROW - BACK
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.0;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 0.0;
 
-        public static final double WRIST_MIDDLE_ROW_DEGREES_CUBE = -1.0;
-        public static final double EXTENSOR_MIDDLE_ROW_METERS_CUBE = -1.0;
-        public static final double ARM_MIDDLE_ROW_DEGREES_CUBE = -1.0;
+        ////////// TOP ROW - FRONT
+
+        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CUBE = 0.0;
+        public static final double ARM_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
+
+        ////////// MIDDLE ROW - FRONT
+
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.0;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
 
         ////////// BOTTOM ROW
-
-        public static final double WRIST_BOTTOM_ROW_DEGREES_CUBE = -1.0;
-        public static final double EXTENSOR_BOTTOM_ROW_METERS_CUBE = -1.0;
-        public static final double ARM_BOTTOM_ROW_DEGREES_CUBE = -1.0;
-
+        /*
+         * public static final double WRIST_BOTTOM_ROW_DEGREES_CUBE = -1.0;
+         * public static final double EXTENSOR_BOTTOM_ROW_METERS_CUBE = -1.0;
+         * public static final double ARM_BOTTOM_ROW_DEGREES_CUBE = -1.0;
+         */
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CUBE = -1.0;
-        public static final double EXTENSOR_FEEDER_METERS_CUBE = -1.0;
-        public static final double ARM_FEEDER_DEGREES_CUBE = -1.0;
+        public static final double WRIST_FEEDER_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.0;
+        public static final double ARM_FEEDER_DEGREES_CUBE = 0.0;
 
         ////////// GRAB FROM INTAKE
 
-        public static final double WRIST_INTAKE_DEGREES_CUBE = -1.0;
-        public static final double EXTENSOR_INTAKE_METERS_CUBE = -1.0;
-        public static final double ARM_INTAKE_DEGREES_CUBE = -1.0;
+        public static final double WRIST_INTAKE_DEGREES_CUBE = 0.0;
+        public static final double EXTENSOR_INTAKE_METERS_CUBE = 0.0;
+        public static final double ARM_INTAKE_DEGREES_CUBE = 0.0;
+
+        ///////// RESTING
+        public static final double WRIST_REST_DEGREES_CUBE = -214.2;
+        public static final double EXTENSOR_REST_METERS_CUBE = 0.43;
+        public static final double ARM_REST_DEGREES_CUBE = -155.22;
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
 
@@ -320,11 +476,13 @@ public final class HighAltitudeConstants {
 
         public static final double GRIPPER_CUBE_IN_SPEED = 0.3;
         public static final double GRIPPER_CUBE_OUT_SPEED = -1;
+        public static final double GRIPPER_CUBE_HOLD_SPEED = 0.09;
         public static final double GRIPPER_CONE_IN_SPEED = -0.3;
         public static final double GRIPPER_CONE_OUT_SPEED = 1;
+        public static final double GRIPPER_CONE_HOLD_SPEED = -0.063;
 
-        public static final double GRIPPER_DEFAULT_IN_SPEED = -0.3;
-        public static final double GRIPPER_DEFAULT_OUT_SPEED = 0.3;
+        public static final double GRIPPER_DEFAULT_IN_SPEED = -0.5;
+        public static final double GRIPPER_DEFAULT_OUT_SPEED = 0.5;
 
         ///////////////////////////// INTAKE //////////////////////////////////////////
 
@@ -339,6 +497,6 @@ public final class HighAltitudeConstants {
         ///////////////////// LEDS ////////////////////////
 
         public static final int LEDS_9280_HUE = 64;
-        public static final int LEDS_CUBE_HUE = 138;
+        public static final int LEDS_CUBE_HUE = 135;
         public static final int LEDS_CONE_HUE = 28;
 }

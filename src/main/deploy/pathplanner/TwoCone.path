@@ -1,0 +1,99 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8045844863619553,
+        "y": 4.9784322375662295
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.804584486361972,
+        "y": 4.9784322375662295
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "ConeTop",
+          "GripperOut"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.592627746659002,
+        "y": 4.597565160042601
+      },
+      "prevControl": {
+        "x": 4.860589370301548,
+        "y": 4.806135226305541
+      },
+      "nextControl": {
+        "x": 4.860589370301548,
+        "y": 4.806135226305541
+      },
+      "holonomicAngle": 0.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "before",
+        "waitTime": 0.5
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.813652750112518,
+        "y": 3.8539675324964686
+      },
+      "prevControl": {
+        "x": 2.4484312126518994,
+        "y": 4.914954391312292
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "sequential",
+        "waitBehavior": "before",
+        "waitTime": 0.5
+      }
+    }
+  ],
+  "maxVelocity": 1.5,
+  "maxAcceleration": 2.0,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.07636363636363305,
+      "names": [
+        "IntakeCone"
+      ]
+    },
+    {
+      "position": 0.7854545454545422,
+      "names": [
+        "GripperIn"
+      ]
+    },
+    {
+      "position": 1.0399999999999971,
+      "names": [
+        "TopCone"
+      ]
+    }
+  ]
+}
