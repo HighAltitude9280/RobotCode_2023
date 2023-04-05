@@ -236,7 +236,7 @@ public class OldHighAltitudePWMLEDStrip {
                 buffer.setHSV(j + offset, hue, 255 - (heat[j] / 3), heat[j]);
             else {
                 // System.out.println(offset + length - 1 - j);
-                buffer.setHSV(offset + length - 1 - j, hue, 255 - (heat[j] / 3), heat[j]);
+                buffer.setHSV(offset + length - 1 - j, hue, 255 - (heat[j] / 3), (int) (heat[j] * 0.5));
             }
         }
 

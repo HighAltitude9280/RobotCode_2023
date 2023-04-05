@@ -25,7 +25,7 @@ public class SwerveDriveTrain extends SubsystemBase {
   private SwerveDrivePoseEstimator swerveDrivePoseEstimator;
 
   private boolean isSlower = false;
-  private boolean isFieldOriented = false;
+  private boolean isFieldOriented = true;
 
   /** Creates a new SwerveDrive. */
   public SwerveDriveTrain() {
@@ -132,6 +132,13 @@ public class SwerveDriveTrain extends SubsystemBase {
     frontRight.stop();
     backLeft.stop();
     backRight.stop();
+  }
+
+  public void setModulesInXPosition() {
+    frontLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    backLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    backRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
   public void recalculateModuleDirections() {

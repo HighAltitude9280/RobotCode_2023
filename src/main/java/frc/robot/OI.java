@@ -53,8 +53,9 @@ public class OI {
          * // pilot.onTrue(ButtonType.POV_N, new ToggleIntakePosition());
          */
 
-        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.TOP_ROW_BACK), ButtonType.Y); // not configured
-                                                                                                     // for cube
+        subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.TOP_ROW_BACK), ButtonType.Y, ButtonType.POV_S); // not
+                                                                                                                       // configured
+        // for cube
         subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.FEEDER), ButtonType.B, ButtonType.POV_N);
         subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.INTAKE), ButtonType.B, ButtonType.POV_S);
         subsystems.whileTrueCombo(new NewTransportGoTo(TransportTarget.RESTING), ButtonType.A);
@@ -73,6 +74,7 @@ public class OI {
         }
 
         else {
+            chassis.onTrue(ButtonType.POV_S, new ToggleShouldManualHaveLimits());
             chassis.onTrue(ButtonType.POV_N, new ResetTransportEncoders());
             chassis.onTrue(ButtonType.START, new ResetNavx());
             chassis.onTrue(ButtonType.BACK, new RecalculateWheelDirection());
@@ -154,18 +156,18 @@ public class OI {
 
     public double getWristInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getPovXAxis() * 0.125
-                : subsystems.getPovXAxis() * 0.5;
+                : subsystems.getPovXAxis() * 0.25;
     }
 
     public double getArmInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual()
                 ? -subsystems.getAxis(AxisType.RIGHT_Y) * 0.25
-                : -subsystems.getAxis(AxisType.RIGHT_Y) * 1.0;
+                : -subsystems.getAxis(AxisType.RIGHT_Y) * 0.5;
     }
 
     public double getExtensorInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getTriggers() * 0.25
-                : subsystems.getTriggers() * 0.75;
+                : subsystems.getTriggers() * 0.875;
     }
 
     public HighAltitudeJoystick getSubsystems() {

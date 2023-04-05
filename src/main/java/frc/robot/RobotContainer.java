@@ -4,15 +4,30 @@
 
 package frc.robot;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.auto.PIDConstants;
+import com.pathplanner.lib.auto.SwerveAutoBuilder;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.commands.autonomous.SwerveAutos;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
+import frc.robot.commands.pieceHandlers.gripper.GripperOut;
+import frc.robot.commands.robotParameters.SetGamePieceMode;
+import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.arm.DriveArm;
+import frc.robot.commands.transport.compound.NewTransportGoTo;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
@@ -77,7 +92,7 @@ public class RobotContainer {
     // intake = new Intake();
 
     limeLightVision = new LimeLightVision();
-    // driverCameras = new DriverCameras();
+    driverCameras = new DriverCameras();
     leds = new LEDs();
   }
 
@@ -143,7 +158,6 @@ public class RobotContainer {
     // m_chooser.addOption("Cube Balance", cubeThenBalance);
     // m_chooser.addOption("Cone Only", coneThenStayStill);
     // m_chooser.addOption("Cube Only", cubeThenStayStill);
-
     SwerveAutos.generateAutos();
   }
 
@@ -162,7 +176,7 @@ public class RobotContainer {
     // FasterPreloadedPieceOnly(GamePieceMode.CUBE);
     // ChargingSimple xd2 = new ChargingSimple();
     // return xd.andThen(xd2);
-    return SwerveAutos.exampleAuto;
+    return SwerveAutos.acAuto;
   }
 
   public Navx getNavx() {

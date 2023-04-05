@@ -43,8 +43,8 @@ public class DisplayGamePieceModeVariableIntensity extends CommandBase {
     else if (a.get().equals(GamePieceMode.CONE))
       hue = HighAltitudeConstants.LEDS_CONE_HUE;
 
-    double input = Math.clamp(Math.abs(speed.get()) + Math.abs(strafe.get()) + Math.abs(turn.get()), 0.0, 2.0);
-    Robot.getRobotContainer().getLeds().setCoolerFireAnimationWithInput(hue, input, 0.0, 2.0);
+    double input = Math.clamp(Math.abs(speed.get()) + Math.abs(strafe.get()) + Math.abs(turn.get()), 0.0, 1.0);
+    Robot.getRobotContainer().getLeds().setCoolerFireAnimationWithInput(hue, input, 0.0, 1.0);
   }
 
   // Called once the command ends or is interrupted.

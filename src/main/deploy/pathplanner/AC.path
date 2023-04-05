@@ -1,0 +1,101 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.8070073746985102,
+        "y": 0.47960506177422585
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.807007374698507,
+        "y": 0.47960506177422585
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "SetConeMode",
+          "ConeTop",
+          "GripperOut"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.557381319890846,
+        "y": 0.9135334509985259
+      },
+      "prevControl": {
+        "x": 5.557381319890846,
+        "y": 0.9135334509985259
+      },
+      "nextControl": {
+        "x": 5.557381319890846,
+        "y": 0.9135334509985259
+      },
+      "holonomicAngle": 0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": true,
+      "stopEvent": {
+        "names": [
+          "GripperIn"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "deadline",
+        "waitTime": 0.75
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.8070073746985102,
+        "y": 1.6101027073849024
+      },
+      "prevControl": {
+        "x": 1.4644323305740632,
+        "y": 0.593796743149042
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "GripperOut"
+        ],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "markers": [
+    {
+      "position": 0.05818181818181487,
+      "names": [
+        "SetCone"
+      ]
+    },
+    {
+      "position": 0.11636363636362562,
+      "names": [
+        "ConeIntake"
+      ]
+    },
+    {
+      "position": 1.0909090909090216,
+      "names": [
+        "ConeTop"
+      ]
+    }
+  ]
+}

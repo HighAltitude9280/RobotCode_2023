@@ -35,12 +35,14 @@ public class NewTransportGoTo extends CommandBase {
 
   final double ARM_WRIST_DELTA_LOWER_LIMIT = HighAltitudeConstants.WRIST_ARM_DELTA_LOWER_LIMIT;
   final double ARM_WRIST_DELTA_UPPER_LIMIT = HighAltitudeConstants.WRIST_ARM_DELTA_UPPER_LIMIT;
-  final double ARM_WRIST_DELTA_SAFE_ZONE = 59.0;
-  final double EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE = 0.43; // maybe
-  final double ARM_BACKPLATE_SAFE_POSITION = 29.0; // maybe
-  final double WRIST_BACKPLATE_SAFE_POSITION = -2.5; // maybe
-  final double ARM_HORIZONTAL = -85.0; // maybe
-  final double EXTENSOR_DOWN_AND_ARM_MIGHT_CRASH_WITH_FLOOR = 0.2; // maybe
+  final double ARM_WRIST_DELTA_SAFE_ZONE = 56.0;
+  final double EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE = 0.0; // maybe
+  final double ARM_BACKPLATE_SAFE_POSITION = 15.0; // maybe
+  final double WRIST_BACKPLATE_SAFE_POSITION = -37.7; // maybe
+  final double ARM_HORIZONTAL = -119.0; // maybe
+  final double EXTENSOR_DOWN_AND_ARM_MIGHT_CRASH_WITH_FLOOR = 0.125; // maybe
+
+  boolean CANCELCOMMAND = false;
 
   /** Creates a new NewTransportGoTo. */
   public NewTransportGoTo(TransportTarget target) {
@@ -50,14 +52,19 @@ public class NewTransportGoTo extends CommandBase {
 
     addRequirements(wrist, arm, extensor);
 
+    this.target = target;
+
     wristPIDController = new PIDController(1 / (HighAltitudeConstants.WRIST_AUTO_MAX_POWER
-        * HighAltitudeConstants.WRIST_AUTO_MAX_POWER * HighAltitudeConstants.WRIST_BRAKING_DEGREES), 0, 0.05);
+        * HighAltitudeConstants.WRIST_AUTO_MAX_POWER * HighAltitudeConstants.WRIST_BRAKING_DEGREES), 0, 0.0);
+    wristPIDController.setTolerance(HighAltitudeConstants.WRIST_ARRIVE_OFFSET);
 
     armPIDController = new PIDController(1 / (HighAltitudeConstants.ARM_AUTO_MAX_POWER
-        * HighAltitudeConstants.ARM_AUTO_MAX_POWER * HighAltitudeConstants.ARM_BRAKING_DEGREES), 0, 0.1);
+        * HighAltitudeConstants.ARM_AUTO_MAX_POWER * HighAltitudeConstants.ARM_BRAKING_DEGREES), 0, 0.0);
+    armPIDController.setTolerance(HighAltitudeConstants.ARM_ARRIVE_OFFSET);
 
     extensorPIDController = new PIDController(1 / (HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER
-        * HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER * HighAltitudeConstants.EXTENSOR_BRAKING_METERS), 0, 0.025);
+        * HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER * HighAltitudeConstants.EXTENSOR_BRAKING_METERS), 0, 0.1);
+    extensorPIDController.setTolerance(HighAltitudeConstants.EXTENSOR_ARRIVE_OFFSET);
   }
 
   public NewTransportGoTo(TransportTarget target, PIDConstants wristPIDConstants, PIDConstants armPIDConstants,
@@ -70,19 +77,21 @@ public class NewTransportGoTo extends CommandBase {
     addRequirements(wrist, arm, extensor);
 
     wristPIDController = new PIDController(wristPIDConstants.kP, wristPIDConstants.kI, wristPIDConstants.kD);
+    wristPIDController.setTolerance(HighAltitudeConstants.WRIST_ARRIVE_OFFSET);
     armPIDController = new PIDController(armPIDConstants.kP, armPIDConstants.kI, armPIDConstants.kD);
+    armPIDController.setTolerance(HighAltitudeConstants.ARM_ARRIVE_OFFSET);
     wristPIDController = new PIDController(extensorPIDConstants.kP, extensorPIDConstants.kI, extensorPIDConstants.kD);
+    extensorPIDController.setTolerance(HighAltitudeConstants.EXTENSOR_ARRIVE_OFFSET);
 
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("TRANSPORTGOTOOOOO INITIALIZEEEEEEEEEEEEEEEEE");
     currentGamePieceMode = Robot.getRobotContainer().getCurrentGamePieceMode();
 
-    if ((target == TransportTarget.TOP_ROW_BACK && currentGamePieceMode == GamePieceMode.CUBE)
-        || (target == TransportTarget.MIDDLE_ROW_BACK && currentGamePieceMode == GamePieceMode.CUBE)
-        || (target == TransportTarget.TOP_ROW_FRONT)) {
+    if ((target == TransportTarget.TOP_ROW_FRONT)) {
       currentGamePieceMode = GamePieceMode.MANUAL;
     }
     switch (currentGamePieceMode) {
@@ -101,7 +110,7 @@ public class NewTransportGoTo extends CommandBase {
         wristFinalTarget = wrist.getCurrentAngle();
         armFinalTarget = arm.getCurrentAngle();
         extensorFinalTarget = extensor.getCurrentDistance();
-        super.cancel();
+        CANCELCOMMAND = true;
         break;
     }
 
@@ -129,7 +138,7 @@ public class NewTransportGoTo extends CommandBase {
     armIntoBackPlateDangerGoingDown = extensorIsUpAndNeedsToGoDown && armIsNotInSafeZone;
 
     // 2nd case: extensor needs to go up and arm needs to exceed safe angle
-    boolean extensorIsDownAndNeedsToGoUp = extensorCurrentDistance < 0.5 && extensorFinalTarget > 0.5;
+    boolean extensorIsDownAndNeedsToGoUp = extensorCurrentDistance < 0.5 && extensorFinalTarget > 0.4;
     boolean armNeedsToExceedSafeAngle = armFinalTarget > ARM_BACKPLATE_SAFE_POSITION;
     armIntoBackPlateDangerGoingUp = extensorIsDownAndNeedsToGoUp && armNeedsToExceedSafeAngle;
 
@@ -188,8 +197,8 @@ public class NewTransportGoTo extends CommandBase {
       boolean wristHasReachedSafeZone = isInAcceptedRange(wristCurrentAngle, wristCurrentTarget,
           HighAltitudeConstants.WRIST_ARRIVE_OFFSET);
 
-      if (extensorCurrentDistance > EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE && armHasReachedSafeZone
-          && wristHasReachedSafeZone) {
+      if (extensorCurrentDistance > EXTENSOR_UP_AND_ARM_MIGHT_CRASH_WITH_BACKPLATE || (armHasReachedSafeZone
+          && wristHasReachedSafeZone)) {
         armIntoBackPlateDangerGoingUp = false;
         armCurrentTarget = armFinalTarget;
         wristCurrentAngle = wristFinalTarget;
@@ -210,6 +219,7 @@ public class NewTransportGoTo extends CommandBase {
         extensorCurrentTarget = extensorFinalTarget;
       }
     }
+    // System.out.println("5. " + (wristCurrentTarget == wristFinalTarget));
 
     SmartDashboard.putBoolean("wristarmdelta", wristArmDangerous);
     SmartDashboard.putBoolean("arm to backplate going up", armIntoBackPlateDangerGoingUp);
@@ -230,7 +240,7 @@ public class NewTransportGoTo extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (currentGamePieceMode.equals(GamePieceMode.MANUAL))
+    if (currentGamePieceMode.equals(GamePieceMode.MANUAL) || CANCELCOMMAND)
       return true;
 
     boolean wristInTarget = isInAcceptedRange(wrist.getCurrentAngle(), wristFinalTarget,
@@ -246,11 +256,16 @@ public class NewTransportGoTo extends CommandBase {
   void setPIDOutputs(double wristTarget, double armTarget, double extensorTarget) {
     double wristOutput = wristPIDController.calculate(wrist.getCurrentAngle(), wristTarget);
     wristOutput = Math.clamp(wristOutput, -1.0, 1.0) * HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
-    wrist.driveWrist(wristOutput);
+    if (!isInAcceptedRange(wrist.getCurrentAngle(), wristCurrentTarget, HighAltitudeConstants.WRIST_ARRIVE_OFFSET))
+      wrist.driveWrist(wristOutput);
+    else
+      wrist.driveWrist(0);
 
     double armOutput = armPIDController.calculate(arm.getCurrentAngle(), armTarget);
     armOutput = Math.clamp(armOutput, -1.0, 1.0) * HighAltitudeConstants.ARM_AUTO_MAX_POWER;
     arm.driveArm(armOutput);
+
+    Robot.debugNumberSmartDashboard("armOut", armOutput);
 
     double extensorOutput = extensorPIDController.calculate(extensor.getCurrentDistance(), extensorTarget);
     extensorOutput = Math.clamp(extensorOutput, -1.0, 1.0) * HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
