@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 import frc.robot.subsystems.chassis.DriveTrain.WheelState;
 import frc.robot.subsystems.intake.Intake.IntakePosition;

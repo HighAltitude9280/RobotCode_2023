@@ -22,7 +22,6 @@ import frc.robot.RobotContainer.GamePieceMode;
 import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Fwd;
 import frc.robot.commands.autonomousV2.pieceHandlingPrimitives.LowerArmToIntake;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePiece;
-import frc.robot.commands.pieceHandlers.gripper.GripperIn;
 import frc.robot.commands.pieceHandlers.gripper.GripperInDontHold;
 import frc.robot.commands.pieceHandlers.gripper.GripperOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
@@ -48,29 +47,33 @@ public class SwerveAutos {
         public static Command CubeMidAndDrive;
 
         public static void generateAutos() {
-                /////// Example auto
-                List<PathPlannerTrajectory> examplePath = PathPlanner.loadPathGroup("ExamplePath",
-                                new PathConstraints(1.5, 1.0));
-
-                ////// PATHS
-                List<PathPlannerTrajectory> abcPath = PathPlanner.loadPathGroup("ABC",
-                                new PathConstraints(1.5, 1.0));
-
-                List<PathPlannerTrajectory> abPath = PathPlanner.loadPathGroup("AB",
-                                new PathConstraints(1.5, 1.0));
-
-                List<PathPlannerTrajectory> abChargingPath = PathPlanner.loadPathGroup("AB Charging",
-                                new PathConstraints(1.5, 1.0));
-
-                List<PathPlannerTrajectory> ihgPath = PathPlanner.loadPathGroup("IHG",
-                                new PathConstraints(1.5, 1.0));
-
-                List<PathPlannerTrajectory> ihPath = PathPlanner.loadPathGroup("IH",
-                                new PathConstraints(1.5, 1.0));
-
-                List<PathPlannerTrajectory> ihChargingPath = PathPlanner.loadPathGroup("IH Charging",
-                                new PathConstraints(1.5, 1.0));
-
+                /*
+                 * /////// Example auto
+                 * List<PathPlannerTrajectory> examplePath =
+                 * PathPlanner.loadPathGroup("ExamplePath",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * ////// PATHS
+                 * List<PathPlannerTrajectory> abcPath = PathPlanner.loadPathGroup("ABC",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * List<PathPlannerTrajectory> abPath = PathPlanner.loadPathGroup("AB",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * List<PathPlannerTrajectory> abChargingPath =
+                 * PathPlanner.loadPathGroup("AB Charging",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * List<PathPlannerTrajectory> ihgPath = PathPlanner.loadPathGroup("IHG",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * List<PathPlannerTrajectory> ihPath = PathPlanner.loadPathGroup("IH",
+                 * new PathConstraints(1.5, 1.0));
+                 * 
+                 * List<PathPlannerTrajectory> ihChargingPath =
+                 * PathPlanner.loadPathGroup("IH Charging",
+                 * new PathConstraints(1.5, 1.0));
+                 */
                 List<PathPlannerTrajectory> baPath = PathPlanner.loadPathGroup("BA",
                                 new PathConstraints(1.5, 1.0));
 

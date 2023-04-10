@@ -6,7 +6,6 @@ package frc.robot.commands.autonomousV2.pieceHandlingPrimitives;
 
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.pieceHandlers.gripper.GripperIn;
 import frc.robot.commands.pieceHandlers.gripper.GripperInDontHold;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.TransportGoToParallel;
