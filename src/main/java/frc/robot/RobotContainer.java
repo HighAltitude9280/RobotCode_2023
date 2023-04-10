@@ -4,30 +4,22 @@
 
 package frc.robot;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.auto.PIDConstants;
-import com.pathplanner.lib.auto.SwerveAutoBuilder;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import frc.robot.commands.autonomous.SwerveAutos;
+import frc.robot.commands.autonomousV2.SwerveAutos;
+import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Fwd;
+import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenBalance;
+import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenExitCommunity;
+import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenRest;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
+import frc.robot.commands.drivetrain.swerve.SwerveDriveDistanceFwd;
+import frc.robot.commands.drivetrain.swerve.TestSwerve;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
-import frc.robot.commands.pieceHandlers.gripper.GripperOut;
-import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
-import frc.robot.commands.transport.arm.DriveArm;
-import frc.robot.commands.transport.compound.NewTransportGoTo;
+import frc.robot.commands.transport.compound.SimultaneousArmWristMovement3;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.commands.transport.wrist.DriveWrist;
 import frc.robot.resources.components.Navx;
@@ -106,8 +98,8 @@ public class RobotContainer {
    */
   public void configureButtonBindings() {
     // driveTrain.setDefaultCommand(new DefaultDrive());
-    wrist.setDefaultCommand(new DriveWrist());
-    arm.setDefaultCommand(new DriveArm());
+    wrist.setDefaultCommand(new SimultaneousArmWristMovement3());
+    arm.setDefaultCommand(new SimultaneousArmWristMovement3());
     extensor.setDefaultCommand(new DriveExtensor());
     leds.setDefaultCommand(new DisplayGamePieceModeVariableIntensity());
     OI.getInstance().ConfigureButtonBindings();
@@ -159,6 +151,15 @@ public class RobotContainer {
     // m_chooser.addOption("Cone Only", coneThenStayStill);
     // m_chooser.addOption("Cube Only", cubeThenStayStill);
     SwerveAutos.generateAutos();
+
+    m_chooser.setDefaultOption("CubeRest", new LeavePieceThenRest(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
+    m_chooser.addOption("ConeRest", new LeavePieceThenRest(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
+    m_chooser.addOption("CubeFwd", SwerveAutos.CubeMidAndDrive);
+    m_chooser.addOption("ConeFwd",
+        new LeavePieceThenExitCommunity(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
+    m_chooser.addOption("CubeCharge", new LeavePieceThenBalance(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
+    m_chooser.addOption("ConeCharge", new LeavePieceThenBalance(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
+    m_chooser.addOption("El mamalón", SwerveAutos.LmaoAuto);
   }
 
   public void putAutoChooser() {
@@ -176,7 +177,19 @@ public class RobotContainer {
     // FasterPreloadedPieceOnly(GamePieceMode.CUBE);
     // ChargingSimple xd2 = new ChargingSimple();
     // return xd.andThen(xd2);
-    return SwerveAutos.acAuto;
+    // return new LeavePieceThenRest(GamePieceMode.CONE,
+    // TransportTarget.TOP_ROW_BACK);
+    // return new LeavePieceThenExitCommunity(GamePieceMode.CUBE,
+    // TransportTarget.TOP_ROW_BACK);
+    // return new SwerveDriveDistanceFwd(1.0, 1.5, 0.5, true);
+
+    // return new SwerveDriveDistanceFwd(1.0, 4.2, 1.0, true);
+    // return new AutoBalance2Fwd();
+
+    // return SwerveAutos.LmaoAuto;
+
+    // UNCOMMENT THE FOLLOWING LINE
+    return m_chooser.getSelected();
   }
 
   public Navx getNavx() {

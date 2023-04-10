@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.autonomous;
+package frc.robot.commands.autonomousV2;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,11 +19,14 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer.GamePieceMode;
+import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Fwd;
+import frc.robot.commands.autonomousV2.pieceHandlingPrimitives.LowerArmToIntake;
+import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePiece;
 import frc.robot.commands.pieceHandlers.gripper.GripperIn;
+import frc.robot.commands.pieceHandlers.gripper.GripperInDontHold;
 import frc.robot.commands.pieceHandlers.gripper.GripperOut;
 import frc.robot.commands.robotParameters.SetGamePieceMode;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
-import frc.robot.commands.transport.arm.DriveArmToPosition;
 import frc.robot.commands.transport.compound.NewTransportGoTo;
 
 /** Add your docs here. */
@@ -38,6 +41,11 @@ public class SwerveAutos {
         public static Command ihChargingAuto;
         public static Command baAuto;
         public static Command acAuto;
+        public static Command LmaoAuto;
+        public static Command LmaoBAAuto;
+        public static Command LmaoBAxdAuto;
+
+        public static Command CubeMidAndDrive;
 
         public static void generateAutos() {
                 /////// Example auto
@@ -45,7 +53,6 @@ public class SwerveAutos {
                                 new PathConstraints(1.5, 1.0));
 
                 ////// PATHS
-
                 List<PathPlannerTrajectory> abcPath = PathPlanner.loadPathGroup("ABC",
                                 new PathConstraints(1.5, 1.0));
 
@@ -70,6 +77,17 @@ public class SwerveAutos {
                 List<PathPlannerTrajectory> acPath = PathPlanner.loadPathGroup("AC",
                                 new PathConstraints(1.5, 1.0));
 
+                List<PathPlannerTrajectory> Lmao = PathPlanner.loadPathGroup("Lmao",
+                                new PathConstraints(0.875, 0.875));
+
+                List<PathPlannerTrajectory> LmaoBA = PathPlanner.loadPathGroup("LmaoBA",
+                                new PathConstraints(0.875, 0.75));
+                List<PathPlannerTrajectory> LmaoBAxd = PathPlanner.loadPathGroup("LmaoBAxd",
+                                new PathConstraints(0.625, 0.625));
+
+                List<PathPlannerTrajectory> leaveAndDrive = PathPlanner.loadPathGroup("CubeMidAndDrive",
+                                new PathConstraints(1.0, 0.875));
+
                 HashMap<String, Command> eventMap = new HashMap<>();
                 eventMap.put("arrive", new PrintCommand("Ahyes placing game pieces"));
 
@@ -78,21 +96,34 @@ public class SwerveAutos {
                 eventMap.put("ConeTop", new NewTransportGoTo(TransportTarget.TOP_ROW_BACK));
                 eventMap.put("ConeMid", new PrintCommand("Cone Mid"));
                 eventMap.put("ConeIntake", new NewTransportGoTo(TransportTarget.INTAKE));
+
                 // Cube
                 eventMap.put("SetCubeMode", new SetGamePieceMode(GamePieceMode.CUBE));
                 eventMap.put("CubeTop", new NewTransportGoTo(TransportTarget.TOP_ROW_BACK));
                 eventMap.put("CubeMid", new PrintCommand("Cube Mid"));
                 eventMap.put("CubeIntake", new NewTransportGoTo(TransportTarget.INTAKE));
+
+                // Transport Go To
+                eventMap.put("GoTop", new NewTransportGoTo(TransportTarget.TOP_ROW_BACK));
+                eventMap.put("GoMiddle", new NewTransportGoTo(TransportTarget.MIDDLE_ROW_BACK));
+                eventMap.put("GoIntake", new NewTransportGoTo(TransportTarget.INTAKE));
+                eventMap.put("GoRest", new NewTransportGoTo(TransportTarget.RESTING));
+
+                eventMap.put("LowerArmToIntake", new LowerArmToIntake());
                 // Gripper
-                eventMap.put("GripperIn", new GripperIn().withTimeout(0.75));
+                eventMap.put("GripperIn", new GripperInDontHold().withTimeout(0.75));
                 eventMap.put("GripperOut", new GripperOut().withTimeout(0.75));
                 eventMap.put("GripperOff", new PrintCommand("Gripper Off"));
                 // Charging
                 eventMap.put("Charging", new PrintCommand("Balancing"));
+                eventMap.put("ChargingFwd", new AutoBalance2Fwd());
+
+                eventMap.put("LeaveCubeMid", new LeavePiece(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
+                eventMap.put("LeaveConeMid", new LeavePiece(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
 
                 SwerveAutoBuilder autoBuilder = autoBuilder(
                                 eventMap,
-                                new PIDConstants(6.25, 0.0, 0.0), // translation constants
+                                new PIDConstants(0.0, 0.0, 0.0), // translation constants
                                 new PIDConstants(0.5, 0.0, 0.0), // rotation constants
                                 true);
 
@@ -105,9 +136,14 @@ public class SwerveAutos {
                 // ihgAuto = autoBuilder.fullAuto(ihgPath);
                 // ihAuto = autoBuilder.fullAuto(ihPath);
                 // ihChargingAuto = autoBuilder.fullAuto(ihChargingPath);
-                //
+
                 baAuto = autoBuilder.fullAuto(baPath);
                 acAuto = autoBuilder.fullAuto(acPath);
+
+                LmaoAuto = autoBuilder.fullAuto(Lmao);
+                LmaoBAAuto = autoBuilder.fullAuto(LmaoBA);
+                LmaoBAxdAuto = autoBuilder.fullAuto(LmaoBAxd);
+                CubeMidAndDrive = autoBuilder.fullAuto(leaveAndDrive);
         }
 
         /**

@@ -21,13 +21,14 @@ public class ToggleShouldExtensorBeLimitedManual extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.MANUAL)
+    if (Robot.getRobotContainer().getCurrentGamePieceMode() == GamePieceMode.MANUAL) {
       Robot.getRobotContainer()
           .setShouldExtensorBeLimitedManual(
               !Robot.getRobotContainer().getShouldExtensorBeSlowerInManual());
-    if (Robot.getRobotContainer().getShouldExtensorBeSlowerInManual())
-      CommandScheduler.getInstance().schedule(new FlashColor(255, 0, 0, 0.125));
-    else
-      CommandScheduler.getInstance().schedule(new FlashColor(0, 255, 0, 0.125));
+      if (Robot.getRobotContainer().getShouldExtensorBeSlowerInManual())
+        CommandScheduler.getInstance().schedule(new FlashColor(255, 0, 0, 0.125));
+      else
+        CommandScheduler.getInstance().schedule(new FlashColor(0, 255, 0, 0.125));
+    }
   }
 }

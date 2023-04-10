@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.chassis.DriveTrain.TransmissionMode;
 import frc.robot.subsystems.chassis.DriveTrain.WheelState;
 import frc.robot.subsystems.intake.Intake.IntakePosition;
@@ -59,8 +60,8 @@ public final class HighAltitudeConstants {
         // Arbitrary. Higher numbers will cause the swerve to react more violently to
         // joysitck inputs and may not be ideal. Lower numbers will cause the swerve to
         // have a very slow reaction to joystick inputs, and may not be ideal.
-        public static final double SWERVE_MAX_ACCELERATION_UNITS_PER_SECOND = 5.0;
-        public static final double SWERVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 5.0;
+        public static final double SWERVE_MAX_ACCELERATION_UNITS_PER_SECOND = 4.0;
+        public static final double SWERVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 4.0;
 
         // Other
 
@@ -97,6 +98,7 @@ public final class HighAltitudeConstants {
 
         // Constant for L3 Configuration
         public static final double SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND = 18 * 12 * 0.0254;
+
         // Arbitrary to make controlling the swerve easier in teleop
         public static final double SWERVE_DRIVE_TELEOP_MAX_SPEED_METERS_PER_SECOND = SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND
                         / 2;
@@ -287,8 +289,8 @@ public final class HighAltitudeConstants {
         public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999; // -43.34
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
 
-        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 111.36;
-        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -43.34;
+        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 153.0;
+        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -31.0;
 
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
@@ -376,9 +378,9 @@ public final class HighAltitudeConstants {
 
         ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 5.37;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 0.0;
         public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.567;
-        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 29.5;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 35.28;
 
         ////////// MIDDLE ROW - BACK
 
@@ -394,9 +396,9 @@ public final class HighAltitudeConstants {
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -185.5;
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.018;
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -71.14;
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -172.06; // -197.44
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.018; // 0.018
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -83.04; // -77.14
 
         ////////// BOTTOM ROW
         /*
@@ -407,9 +409,9 @@ public final class HighAltitudeConstants {
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = -137.44;
-        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.523;
-        public static final double ARM_FEEDER_DEGREES_CONE = -155.36;
+        public static final double WRIST_FEEDER_DEGREES_CONE = -187.28; // -142.9 //-142.9
+        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.209; // 0.52 //0.01
+        public static final double ARM_FEEDER_DEGREES_CONE = -75.8; // -159.02 //-59.39
 
         ////////// GRAB FROM INTAKE
         public static final double WRIST_INTAKE_DEGREES_CONE = -247.13;
@@ -419,7 +421,7 @@ public final class HighAltitudeConstants {
         //////////// POSITION TO GRAB FROM FLOOR
         public static final double WRIST_FLOOR_DEGREES_CONE = -251.27;
         public static final double EXTENSOR_FLOOR_METERS_CONE = 0.289;
-        public static final double ARM_FLOOR_DEGREES_CONE = -147.17;
+        public static final double ARM_FLOOR_DEGREES_CONE = -152.17;
 
         ///////// RESTING
         public static final double WRIST_REST_DEGREES_CONE = 0.0; // -274.65
@@ -435,9 +437,9 @@ public final class HighAltitudeConstants {
         public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 43.8;
 
         ////////// MIDDLE ROW - BACK
-        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 71.0;
-        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.338;
-        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 55.7;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 70.36;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.29;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 50.6;
 
         ////////// TOP ROW - FRONT
 
@@ -447,9 +449,9 @@ public final class HighAltitudeConstants {
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.0;
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = -109.87;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.017;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = -90.07;
 
         ////////// BOTTOM ROW
         /*
@@ -459,9 +461,9 @@ public final class HighAltitudeConstants {
          */
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CUBE = 0.0;
-        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.0;
-        public static final double ARM_FEEDER_DEGREES_CUBE = 0.0;
+        public static final double WRIST_FEEDER_DEGREES_CUBE = -146.16;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.018;
+        public static final double ARM_FEEDER_DEGREES_CUBE = -57.22;
 
         ////////// GRAB FROM INTAKE
 
@@ -472,13 +474,13 @@ public final class HighAltitudeConstants {
         ///////// POSITION TO GRAB FROM FLOOR
 
         public static final double WRIST_FLOOR_DEGREES_CUBE = -148.9;
-        public static final double EXTENSOR_FLOOR_DEGREES_CUBE = 0.011;
+        public static final double EXTENSOR_FLOOR_METERS_CUBE = 0.011;
         public static final double ARM_FLOOR_DEGREES_CUBE = -158.97;
 
         ///////// RESTING
-        public static final double WRIST_REST_DEGREES_CUBE = -214.2; // -214.2
-        public static final double EXTENSOR_REST_METERS_CUBE = 0.43; // 0.43
-        public static final double ARM_REST_DEGREES_CUBE = -155.22; // -155.22
+        public static final double WRIST_REST_DEGREES_CUBE = 0.0; // -214.2
+        public static final double EXTENSOR_REST_METERS_CUBE = 0.0; // 0.43
+        public static final double ARM_REST_DEGREES_CUBE = 0.0; // -155.22
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
 

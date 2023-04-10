@@ -6,8 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.server.PathPlannerServer;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -41,7 +41,7 @@ public class Robot extends TimedRobot {
     getRobotContainer().configureButtonBindings();
 
     getRobotContainer().generateAutos();
-    PathPlannerServer.startServer(5811);
+    // PathPlannerServer.startServer(5811);
   }
 
   /**
@@ -71,8 +71,12 @@ public class Robot extends TimedRobot {
         getRobotContainer().getCurrentGamePieceMode().toString());
     debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
     debugBooleanSmartDashboard("ManualLimits?", getRobotContainer().getShouldManualHaveLimits());
-    SmartDashboard.putData(getRobotContainer().getSwerveDriveTrain());
-    SmartDashboard.putData(getRobotContainer().getArm());
+    // SmartDashboard.putData(getRobotContainer().getSwerveDriveTrain());
+    // SmartDashboard.putData(getRobotContainer().getArm());
+
+    SmartDashboard.putNumber("Roll", getRobotContainer().getNavx().getRoll());
+    SmartDashboard.putNumber("Roll Velocity", getRobotContainer().getNavx().getYVel());
+    SmartDashboard.putNumber("Roll Acceleration", getRobotContainer().getNavx().getAngularAccelerationRoll());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -93,9 +97,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(true);
+    // getRobotContainer().getSwerveDriveTrain().resetPose(new Pose2d());
     m_autonomousCommand = robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
+    // schedule the autonomous comand (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
@@ -127,7 +132,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopExit() {
-    getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
+    // UNCOMMENT FOR COAST
+    // getRobotContainer().getSwerveDriveTrain().setModulesBrakeMode(false);
     // Only time the modules will be in brake is when exiting teleop
   }
 

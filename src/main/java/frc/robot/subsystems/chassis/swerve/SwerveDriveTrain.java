@@ -135,10 +135,10 @@ public class SwerveDriveTrain extends SubsystemBase {
   }
 
   public void setModulesInXPosition() {
-    frontLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-    frontRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    backLeft.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    backRight.setState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontLeft.setStateRegardlessOfSpeed(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    frontRight.setStateRegardlessOfSpeed(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    backLeft.setStateRegardlessOfSpeed(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    backRight.setStateRegardlessOfSpeed(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
   }
 
   public void recalculateModuleDirections() {

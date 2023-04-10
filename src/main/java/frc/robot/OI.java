@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.RobotContainer.GamePieceMode;
+import frc.robot.commands.drivetrain.swerve.SwerveSetX;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.RecalculateWheelDirection;
 import frc.robot.commands.drivetrain.swerve.swerveParameters.ToggleIsFieldOriented;
 import frc.robot.commands.pieceHandlers.gripper.GripperIn;
@@ -79,6 +80,7 @@ public class OI {
             chassis.onTrue(ButtonType.START, new ResetNavx());
             chassis.onTrue(ButtonType.BACK, new RecalculateWheelDirection());
             chassis.onTrue(ButtonType.LB, new ToggleIsFieldOriented());
+            chassis.toggleOnTrue(ButtonType.X, new SwerveSetX());
 
             // copilot.onTrue(ButtonType.A, new DrivetrainToggleTransmissionMode()); //
             // COPILOT
@@ -155,19 +157,19 @@ public class OI {
     }
 
     public double getWristInput() {
-        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getPovXAxis() * 0.125
-                : subsystems.getPovXAxis() * 0.25;
+        return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getPovXAxis() * 0.09
+                : subsystems.getPovXAxis() * 0.1875;
     }
 
     public double getArmInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual()
                 ? -subsystems.getAxis(AxisType.RIGHT_Y) * 0.25
-                : -subsystems.getAxis(AxisType.RIGHT_Y) * 0.5;
+                : -subsystems.getAxis(AxisType.RIGHT_Y) * 0.375;
     }
 
     public double getExtensorInput() {
         return Robot.getRobotContainer().getShouldExtensorBeSlowerInManual() ? subsystems.getTriggers() * 0.25
-                : subsystems.getTriggers() * 0.875;
+                : subsystems.getTriggers() * 1.0;
     }
 
     public HighAltitudeJoystick getSubsystems() {

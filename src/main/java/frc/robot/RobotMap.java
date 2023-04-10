@@ -22,7 +22,7 @@ public class RobotMap {
         public static final boolean SWERVE_FRONT_LEFT_DIRECTION_MOTOR_INVERTED = true; // false // false
         public static final boolean SWERVE_FRONT_LEFT_DIRECTION_ENCODER_INVERTED = false; // false // true
         // TALON ENCODER
-        public static final int SWERVE_FRONT_LEFT_ENCODED_TALON_PORT = 3;
+        public static final int SWERVE_FRONT_LEFT_ENCODED_TALON_PORT = 6;
         public static final double SWERVE_FRONT_LEFT_DIRECTION_ENCODER_OFFSET_PULSES = 1657; // 1679
         public static final boolean SWERVE_FRONT_LEFT_ENCODED_TALON_INVERTED = false; // true
 
@@ -38,7 +38,7 @@ public class RobotMap {
         public static final boolean SWERVE_FRONT_RIGHT_DIRECTION_MOTOR_INVERTED = true; // false // false
         public static final boolean SWERVE_FRONT_RIGHT_DIRECTION_ENCODER_INVERTED = false; // false // true
         // TALON ENCODER
-        public static final int SWERVE_FRONT_RIGHT_ENCODED_TALON_PORT = 6;
+        public static final int SWERVE_FRONT_RIGHT_ENCODED_TALON_PORT = 9;
         public static final double SWERVE_FRONT_RIGHT_DIRECTION_ENCODER_OFFSET_PULSES = 124;
         public static final boolean SWERVE_FRONT_RIGHT_ENCODED_TALON_INVERTED = false; // true
 
@@ -54,7 +54,7 @@ public class RobotMap {
         public static final boolean SWERVE_BACK_LEFT_DIRECTION_MOTOR_INVERTED = true; // false //false
         public static final boolean SWERVE_BACK_LEFT_DIRECTION_ENCODER_INVERTED = false; // false // true
         // TALON ENCODER
-        public static final int SWERVE_BACK_LEFT_ENCODED_TALON_PORT = 9;
+        public static final int SWERVE_BACK_LEFT_ENCODED_TALON_PORT = 3;
         public static final double SWERVE_BACK_LEFT_DIRECTION_ENCODER_OFFSET_PULSES = 3933;
         public static final boolean SWERVE_BACK_LEFT_ENCODED_TALON_INVERTED = false; // true
 

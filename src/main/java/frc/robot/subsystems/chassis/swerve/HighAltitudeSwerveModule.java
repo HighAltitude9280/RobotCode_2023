@@ -47,7 +47,7 @@ public class HighAltitudeSwerveModule {
         directionMotor.setBrakeMode(false);
         this.isDirectionEncoderReversed = isDirectionEncoderReversed;
 
-        directionPIDController = new PIDController(HighAltitudeConstants.SWERVE_DIRECTION_KP, 0, 0);
+        directionPIDController = new PIDController(HighAltitudeConstants.SWERVE_DIRECTION_KP, 0.025, 0.0);
         directionPIDController.enableContinuousInput(-Math.PI, Math.PI);
 
         absoluteEncoderController = new TalonSRX(encodedTalonPort);
@@ -139,6 +139,12 @@ public class HighAltitudeSwerveModule {
             return;
         }
 
+        state = SwerveModuleState.optimize(state, getState().angle);
+        driveMotor.set(state.speedMetersPerSecond / HighAltitudeConstants.SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND);
+        directionMotor.set(directionPIDController.calculate(getDirection(), state.angle.getRadians()));
+    }
+
+    public void setStateRegardlessOfSpeed(SwerveModuleState state) {
         state = SwerveModuleState.optimize(state, getState().angle);
         driveMotor.set(state.speedMetersPerSecond / HighAltitudeConstants.SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND);
         directionMotor.set(directionPIDController.calculate(getDirection(), state.angle.getRadians()));

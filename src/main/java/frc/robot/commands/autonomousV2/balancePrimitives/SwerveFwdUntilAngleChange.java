@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.drivetrain.swerve.balance;
+package frc.robot.commands.autonomousV2.balancePrimitives;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -11,18 +11,29 @@ import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
 import frc.robot.subsystems.chassis.swerve.SwerveDriveTrain;
 
-public class SwerveWaitForFall extends CommandBase {
+public class SwerveFwdUntilAngleChange extends CommandBase {
   SwerveDriveTrain swerveDriveTrain;
 
   ChassisSpeeds chassisSpeeds;
 
-  double currentRollVel;
+  double currentRoll;
   double currentYawFromOdometry;
 
+  double kP_Angular = 1.0 / 180.0;
   double vx;
+  double kAngleThreshold = HighAltitudeConstants.BALANCING_ANGLE_THRESHOLD;
 
-  /** Creates a new SwerveWaitForFall. */
-  public SwerveWaitForFall(double vx) {
+  /** Creates a new SwerveFwdUntilAngleChange. */
+  public SwerveFwdUntilAngleChange(double vx, double kAngleThreshold) {
+    this.vx = vx;
+    this.kAngleThreshold = kAngleThreshold;
+    swerveDriveTrain = Robot.getRobotContainer().getSwerveDriveTrain();
+    addRequirements(swerveDriveTrain);
+    // Use addRequirements() here to declare subsystem dependencies.
+  }
+
+  /** Creates a new SwerveFwdUntilAngleChange. */
+  public SwerveFwdUntilAngleChange(double vx) {
     this.vx = vx;
     swerveDriveTrain = Robot.getRobotContainer().getSwerveDriveTrain();
     addRequirements(swerveDriveTrain);
@@ -38,26 +49,28 @@ public class SwerveWaitForFall extends CommandBase {
   @Override
   public void execute() {
     updateAngles();
+    double yawError = 0 - currentYawFromOdometry;
+    double chassisAngVel = yawError * kP_Angular;
 
-    chassisSpeeds = new ChassisSpeeds(vx, 0, 0);
+    chassisSpeeds = new ChassisSpeeds(vx, 0, chassisAngVel);
     SwerveModuleState[] moduleStates = HighAltitudeConstants.SWERVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
     swerveDriveTrain.setModuleStates(moduleStates);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    swerveDriveTrain.setModulesInXPosition();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(currentRollVel) > HighAltitudeConstants.BALANCING_SPEED_THRESHOLD;
+    return (Math.abs(currentRoll) > kAngleThreshold);
   }
 
   void updateAngles() {
-    currentRollVel = Robot.getRobotContainer().getNavx().getYVel();
+    currentRoll = Robot.getRobotContainer().getNavx().getRoll();
     currentYawFromOdometry = swerveDriveTrain.getPose().getRotation().getDegrees();
   }
 }

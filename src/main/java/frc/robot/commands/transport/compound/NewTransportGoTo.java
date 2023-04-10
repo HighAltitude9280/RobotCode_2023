@@ -44,6 +44,10 @@ public class NewTransportGoTo extends CommandBase {
 
   boolean CANCELCOMMAND = false;
 
+  double wristMaxPower = HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
+  double armMaxPower = HighAltitudeConstants.ARM_AUTO_MAX_POWER;
+  double extensorMaxPower = HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
+
   /** Creates a new NewTransportGoTo. */
   public NewTransportGoTo(TransportTarget target) {
     wrist = Robot.getRobotContainer().getWrist();
@@ -67,13 +71,16 @@ public class NewTransportGoTo extends CommandBase {
     extensorPIDController.setTolerance(HighAltitudeConstants.EXTENSOR_ARRIVE_OFFSET);
   }
 
-  public NewTransportGoTo(TransportTarget target, PIDConstants wristPIDConstants, PIDConstants armPIDConstants,
-      PIDConstants extensorPIDConstants) {
+  public NewTransportGoTo(TransportTarget target, PIDConstants wristPIDConstants, double wristMaxPower,
+      PIDConstants armPIDConstants, double armMaxPower, PIDConstants extensorPIDConstants, double extensorMaxPower) {
 
     wrist = Robot.getRobotContainer().getWrist();
     arm = Robot.getRobotContainer().getArm();
     extensor = Robot.getRobotContainer().getExtensor();
 
+    this.wristMaxPower = wristMaxPower;
+    this.armMaxPower = armMaxPower;
+    this.extensorMaxPower = extensorMaxPower;
     addRequirements(wrist, arm, extensor);
 
     wristPIDController = new PIDController(wristPIDConstants.kP, wristPIDConstants.kI, wristPIDConstants.kD);
@@ -221,7 +228,7 @@ public class NewTransportGoTo extends CommandBase {
     }
     // System.out.println("5. " + (wristCurrentTarget == wristFinalTarget));
 
-    SmartDashboard.putBoolean("wristarmdelta", wristArmDangerous);
+    SmartDashboard.putBoolean("wristarmdanger", wristArmDangerous);
     SmartDashboard.putBoolean("arm to backplate going up", armIntoBackPlateDangerGoingUp);
     SmartDashboard.putBoolean("arm to backplate going down", armIntoBackPlateDangerGoingDown);
     SmartDashboard.putBoolean("armIntoFloorGoingUp", armIntoFloorDangerGoingUp);
@@ -255,20 +262,18 @@ public class NewTransportGoTo extends CommandBase {
 
   void setPIDOutputs(double wristTarget, double armTarget, double extensorTarget) {
     double wristOutput = wristPIDController.calculate(wrist.getCurrentAngle(), wristTarget);
-    wristOutput = Math.clamp(wristOutput, -1.0, 1.0) * HighAltitudeConstants.WRIST_AUTO_MAX_POWER;
+    wristOutput = Math.clamp(wristOutput, -1.0, 1.0) * wristMaxPower;
     if (!isInAcceptedRange(wrist.getCurrentAngle(), wristCurrentTarget, HighAltitudeConstants.WRIST_ARRIVE_OFFSET))
       wrist.driveWrist(wristOutput);
     else
       wrist.driveWrist(0);
 
     double armOutput = armPIDController.calculate(arm.getCurrentAngle(), armTarget);
-    armOutput = Math.clamp(armOutput, -1.0, 1.0) * HighAltitudeConstants.ARM_AUTO_MAX_POWER;
+    armOutput = Math.clamp(armOutput, -1.0, 1.0) * armMaxPower;
     arm.driveArm(armOutput);
 
-    Robot.debugNumberSmartDashboard("armOut", armOutput);
-
     double extensorOutput = extensorPIDController.calculate(extensor.getCurrentDistance(), extensorTarget);
-    extensorOutput = Math.clamp(extensorOutput, -1.0, 1.0) * HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER;
+    extensorOutput = Math.clamp(extensorOutput, -1.0, 1.0) * extensorMaxPower;
     extensor.driveExtensor(extensorOutput);
   }
 

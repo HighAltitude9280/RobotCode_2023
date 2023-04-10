@@ -65,25 +65,17 @@ public class DefaultSwerveDrive extends CommandBase {
     swerveDriveTrain.setModuleStates(moduleStates);
 
     // 6. Print for debugging
-    SmartDashboard.putNumber("processed speed", speed);
-    SmartDashboard.putNumber("processed strafe", strafe);
-    SmartDashboard.putNumber("processed turn", turn);
-    SmartDashboard.putNumber("FrontLeftSpeed",
-        moduleStates[0].speedMetersPerSecond);
-    SmartDashboard.putNumber("FrontLeftAngle",
-        moduleStates[0].angle.getDegrees());
-    SmartDashboard.putNumber("FrontRightSpeed",
-        moduleStates[1].speedMetersPerSecond);
-    SmartDashboard.putNumber("FrontRightAngle",
-        moduleStates[1].angle.getDegrees());
-    SmartDashboard.putNumber("BackLeftSpeed",
-        moduleStates[2].speedMetersPerSecond);
-    SmartDashboard.putNumber("BackLeftAngle",
-        moduleStates[2].angle.getDegrees());
-    SmartDashboard.putNumber("BackRightSpeed",
-        moduleStates[3].speedMetersPerSecond);
-    SmartDashboard.putNumber("BackRightAngle",
-        moduleStates[3].angle.getDegrees());
+    Robot.debugNumberSmartDashboard("processed speed", speed);
+    Robot.debugNumberSmartDashboard("processed strafe", strafe);
+    Robot.debugNumberSmartDashboard("processed turn", turn);
+    Robot.debugNumberSmartDashboard("FrontLeftSpeed", moduleStates[0].speedMetersPerSecond);
+    Robot.debugNumberSmartDashboard("FrontLeftAngle", moduleStates[0].angle.getDegrees());
+    Robot.debugNumberSmartDashboard("FrontRightSpeed", moduleStates[1].speedMetersPerSecond);
+    Robot.debugNumberSmartDashboard("FrontRightAngle", moduleStates[1].angle.getDegrees());
+    Robot.debugNumberSmartDashboard("BackLeftSpeed", moduleStates[2].speedMetersPerSecond);
+    Robot.debugNumberSmartDashboard("BackLeftAngle", moduleStates[2].angle.getDegrees());
+    Robot.debugNumberSmartDashboard("BackRightSpeed", moduleStates[3].speedMetersPerSecond);
+    Robot.debugNumberSmartDashboard("BackRightAngle", moduleStates[3].angle.getDegrees());
   }
 
   // Called once the command ends or is interrupted.

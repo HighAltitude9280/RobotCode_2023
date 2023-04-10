@@ -191,13 +191,13 @@ public class OldHighAltitudePWMLEDStrip {
         // Change the coefficent of absoluteMagnitude to 100 for 100% flame intensity
         // when full joystick power. Turn down for less intensity in full joystick
         // power.
-        sparking = (int) (absoluteMagnitude * 80);
+        sparking = (int) (absoluteMagnitude * 50);
 
         // Step 1. Cool down every cell a little
         // The second parameter in cooldown definition is changeable
 
         for (int i = 0; i < length; i++) {
-            cooldown = Math.randomInt(0, ((cooling * 10) / length));
+            cooldown = Math.randomInt(0, ((cooling * 10) / length * 2));
             if (cooldown > heat[i] || heat[i] > 255) {
                 heat[i] %= 255;
             } else {
@@ -217,15 +217,15 @@ public class OldHighAltitudePWMLEDStrip {
         // randomLed picks one in the bottom to be a new spark. Change the second
         // parameter of its definition to increase or decrease the length of the
         // 'bottom'.
-        // Currently, the 'bottom' is a fifth of the strip.
+        // Currently, the 'bottom' is a fifth of the strip. Now a sixth haha
 
         // sparkIntensity non-surprisingly defines the intensity of the new spark
         // created in the randomLed
         // The clamp prevents it from going over, because if the value of randomLed is
         // something like 258, then the displayed intensity will be 258%255 = 3
 
-        int randomLed = Math.randomInt(0, length / 5);
-        int sparkIntensity = Math.randomInt(155 + sparking, 255);
+        int randomLed = Math.randomInt(0, length / 6);
+        int sparkIntensity = Math.randomInt(58 + sparking, 255);
         heat[randomLed] = (int) Math.clamp(heat[randomLed] + sparkIntensity, 0, 255);
 
         // Step 4. Convert heat to LED colors
@@ -233,7 +233,7 @@ public class OldHighAltitudePWMLEDStrip {
 
         for (int j = 0; j < length; j++) {
             if (!inverted)
-                buffer.setHSV(j + offset, hue, 255 - (heat[j] / 3), heat[j]);
+                buffer.setHSV(j + offset, hue, 255 - (heat[j] / 3), (int) (heat[j] * 0.5));
             else {
                 // System.out.println(offset + length - 1 - j);
                 buffer.setHSV(offset + length - 1 - j, hue, 255 - (heat[j] / 3), (int) (heat[j] * 0.5));

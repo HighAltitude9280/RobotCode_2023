@@ -68,6 +68,12 @@ public class TransportTargets {
         HighAltitudeConstants.WRIST_FEEDER_DEGREES_CONE, HighAltitudeConstants.EXTENSOR_FEEDER_METERS_CUBE,
         HighAltitudeConstants.ARM_FEEDER_DEGREES_CUBE, HighAltitudeConstants.WRIST_FEEDER_DEGREES_CUBE,
         HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER, HighAltitudeConstants.ARM_AUTO_MAX_POWER,
+        HighAltitudeConstants.WRIST_AUTO_MAX_POWER),
+
+    FLOOR(HighAltitudeConstants.EXTENSOR_FLOOR_METERS_CONE, HighAltitudeConstants.ARM_FLOOR_DEGREES_CONE,
+        HighAltitudeConstants.WRIST_FLOOR_DEGREES_CONE, HighAltitudeConstants.EXTENSOR_FLOOR_METERS_CUBE,
+        HighAltitudeConstants.ARM_FLOOR_DEGREES_CUBE, HighAltitudeConstants.WRIST_FLOOR_DEGREES_CUBE,
+        HighAltitudeConstants.EXTENSOR_AUTO_MAX_POWER, HighAltitudeConstants.ARM_AUTO_MAX_POWER,
         HighAltitudeConstants.WRIST_AUTO_MAX_POWER);
 
     private double extensorTargetCone, armTargetCone, wristTargetCone;
