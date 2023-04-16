@@ -9,13 +9,22 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
 import frc.robot.commands.autonomousV2.SwerveAutos;
+import frc.robot.commands.autonomousV2.SwerveAutos2;
+import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Fwd;
+import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePiece;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenBalance;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenExitCommunity;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenRest;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
+import frc.robot.commands.drivetrain.swerve.SwerveDriveAsTank;
+import frc.robot.commands.drivetrain.swerve.SwerveDriveDistanceFwd;
+import frc.robot.commands.drivetrain.swerve.swerveParameters.ResetOdometryZeros;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
+import frc.robot.commands.transport.compound.NewTransportGoTo;
 import frc.robot.commands.transport.compound.SimultaneousArmWristMovement3;
 import frc.robot.commands.transport.extensor.DriveExtensor;
 import frc.robot.resources.components.Navx;
@@ -80,7 +89,7 @@ public class RobotContainer {
     // intake = new Intake();
 
     limeLightVision = new LimeLightVision();
-    driverCameras = new DriverCameras();
+    // driverCameras = new DriverCameras();
     leds = new LEDs();
   }
 
@@ -102,7 +111,8 @@ public class RobotContainer {
 
     gripper.setDefaultCommand(new DriveGripper());
 
-    swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
+    // swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
+    swerveDriveTrain.setDefaultCommand(new SwerveDriveAsTank());
   }
 
   public void generateAutos() {
@@ -147,6 +157,7 @@ public class RobotContainer {
     // m_chooser.addOption("Cone Only", coneThenStayStill);
     // m_chooser.addOption("Cube Only", cubeThenStayStill);
     SwerveAutos.generateAutos();
+    SwerveAutos2.generateAutos();
 
     m_chooser.setDefaultOption("CubeRest", new LeavePieceThenRest(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
     m_chooser.addOption("ConeRest", new LeavePieceThenRest(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
@@ -184,8 +195,16 @@ public class RobotContainer {
 
     // return SwerveAutos.LmaoAuto;
 
+    // return new DoNothing();
+    // JALO return new ResetOdometryZeros().andThen(new SwerveDriveDistanceFwd(1.0,
+    // 3.0, 0.05, true));
+
+    // return SwerveAutos2.twoPieceFreeAuto;
+    Command auto = new LeavePiece(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK)
+        .andThen(Commands.parallel(new AutoBalance2Fwd(), new NewTransportGoTo(TransportTarget.RESTING)));
+    return auto;
     // UNCOMMENT THE FOLLOWING LINE
-    return m_chooser.getSelected();
+    // return m_chooser.getSelected();
   }
 
   public Navx getNavx() {

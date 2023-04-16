@@ -30,7 +30,11 @@ public class OI {
     public void ConfigureButtonBindings() {
         subsystems = new HighAltitudeJoystick(0, JoystickType.XBOX);
         chassis = new HighAltitudeJoystick(1, JoystickType.XBOX);
-
+        /*
+         * chassis.setAxisDeadzone(AxisType.LEFT_X, 0.05);
+         * chassis.setAxisDeadzone(AxisType.LEFT_Y, 0.05);
+         * chassis.setAxisDeadzone(AxisType.RIGHT_X, 0.05);
+         */
         // pit = new HighAltitudeJoystick(2, 12, 4); // Logitech Extreme 3D Pro
 
         subsystems.onTrue(ButtonType.START, new SetGamePieceMode(GamePieceMode.CONE));

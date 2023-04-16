@@ -1,0 +1,114 @@
+{
+  "waypoints": [
+    {
+      "anchorPoint": {
+        "x": 1.7955882065610285,
+        "y": 4.430637237342851
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.0174391972715573,
+        "y": 4.624763095680038
+      },
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "SetCubeMode",
+          "GoMiddleBack",
+          "GripperOut"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 6.7515071782280325,
+        "y": 4.58
+      },
+      "prevControl": {
+        "x": 4.650380240931422,
+        "y": 4.6142575044124445
+      },
+      "nextControl": {
+        "x": 4.650380240931422,
+        "y": 4.6142575044124445
+      },
+      "holonomicAngle": 0.0,
+      "isReversal": true,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [],
+        "executionBehavior": "parallel",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    },
+    {
+      "anchorPoint": {
+        "x": 1.78,
+        "y": 5.05
+      },
+      "prevControl": {
+        "x": 2.088317539711999,
+        "y": 5.0899670884811865
+      },
+      "nextControl": null,
+      "holonomicAngle": 0,
+      "isReversal": false,
+      "velOverride": null,
+      "isLocked": false,
+      "isStopPoint": false,
+      "stopEvent": {
+        "names": [
+          "GripperOut"
+        ],
+        "executionBehavior": "sequential",
+        "waitBehavior": "none",
+        "waitTime": 0
+      }
+    }
+  ],
+  "maxVelocity": 1.0,
+  "maxAcceleration": 1.25,
+  "isReversed": null,
+  "markers": [
+    {
+      "position": 0.043636363636361156,
+      "names": [
+        "SetConeMode"
+      ]
+    },
+    {
+      "position": 0.06,
+      "names": [
+        "GoIntake"
+      ]
+    },
+    {
+      "position": 0.8799999999999852,
+      "names": [
+        "GripperIn"
+      ]
+    },
+    {
+      "position": 1.0099999999999998,
+      "names": [
+        "GoMiddleBack"
+      ]
+    },
+    {
+      "position": 1.0199999999999996,
+      "names": [
+        "GripperHold"
+      ]
+    }
+  ]
+}

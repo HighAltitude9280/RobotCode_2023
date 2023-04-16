@@ -18,7 +18,6 @@ public class GripperHold extends CommandBase {
   public GripperHold() {
     gripper = Robot.getRobotContainer().getGripper();
     addRequirements(gripper);
-    currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,6 +29,7 @@ public class GripperHold extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    currentMode = Robot.getRobotContainer().getCurrentGamePieceMode();
     switch (currentMode) {
       case CONE:
         gripper.driveGripper(HighAltitudeConstants.GRIPPER_CONE_HOLD_SPEED);

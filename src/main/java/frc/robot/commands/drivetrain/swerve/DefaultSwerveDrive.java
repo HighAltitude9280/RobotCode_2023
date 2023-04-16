@@ -7,7 +7,6 @@ package frc.robot.commands.drivetrain.swerve;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.OI;
@@ -55,7 +54,7 @@ public class DefaultSwerveDrive extends CommandBase {
     ChassisSpeeds chassisSpeeds;
     if (swerveDriveTrain.getIsFieldOriented()) {
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(speed, strafe, turn,
-          swerveDriveTrain.getRotation2dCCWPositive());
+          swerveDriveTrain.getPose().getRotation());
     } else {
       chassisSpeeds = new ChassisSpeeds(speed, strafe, turn);
     }
@@ -65,17 +64,25 @@ public class DefaultSwerveDrive extends CommandBase {
     swerveDriveTrain.setModuleStates(moduleStates);
 
     // 6. Print for debugging
-    Robot.debugNumberSmartDashboard("processed speed", speed);
-    Robot.debugNumberSmartDashboard("processed strafe", strafe);
-    Robot.debugNumberSmartDashboard("processed turn", turn);
-    Robot.debugNumberSmartDashboard("FrontLeftSpeed", moduleStates[0].speedMetersPerSecond);
-    Robot.debugNumberSmartDashboard("FrontLeftAngle", moduleStates[0].angle.getDegrees());
-    Robot.debugNumberSmartDashboard("FrontRightSpeed", moduleStates[1].speedMetersPerSecond);
-    Robot.debugNumberSmartDashboard("FrontRightAngle", moduleStates[1].angle.getDegrees());
-    Robot.debugNumberSmartDashboard("BackLeftSpeed", moduleStates[2].speedMetersPerSecond);
-    Robot.debugNumberSmartDashboard("BackLeftAngle", moduleStates[2].angle.getDegrees());
-    Robot.debugNumberSmartDashboard("BackRightSpeed", moduleStates[3].speedMetersPerSecond);
-    Robot.debugNumberSmartDashboard("BackRightAngle", moduleStates[3].angle.getDegrees());
+    // Robot.debugNumberSmartDashboard("processed speed", speed);
+    // Robot.debugNumberSmartDashboard("processed strafe", strafe);
+    // Robot.debugNumberSmartDashboard("processed turn", turn);
+    // Robot.debugNumberSmartDashboard("FrontLeftSpeed",
+    // moduleStates[0].speedMetersPerSecond);
+    // Robot.debugNumberSmartDashboard("FrontLeftAngle",
+    // moduleStates[0].angle.getDegrees());
+    // Robot.debugNumberSmartDashboard("FrontRightSpeed",
+    // moduleStates[1].speedMetersPerSecond);
+    // Robot.debugNumberSmartDashboard("FrontRightAngle",
+    // moduleStates[1].angle.getDegrees());
+    // Robot.debugNumberSmartDashboard("BackLeftSpeed",
+    // moduleStates[2].speedMetersPerSecond);
+    // Robot.debugNumberSmartDashboard("BackLeftAngle",
+    // moduleStates[2].angle.getDegrees());
+    // Robot.debugNumberSmartDashboard("BackRightSpeed",
+    // moduleStates[3].speedMetersPerSecond);
+    // Robot.debugNumberSmartDashboard("BackRightAngle",
+    // moduleStates[3].angle.getDegrees());
   }
 
   // Called once the command ends or is interrupted.

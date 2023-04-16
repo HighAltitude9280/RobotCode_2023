@@ -30,7 +30,7 @@ public final class HighAltitudeConstants {
 
         public static final boolean SINGLE_DRIVER = false;
 
-        public static final boolean USING_VISION_FOR_POSE = true;
+        public static final boolean USING_VISION_FOR_POSE = false;
 
         ////////////////////////// SWERVE //////////////////////////
 
@@ -59,8 +59,8 @@ public final class HighAltitudeConstants {
         // Arbitrary. Higher numbers will cause the swerve to react more violently to
         // joysitck inputs and may not be ideal. Lower numbers will cause the swerve to
         // have a very slow reaction to joystick inputs, and may not be ideal.
-        public static final double SWERVE_MAX_ACCELERATION_UNITS_PER_SECOND = 4.0;
-        public static final double SWERVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 4.0;
+        public static final double SWERVE_MAX_ACCELERATION_UNITS_PER_SECOND = 5.0;
+        public static final double SWERVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 5.0;
 
         // Other
 
@@ -100,7 +100,7 @@ public final class HighAltitudeConstants {
 
         // Arbitrary to make controlling the swerve easier in teleop
         public static final double SWERVE_DRIVE_TELEOP_MAX_SPEED_METERS_PER_SECOND = SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND
-                        / 2;
+                        * 0.6;
 
         /////////// DIRECTION MOTOR
 
@@ -124,7 +124,7 @@ public final class HighAltitudeConstants {
                         * SWERVE_DIRECTION_RADIANS_PER_PULSE)
                         / SWERVE_DIRECTION_VELOCITY_SAMPLE_RATE_MS;
 
-        public static final double SWERVE_DIRECTION_TELEOP_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = Math.PI;
+        public static final double SWERVE_DIRECTION_TELEOP_MAX_ANGULAR_SPEED_RADIANS_PER_SECOND = 2 * Math.PI * 0.75;
 
         //// PID
         public static final double SWERVE_DIRECTION_BRAKING_RADIANS = (Math.PI * 2) / 4; // 2pi/3
@@ -283,13 +283,13 @@ public final class HighAltitudeConstants {
         // When moving straight (straightMove()) in autonomous, if the difference
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
-        public static final double WRIST_ARRIVE_OFFSET = 5.0;
+        public static final double WRIST_ARRIVE_OFFSET = 2.5;
 
         public static final double WRIST_UPPER_LIMIT_DEGREES = 999999999; // -43.34
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
 
-        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 153.0;
-        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -31.0;
+        public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 198.67;
+        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -48.23;
 
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
@@ -318,9 +318,9 @@ public final class HighAltitudeConstants {
         // between the target and the current position (in meters) is less than this
         // constant, it will be considered on target.
 
-        public static final double EXTENSOR_ARRIVE_OFFSET = 0.025;
+        public static final double EXTENSOR_ARRIVE_OFFSET = 0.019;
 
-        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.566; // 0.475
+        public static final double EXTENSOR_UPPER_LIMIT_METERS = 0.57; // 0.475
         public static final double EXTENSOR_LOWER_LIMIT_METERS = 0.02; // -0.06
 
         //////////////////////////////// ARM ///////////////////////////////////////////
@@ -348,7 +348,7 @@ public final class HighAltitudeConstants {
         // between the target and the current position (in degrees) is less than this
         // constant, it will be considered on target.
 
-        public static final double ARM_ARRIVE_OFFSET = 5.0;
+        public static final double ARM_ARRIVE_OFFSET = 3.75;
 
         public static final double ARM_UPPER_LIMIT_DEGREES = 999999999;
         public static final double ARM_LOWER_LIMIT_DEGREES = -999999999;
@@ -377,15 +377,15 @@ public final class HighAltitudeConstants {
 
         ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 0.0;
-        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.567;
-        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 35.28;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CONE = 11.38;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CONE = 0.576;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CONE = 31.02;
 
         ////////// MIDDLE ROW - BACK
 
-        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CONE = 31.74;
-        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CONE = 0.31;
-        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CONE = 29.58;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CONE = 46.19;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CONE = 0.45;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CONE = 39.874;
 
         ////////// TOP ROW - FRONT
 
@@ -395,9 +395,9 @@ public final class HighAltitudeConstants {
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -172.06; // -197.44
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.018; // 0.018
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -83.04; // -77.14
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CONE = -175.68; // -197.44 // -172.06
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CONE = 0.0289; // 0.018 // 0.018
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CONE = -76.32; // -77.14 //-83.04
 
         ////////// BOTTOM ROW
         /*
@@ -408,14 +408,14 @@ public final class HighAltitudeConstants {
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = -187.28; // -142.9 //-142.9
-        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.209; // 0.52 //0.01
-        public static final double ARM_FEEDER_DEGREES_CONE = -75.8; // -159.02 //-59.39
+        public static final double WRIST_FEEDER_DEGREES_CONE = -188.13; // -142.9 //-142.9
+        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.105; // 0.52 //0.01
+        public static final double ARM_FEEDER_DEGREES_CONE = -40.50; // -159.02 //-59.39
 
         ////////// GRAB FROM INTAKE
-        public static final double WRIST_INTAKE_DEGREES_CONE = -247.13;
-        public static final double EXTENSOR_INTAKE_METERS_CONE = 0.289;
-        public static final double ARM_INTAKE_DEGREES_CONE = -137.05;
+        public static final double WRIST_INTAKE_DEGREES_CONE = -209.77;
+        public static final double EXTENSOR_INTAKE_METERS_CONE = 0.425;
+        public static final double ARM_INTAKE_DEGREES_CONE = -156.57;
 
         //////////// POSITION TO GRAB FROM FLOOR
         public static final double WRIST_FLOOR_DEGREES_CONE = -251.27;
@@ -424,33 +424,33 @@ public final class HighAltitudeConstants {
 
         ///////// RESTING
         public static final double WRIST_REST_DEGREES_CONE = 0.0; // -274.65
-        public static final double EXTENSOR_REST_METERS_CONE = 0.0; // 0.43
+        public static final double EXTENSOR_REST_METERS_CONE = 0.019; // 0.43
         public static final double ARM_REST_DEGREES_CONE = 0.0; // -140.35
 
         /////////////////// CUBE MODE ///////////////////
 
         ////////// TOP ROW - BACK
 
-        public static final double WRIST_TOP_ROW_BACK_DEGREES_CUBE = 56.7;
-        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CUBE = 0.568;
-        public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 43.8;
+        public static final double WRIST_TOP_ROW_BACK_DEGREES_CUBE = 88.85;
+        public static final double EXTENSOR_TOP_ROW_BACK_METERS_CUBE = 0.526;
+        public static final double ARM_TOP_ROW_BACK_DEGREES_CUBE = 38.35;
 
         ////////// MIDDLE ROW - BACK
-        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 70.36;
-        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.29;
-        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 50.6;
+        public static final double WRIST_MIDDLE_ROW_BACK_DEGREES_CUBE = 88.85;
+        public static final double EXTENSOR_MIDDLE_ROW_BACK_METERS_CUBE = 0.150;
+        public static final double ARM_MIDDLE_ROW_BACK_DEGREES_CUBE = 38.34;
 
         ////////// TOP ROW - FRONT
 
-        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
-        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CUBE = 0.0;
-        public static final double ARM_TOP_ROW_FRONT_DEGREES_CUBE = 0.0;
+        public static final double WRIST_TOP_ROW_FRONT_DEGREES_CUBE = -38.42;
+        public static final double EXTENSOR_TOP_ROW_FRONT_METERS_CUBE = 0.032;
+        public static final double ARM_TOP_ROW_FRONT_DEGREES_CUBE = -74.37;
 
         ////////// MIDDLE ROW - FRONT
 
-        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = -109.87;
-        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.017;
-        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = -90.07;
+        public static final double WRIST_MIDDLE_ROW_FRONT_DEGREES_CUBE = -101.45;
+        public static final double EXTENSOR_MIDDLE_ROW_FRONT_METERS_CUBE = 0.032;
+        public static final double ARM_MIDDLE_ROW_FRONT_DEGREES_CUBE = -89.15;
 
         ////////// BOTTOM ROW
         /*
@@ -460,15 +460,15 @@ public final class HighAltitudeConstants {
          */
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CUBE = -146.16;
-        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.018;
-        public static final double ARM_FEEDER_DEGREES_CUBE = -57.22;
+        public static final double WRIST_FEEDER_DEGREES_CUBE = -101.45;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.032;
+        public static final double ARM_FEEDER_DEGREES_CUBE = -89.15;
 
         ////////// GRAB FROM INTAKE
 
-        public static final double WRIST_INTAKE_DEGREES_CUBE = -148.6;
-        public static final double EXTENSOR_INTAKE_METERS_CUBE = 0.011;
-        public static final double ARM_INTAKE_DEGREES_CUBE = -148.4;
+        public static final double WRIST_INTAKE_DEGREES_CUBE = -121.05;
+        public static final double EXTENSOR_INTAKE_METERS_CUBE = 0.023;
+        public static final double ARM_INTAKE_DEGREES_CUBE = -169.72;
 
         ///////// POSITION TO GRAB FROM FLOOR
 
@@ -478,7 +478,7 @@ public final class HighAltitudeConstants {
 
         ///////// RESTING
         public static final double WRIST_REST_DEGREES_CUBE = 0.0; // -214.2
-        public static final double EXTENSOR_REST_METERS_CUBE = 0.0; // 0.43
+        public static final double EXTENSOR_REST_METERS_CUBE = 0.019; // 0.43
         public static final double ARM_REST_DEGREES_CUBE = 0.0; // -155.22
 
         ///////////////////////////// GRIPPER //////////////////////////////////////////
@@ -486,15 +486,15 @@ public final class HighAltitudeConstants {
         // Default braking mode, true for brake, false for coast.
         public static final boolean GRIPPER_MOTORS_BRAKING_MODE = true;
 
-        public static final double GRIPPER_CUBE_IN_SPEED = 0.3;
-        public static final double GRIPPER_CUBE_OUT_SPEED = -1;
-        public static final double GRIPPER_CUBE_HOLD_SPEED = 0.09;
-        public static final double GRIPPER_CONE_IN_SPEED = -0.3;
-        public static final double GRIPPER_CONE_OUT_SPEED = 1;
-        public static final double GRIPPER_CONE_HOLD_SPEED = -0.063;
+        public static final double GRIPPER_CUBE_IN_SPEED = -0.3;
+        public static final double GRIPPER_CUBE_OUT_SPEED = 1.0;
+        public static final double GRIPPER_CUBE_HOLD_SPEED = -0.063;
+        public static final double GRIPPER_CONE_IN_SPEED = 0.575;
+        public static final double GRIPPER_CONE_OUT_SPEED = -1.0;
+        public static final double GRIPPER_CONE_HOLD_SPEED = 0.075;
 
-        public static final double GRIPPER_DEFAULT_IN_SPEED = -0.5;
-        public static final double GRIPPER_DEFAULT_OUT_SPEED = 0.5;
+        public static final double GRIPPER_DEFAULT_IN_SPEED = -1.0;
+        public static final double GRIPPER_DEFAULT_OUT_SPEED = 1.0;
 
         ///////////////////////////// INTAKE //////////////////////////////////////////
 

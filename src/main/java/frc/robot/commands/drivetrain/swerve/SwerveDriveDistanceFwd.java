@@ -20,6 +20,8 @@ public class SwerveDriveDistanceFwd extends CommandBase {
   double brakingDistance = -1;
   double vx;
   double initialDistance;
+  double kP_Angular = 2.0 / Math.PI;
+  double initialYaw;
 
   double error;
 
@@ -31,6 +33,7 @@ public class SwerveDriveDistanceFwd extends CommandBase {
     this.vx = vx;
     this.targetDistance = targetDistance;
     this.usingOdometry = usingOdometry;
+
   }
 
   public SwerveDriveDistanceFwd(double vx, double targetDistance, double brakingDistance, boolean usingOdometry) {
@@ -48,8 +51,10 @@ public class SwerveDriveDistanceFwd extends CommandBase {
   public void initialize() {
     if (usingOdometry) {
       initialDistance = swerveDriveTrain.getPose().getX();
+      initialYaw = swerveDriveTrain.getPose().getRotation().getRadians();
     } else {
       initialDistance = swerveDriveTrain.getFrontLeft().getDriveDistance();
+      initialYaw = Math.toRadians(Robot.getRobotContainer().getNavx().getYaw());
     }
     updateError();
   }
@@ -61,11 +66,18 @@ public class SwerveDriveDistanceFwd extends CommandBase {
     double appliedVel;
     appliedVel = vx;
 
+    double yawError = 0;
+
+    if (usingOdometry) {
+      yawError = 0 - swerveDriveTrain.getPose().getRotation().getRadians();
+    }
+    double chassisAngVel = yawError * kP_Angular;
+
     if (brakingDistance > 0)
       appliedVel = Math.clamp(error * (1 / brakingDistance), -1.0, 1.0) * vx;
 
     ChassisSpeeds chassisSpeeds;
-    chassisSpeeds = new ChassisSpeeds(appliedVel, 0.0, 0.0);
+    chassisSpeeds = new ChassisSpeeds(appliedVel, 0.0, chassisAngVel);
 
     // 5. Set the states to the swerve modules
     SwerveModuleState[] moduleStates = HighAltitudeConstants.SWERVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
