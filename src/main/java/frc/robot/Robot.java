@@ -66,16 +66,16 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     getRobotContainer().getNavx().run();
 
-    debugStringSmartDashboard("Current Game Piece Mode",
+    SmartDashboard.putString("Current Game Piece Mode",
         getRobotContainer().getCurrentGamePieceMode().toString());
     debugNumberSmartDashboard("Yaw", getRobotContainer().getNavx().getYaw());
-    debugBooleanSmartDashboard("ManualLimits?", getRobotContainer().getShouldManualHaveLimits());
+    SmartDashboard.putBoolean("ManualLimits?", getRobotContainer().getShouldManualHaveLimits());
     // SmartDashboard.putData(getRobotContainer().getSwerveDriveTrain());
     // SmartDashboard.putData(getRobotContainer().getArm());
 
-    SmartDashboard.putNumber("Roll", getRobotContainer().getNavx().getRoll());
-    SmartDashboard.putNumber("Roll Velocity", getRobotContainer().getNavx().getYVel());
-    SmartDashboard.putNumber("Roll Acceleration", getRobotContainer().getNavx().getAngularAccelerationRoll());
+    Robot.debugNumberSmartDashboard("Roll", getRobotContainer().getNavx().getRoll());
+    Robot.debugNumberSmartDashboard("Roll Velocity", getRobotContainer().getNavx().getYVel());
+    Robot.debugNumberSmartDashboard("Roll Acceleration", getRobotContainer().getNavx().getAngularAccelerationRoll());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

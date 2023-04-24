@@ -20,7 +20,7 @@ public class SwerveDriveDistanceFwd extends CommandBase {
   double brakingDistance = -1;
   double vx;
   double initialDistance;
-  double kP_Angular = 2.0 / Math.PI;
+  double kP_Angular = 1.25 * (2.0 / Math.PI);
   double initialYaw;
 
   double error;

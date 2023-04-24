@@ -17,7 +17,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "LeaveCubeMid"
+          "LeaveConeMid"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",
@@ -26,11 +26,11 @@
     },
     {
       "anchorPoint": {
-        "x": 7.0,
+        "x": 5.7,
         "y": 4.5
       },
       "prevControl": {
-        "x": 6.237970182680278,
+        "x": 4.937970182680278,
         "y": 4.5
       },
       "nextControl": null,

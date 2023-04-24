@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.transport;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -77,7 +78,7 @@ public class Extensor extends SubsystemBase {
         HighAltitudeConstants.EXTENSOR_METERS_PER_PULSE;
 
     Robot.debugNumberSmartDashboard("Extensor Encoder", extensorEncoderPosition);
-    Robot.debugNumberSmartDashboard("Extensor Meters", extensorPositionMeters);
+    SmartDashboard.putNumber("Extensor Meters", extensorPositionMeters);
     // Robot.debug("ExtensorPos:" + extensorEncoderPosition + " ExtensorDeg: " +
     // extensorPositionDegrees);
   }

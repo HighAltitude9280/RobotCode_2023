@@ -19,7 +19,7 @@ public class SwerveFwdUntilAngleChange extends CommandBase {
   double currentRoll;
   double currentYawFromOdometry;
 
-  double kP_Angular = 1.0 / 180.0;
+  double kP_Angular = 1.0 / 95.0;
   double vx;
   double kAngleThreshold = HighAltitudeConstants.BALANCING_ANGLE_THRESHOLD;
 

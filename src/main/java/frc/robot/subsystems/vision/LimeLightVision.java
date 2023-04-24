@@ -10,12 +10,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotState;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.HighAltitudeConstants;
-import frc.robot.Robot;
 
 public class LimeLightVision extends SubsystemBase {
   NetworkTable table;
@@ -33,11 +29,14 @@ public class LimeLightVision extends SubsystemBase {
   }
 
   public void addLimeLightPoseToOdometry() {
-    if (getPipeline() == 0 && getTv() == 1 && HighAltitudeConstants.USING_VISION_FOR_POSE) {
-      Robot.getRobotContainer().getSwerveDriveTrain().addVisionMeasurement(
-          getPose(true),
-          Timer.getFPGATimestamp() - (getTl() / 1000.0) - (getCl() / 1000.0));
-    }
+    /*
+     * if (getPipeline() == 0 && getTv() == 1 &&
+     * HighAltitudeConstants.USING_VISION_FOR_POSE) {
+     * Robot.getRobotContainer().getSwerveDriveTrain().addVisionMeasurement(
+     * getPose(true),
+     * Timer.getFPGATimestamp() - (getTl() / 1000.0) - (getCl() / 1000.0));
+     * }
+     */
   }
 
   public double getTv() {

@@ -100,7 +100,7 @@ public final class HighAltitudeConstants {
 
         // Arbitrary to make controlling the swerve easier in teleop
         public static final double SWERVE_DRIVE_TELEOP_MAX_SPEED_METERS_PER_SECOND = SWERVE_DRIVE_MAX_SPEED_METERS_PER_SECOND
-                        * 0.6;
+                        * 0.8;
 
         /////////// DIRECTION MOTOR
 
@@ -289,7 +289,7 @@ public final class HighAltitudeConstants {
         public static final double WRIST_LOWER_LIMIT_DEGREES = -999999999; // 111.36
 
         public static final double WRIST_ARM_DELTA_UPPER_LIMIT = 198.67;
-        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -48.23;
+        public static final double WRIST_ARM_DELTA_LOWER_LIMIT = -50.0; // -48.23
 
         ///////////////////////////// EXTENSOR /////////////////////////////////////////
 
@@ -369,9 +369,9 @@ public final class HighAltitudeConstants {
 
         ////////////////////// AUTONOMOUS MOVEMENT
 
-        public static final double WRIST_AUTO_MAX_POWER = 0.25;
+        public static final double WRIST_AUTO_MAX_POWER = 0.375;
         public static final double EXTENSOR_AUTO_MAX_POWER = 0.875;
-        public static final double ARM_AUTO_MAX_POWER = 0.5;
+        public static final double ARM_AUTO_MAX_POWER = 0.75;
 
         /////////////////// CONE MODE ///////////////////
 
@@ -408,9 +408,9 @@ public final class HighAltitudeConstants {
 
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CONE = -188.13; // -142.9 //-142.9
-        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.105; // 0.52 //0.01
-        public static final double ARM_FEEDER_DEGREES_CONE = -40.50; // -159.02 //-59.39
+        public static final double WRIST_FEEDER_DEGREES_CONE = -192.72; // -142.9 //-142.9
+        public static final double EXTENSOR_FEEDER_METERS_CONE = 0.336; // 0.52 //0.01
+        public static final double ARM_FEEDER_DEGREES_CONE = -55.81; // -159.02 //-59.39
 
         ////////// GRAB FROM INTAKE
         public static final double WRIST_INTAKE_DEGREES_CONE = -209.77;
@@ -460,9 +460,9 @@ public final class HighAltitudeConstants {
          */
         ////////// GRAB FROM FEEDER
 
-        public static final double WRIST_FEEDER_DEGREES_CUBE = -101.45;
-        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.032;
-        public static final double ARM_FEEDER_DEGREES_CUBE = -89.15;
+        public static final double WRIST_FEEDER_DEGREES_CUBE = -103.38;
+        public static final double EXTENSOR_FEEDER_METERS_CUBE = 0.055;
+        public static final double ARM_FEEDER_DEGREES_CUBE = -80.29;
 
         ////////// GRAB FROM INTAKE
 

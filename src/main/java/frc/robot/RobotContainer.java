@@ -13,15 +13,11 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.commands.autonomous.sequences.fullAutonomous.standard.DoNothing;
 import frc.robot.commands.autonomousV2.SwerveAutos;
 import frc.robot.commands.autonomousV2.SwerveAutos2;
+import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Bwd;
 import frc.robot.commands.autonomousV2.balancePrimitives.AutoBalance2Fwd;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePiece;
-import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenBalance;
-import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenExitCommunity;
 import frc.robot.commands.autonomousV2.superSimpleAutos.LeavePieceThenRest;
 import frc.robot.commands.drivetrain.swerve.DefaultSwerveDrive;
-import frc.robot.commands.drivetrain.swerve.SwerveDriveAsTank;
-import frc.robot.commands.drivetrain.swerve.SwerveDriveDistanceFwd;
-import frc.robot.commands.drivetrain.swerve.swerveParameters.ResetOdometryZeros;
 import frc.robot.commands.pieceHandlers.gripper.DriveGripper;
 import frc.robot.commands.transport.TransportTargets.TransportTarget;
 import frc.robot.commands.transport.compound.NewTransportGoTo;
@@ -112,7 +108,7 @@ public class RobotContainer {
     gripper.setDefaultCommand(new DriveGripper());
 
     // swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
-    swerveDriveTrain.setDefaultCommand(new SwerveDriveAsTank());
+    swerveDriveTrain.setDefaultCommand(new DefaultSwerveDrive());
   }
 
   public void generateAutos() {
@@ -159,14 +155,22 @@ public class RobotContainer {
     SwerveAutos.generateAutos();
     SwerveAutos2.generateAutos();
 
-    m_chooser.setDefaultOption("CubeRest", new LeavePieceThenRest(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
+    Command cubeCharge = new LeavePiece(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK)
+        .andThen(Commands.parallel(new AutoBalance2Fwd(), new NewTransportGoTo(TransportTarget.RESTING)));
+    Command coneCharge = new LeavePiece(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK)
+        .andThen(Commands.parallel(new AutoBalance2Fwd(), new NewTransportGoTo(TransportTarget.RESTING)));
+
+    Command leaveCommunityThenBalance = SwerveAutos2.mobilityAuto.andThen(new AutoBalance2Bwd());
+
+    m_chooser.setDefaultOption("NADA", new DoNothing());
+    m_chooser.addOption("CubeRest", new LeavePieceThenRest(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
     m_chooser.addOption("ConeRest", new LeavePieceThenRest(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
-    m_chooser.addOption("CubeFwd", SwerveAutos.CubeMidAndDrive);
-    m_chooser.addOption("ConeFwd",
-        new LeavePieceThenExitCommunity(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
-    m_chooser.addOption("CubeCharge", new LeavePieceThenBalance(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK));
-    m_chooser.addOption("ConeCharge", new LeavePieceThenBalance(GamePieceMode.CONE, TransportTarget.MIDDLE_ROW_BACK));
-    m_chooser.addOption("El mamalón", SwerveAutos.LmaoAuto);
+    m_chooser.addOption("CubeFwd", SwerveAutos2.cubeMidFwdAuto.withTimeout(13.5));
+    m_chooser.addOption("ConeFwd", SwerveAutos2.coneMidFwdAuto.withTimeout(13.5));
+    m_chooser.addOption("CubeCharge", cubeCharge);
+    m_chooser.addOption("ConeCharge", coneCharge);
+    m_chooser.addOption("El mamalón", SwerveAutos2.twoPieceFreeAuto);
+    m_chooser.addOption("MobilityBalance (Untested)", leaveCommunityThenBalance);
   }
 
   public void putAutoChooser() {
@@ -200,11 +204,18 @@ public class RobotContainer {
     // 3.0, 0.05, true));
 
     // return SwerveAutos2.twoPieceFreeAuto;
-    Command auto = new LeavePiece(GamePieceMode.CUBE, TransportTarget.MIDDLE_ROW_BACK)
-        .andThen(Commands.parallel(new AutoBalance2Fwd(), new NewTransportGoTo(TransportTarget.RESTING)));
-    return auto;
+
+    // mira, este de charge medio jaló. For reference, es el balance que jaló en
+    // frente de toni.
+    /*
+     * Command auto = new LeavePiece(GamePieceMode.CUBE,
+     * TransportTarget.MIDDLE_ROW_BACK)
+     * .andThen(Commands.parallel(new AutoBalance2Fwd(), new
+     * NewTransportGoTo(TransportTarget.RESTING)));
+     * return auto;
+     */
     // UNCOMMENT THE FOLLOWING LINE
-    // return m_chooser.getSelected();
+    return m_chooser.getSelected();
   }
 
   public Navx getNavx() {

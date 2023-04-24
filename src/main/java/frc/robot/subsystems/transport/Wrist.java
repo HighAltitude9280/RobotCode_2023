@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems.transport;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -66,10 +67,10 @@ public class Wrist extends SubsystemBase {
   @Override
   public void periodic() {
     wristEncoderPosition = wristMotors.getEncoderPosition();
-    wristPositionDegrees = wristEncoderPosition * HighAltitudeConstants.WRIST_DEGREES_PER_PULSE;
+    wristPositionDegrees = wristEncoderPosition * HighAltitudeConstants.WRIST_DEGREES_PER_PULSE + 45.64;
 
     Robot.debugNumberSmartDashboard("Wrist Encoder", wristEncoderPosition);
-    Robot.debugNumberSmartDashboard("Wrist Degrees", wristPositionDegrees);
+    SmartDashboard.putNumber("Wrist Degrees", wristPositionDegrees);
     // Robot.debug("WristPos:" + wristEncoderPosition + " WristDeg: " +
     // wristPositionDegrees);
   }

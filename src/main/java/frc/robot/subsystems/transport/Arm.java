@@ -6,6 +6,7 @@ package frc.robot.subsystems.transport;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.HighAltitudeConstants;
 import frc.robot.Robot;
@@ -75,7 +76,7 @@ public class Arm extends SubsystemBase {
 
     updateArmOdometry();
     Robot.debugNumberSmartDashboard("Arm Encoder", currentArmEncoderPosition);
-    Robot.debugNumberSmartDashboard("Arm Degrees", armPositionDegrees);
+    SmartDashboard.putNumber("Arm Degrees", armPositionDegrees);
     Robot.debugNumberSmartDashboard("Arm Y", armEndPointPos.getY());
     Robot.debugNumberSmartDashboard("Arm x", armEndPointPos.getX());
     // Robot.debug("ArmPos:" + armEncoderPosition + " ArmDeg: " +

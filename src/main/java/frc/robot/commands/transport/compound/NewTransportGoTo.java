@@ -59,7 +59,7 @@ public class NewTransportGoTo extends CommandBase {
     this.target = target;
 
     wristPIDController = new PIDController(1 / (HighAltitudeConstants.WRIST_AUTO_MAX_POWER
-        * HighAltitudeConstants.WRIST_AUTO_MAX_POWER * HighAltitudeConstants.WRIST_BRAKING_DEGREES), 0, 0.0);
+        * HighAltitudeConstants.WRIST_AUTO_MAX_POWER * HighAltitudeConstants.WRIST_BRAKING_DEGREES), 0, 0.025);
     wristPIDController.setTolerance(HighAltitudeConstants.WRIST_ARRIVE_OFFSET);
 
     armPIDController = new PIDController(1 / (HighAltitudeConstants.ARM_AUTO_MAX_POWER
@@ -130,11 +130,15 @@ public class NewTransportGoTo extends CommandBase {
 
     // True if wrist is outside its safe zone and if target doesn't change much from
     // current angle.
+    // Also, if the wrist's final target angle decreases from its current angle and
+    // the arm angle also decreases, there's no point in correcting the position...
+    // i.e. from cube middle back to resting.
     double armWristDelta = armCurrentAngle - wristCurrentAngle;
     boolean wristIsVeryCloseToTargetAlready = Math.abs(wristFinalTarget - wristCurrentAngle) < 5.0;
+    boolean wirstArmMovingKindaInSync = wristFinalTarget < wristCurrentAngle && armFinalTarget < armCurrentAngle;
 
     wristArmDangerous = !isWithinRange(armWristDelta, ARM_WRIST_DELTA_LOWER_LIMIT, ARM_WRIST_DELTA_UPPER_LIMIT)
-        && !wristIsVeryCloseToTargetAlready;
+        && !wristIsVeryCloseToTargetAlready && !wirstArmMovingKindaInSync;
 
     // Check if arm might crash into backplate
 
@@ -188,6 +192,10 @@ public class NewTransportGoTo extends CommandBase {
     if (wristArmDangerous) {
       armCurrentTarget = armCurrentAngle;
       wristCurrentTarget = armCurrentAngle - ARM_WRIST_DELTA_SAFE_ZONE;
+      // added for movement from cube intake to resting
+      if (armCurrentTarget != armFinalTarget && armCurrentAngle < ARM_HORIZONTAL) {
+        extensorCurrentTarget = 0.3;
+      }
       if (isInAcceptedRange(wristCurrentAngle, wristCurrentTarget,
           HighAltitudeConstants.WRIST_ARRIVE_OFFSET)) {
         wristArmDangerous = false;
@@ -231,6 +239,7 @@ public class NewTransportGoTo extends CommandBase {
         extensorCurrentTarget = extensorFinalTarget;
       }
     }
+
     // System.out.println("5. " + (wristCurrentTarget == wristFinalTarget));
 
     SmartDashboard.putBoolean("wristarmdanger", wristArmDangerous);
